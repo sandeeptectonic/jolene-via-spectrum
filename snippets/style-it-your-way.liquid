@@ -1,0 +1,135 @@
+{% comment %}
+  Renders "Style It Your Way" card + dialog with image carousel.
+  Reads from product.metafields.custom.spectrum_look metaobject reference.
+{% endcomment %}
+
+{%- assign spectrum_look = product.metafields.custom.spectrum_look.value -%}
+{%- if spectrum_look -%}
+{%- assign spectrum_images = spectrum_look.images.value -%}
+
+{%- assign has_images = false -%}
+{%- assign first_img_url = blank -%}
+{%- assign second_img_url = blank -%}
+{%- assign third_img_url = blank -%}
+{%- assign img_count = 0 -%}
+{%- for img in spectrum_images -%}
+  {%- assign has_images = true -%}
+  {%- assign img_count = forloop.length -%}
+  {%- if forloop.index == 1 -%}
+    {%- assign first_img_url = img | image_url: width: 120 -%}
+  {%- elsif forloop.index == 2 -%}
+    {%- assign second_img_url = img | image_url: width: 120 -%}
+  {%- elsif forloop.index == 3 -%}
+    {%- assign third_img_url = img | image_url: width: 120 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if has_images -%}
+
+{{ 'style-it-your-way.css' | asset_url | stylesheet_tag }}
+
+<!-- Card trigger -->
+<button class="siyw-card" type="button" id="siyw-open-btn">
+  <div class="siyw-card__thumbs">
+    <img src="{{ first_img_url }}" alt="Style It Your Way" width="56" height="56" loading="lazy">
+    {%- if second_img_url != blank -%}
+      <img src="{{ second_img_url }}" alt="" width="56" height="56" loading="lazy">
+    {%- endif -%}
+    {%- if third_img_url != blank -%}
+      <img src="{{ third_img_url }}" alt="" width="56" height="56" loading="lazy">
+    {%- endif -%}
+  </div>
+  <div class="siyw-card__text">
+    <p class="siyw-card__title">Style It Your Way</p>
+    <p class="siyw-card__sub">Explore curated looks for every vibe and occasion</p>
+  </div>
+  <span class="siyw-card__arrow">&#8250;</span>
+</button>
+
+<!-- Pass image URLs to JS -->
+<script type="application/json" id="siyw-images-data">
+  [
+    {%- for img in spectrum_images -%}
+      "{{ img | image_url: width: 800 }}"{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+</script>
+
+<script>
+(function() {
+  var dataEl = document.getElementById('siyw-images-data');
+  if (!dataEl) return;
+  var images = JSON.parse(dataEl.textContent);
+  if (!images.length) return;
+
+  /* Create overlay */
+  var overlay = document.createElement('div');
+  overlay.id = 'siyw-overlay-root';
+  overlay.className = 'siyw-overlay';
+
+  var dialog = document.createElement('div');
+  dialog.className = 'siyw-dialog';
+
+  /* Close button */
+  var closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '&times;';
+  closeBtn.className = 'siyw-dialog__close';
+
+  /* Title */
+  var title = document.createElement('p');
+  title.textContent = 'STYLE IT YOUR WAY';
+  title.className = 'siyw-dialog__title';
+
+  /* Carousel */
+  var carouselWrap = document.createElement('div');
+  carouselWrap.className = 'siyw-carousel';
+
+  var track = document.createElement('div');
+  track.className = 'siyw-carousel__track';
+
+  images.forEach(function(src, i) {
+    var slide = document.createElement('div');
+    slide.className = 'siyw-carousel__slide';
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Look ' + (i + 1);
+    img.loading = 'lazy';
+    slide.appendChild(img);
+    track.appendChild(slide);
+  });
+
+  carouselWrap.appendChild(track);
+
+  /* CTA */
+  var cta = document.createElement('a');
+  cta.textContent = 'VIEW MORE LOOKS';
+  cta.href = '/pages/all-lookbooks';
+  cta.className = 'siyw-cta';
+
+  dialog.appendChild(closeBtn);
+  dialog.appendChild(title);
+  dialog.appendChild(carouselWrap);
+  dialog.appendChild(cta);
+  overlay.appendChild(dialog);
+  document.body.appendChild(overlay);
+
+  function openDialog() {
+    overlay.classList.add('siyw-overlay--open');
+  }
+  function closeDialog() {
+    overlay.classList.remove('siyw-overlay--open');
+  }
+
+  /* Events */
+  var openBtn = document.getElementById('siyw-open-btn');
+  if (openBtn) openBtn.addEventListener('click', openDialog);
+  closeBtn.addEventListener('click', closeDialog);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeDialog();
+  });
+
+})();
+</script>
+
+{%- endif -%}
+{%- endif -%}
