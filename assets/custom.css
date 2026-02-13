@@ -4113,10 +4113,6 @@ main-search .field:after {
   fill: #a60017;
   color: #a60017 !important;
 }
-.template-search .collection .product-grid .grid__item {
-  width: 19% !important;
-  max-width: 18.4% !important;
-}
 .template-search .collection .product-grid {
   gap: 24px;
   width: 100%;
@@ -4146,7 +4142,7 @@ main-search .field:after {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
-#product-grid.template-search__results {
+.template-search .template-search__results {
   padding-top: 20px !important;
   border: 0px !important;
   padding-left: 0px !important;
@@ -4280,21 +4276,6 @@ span.sd {
     width: 33.33%;
   }
 }
-@media (min-width: 1601px) {
-  .template-search .collection .product-grid .grid__item {
-    max-width: 18.8% !important;
-  }
-}
-@media (max-width: 1600px) and (min-width: 1261px) {
-  .template-search .collection .product-grid .grid__item {
-    max-width: 18.4% !important;
-  }
-}
-@media (max-width: 1260px) and (min-width: 992px) {
-  .template-search .collection .product-grid .grid__item {
-    max-width: 17.9% !important;
-  }
-}
 @media (max-width: 749px) {
   .template-search #product-grid {
     padding-left: 0px;
@@ -4308,10 +4289,6 @@ span.sd {
     margin-bottom: 16px;
   }
 
-  .template-search .collection .product-grid .grid__item {
-    width: 41% !important;
-    max-width: 53% !important;
-  }
   .search-benefits-prd .prd-benefits {
     background: transparent;
     margin-top: 8px;

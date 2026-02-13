@@ -1,0 +1,203 @@
+{% comment %}
+  Spectrum Product Groups — Renders sibling product swatches on PDP.
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+  - context: {String} 'card' or 'pdp' (required)
+
+  Renders pill-shaped swatches: circular thumbnail/color dot + text label,
+  horizontal row, active item has dark border.
+
+  DATA SOURCE is isolated below — swap for metaobject reads later.
+{% endcomment %}
+
+{%- liquid
+  assign max_display = 10
+  if context == 'card'
+    assign max_display = 4
+  endif
+-%}
+
+{% comment %} ================================================
+   DATA SOURCE — Replace this block to change where siblings come from.
+
+   Priority:
+   1. Metaobject path (product.metafields.spectrum.color_siblings)
+   2. Variant fallback (product's own Color option variants)
+
+   Future: only use metaobject path once cron is connected.
+   ================================================ {% endcomment %}
+
+{%- liquid
+  assign sibling_group = product.metafields.spectrum.color_siblings.value
+  assign use_metaobject = false
+  if sibling_group != blank and sibling_group.members.value != blank
+    assign use_metaobject = true
+  endif
+-%}
+
+{% comment %} ================================================
+   END DATA SOURCE
+   ================================================ {% endcomment %}
+
+<!-- DEBUG: use_metaobject={{ use_metaobject }} sibling_group_blank={{ sibling_group | size }} -->
+{%- if use_metaobject -%}
+  {%- assign siblings = sibling_group.members.value -%}
+  <!-- DEBUG: siblings_count={{ siblings.size }} -->
+  {%- if siblings.size >= 2 -%}
+    <div class="spectrum-groups spectrum-groups--{{ context }}">
+      <div class="spectrum-groups__list">
+        {%- assign display_count = 0 -%}
+        {%- for sibling in siblings -%}
+          {%- if display_count >= max_display -%}{%- break -%}{%- endif -%}
+          {%- liquid
+            assign is_active = false
+            if sibling.handle == product.handle
+              assign is_active = true
+            endif
+            assign sibling_label = sibling.title
+            for option in sibling.options_with_values
+              if option.name == 'Color' or option.name == 'Colour' or option.name == 'color' or option.name == 'colour'
+                assign sibling_label = option.values | first
+                break
+              endif
+            endfor
+            if sibling.title contains ' - '
+              assign title_parts = sibling.title | split: ' - '
+              assign sibling_label = title_parts | last
+            endif
+          -%}
+          <a
+            href="{{ sibling.url }}"
+            class="spectrum-groups__pill{% if is_active %} spectrum-groups__pill--active{% endif %}"
+            {% if is_active %}aria-current="page"{% endif %}
+            title="{{ sibling_label | escape }}"
+          >
+            {%- if sibling.featured_image != blank -%}
+              <img
+                class="spectrum-groups__pill-img"
+                src="{{ sibling.featured_image | image_url: width: 60 }}"
+                alt="{{ sibling_label | escape }}"
+                width="24"
+                height="24"
+                loading="lazy"
+              >
+            {%- else -%}
+              <span class="spectrum-groups__dot" style="background-color: #ccc;"></span>
+            {%- endif -%}
+            <span class="spectrum-groups__pill-label">{{ sibling_label }}</span>
+          </a>
+          {%- assign display_count = display_count | plus: 1 -%}
+        {%- endfor -%}
+        {%- if siblings.size > max_display -%}
+          <span class="spectrum-groups__overflow">+{{ siblings.size | minus: max_display }}</span>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+{%- else -%}
+  {%- comment -%} VARIANT FALLBACK — show product's own Color option as pill swatches {%- endcomment -%}
+  {%- liquid
+    assign color_option_index = nil
+    for option in product.options
+      if option == 'Color' or option == 'Colour' or option == 'color' or option == 'colour'
+        assign color_option_index = forloop.index
+        break
+      endif
+    endfor
+  -%}
+
+  {%- if color_option_index != nil and product.variants.size > 1 -%}
+    {%- assign selected_variant = product.selected_or_first_available_variant -%}
+    {%- assign option_key = 'option' | append: color_option_index -%}
+    {%- assign selected_color = selected_variant[option_key] -%}
+
+    <div class="spectrum-groups spectrum-groups--{{ context }}">
+      <div class="spectrum-groups__list">
+        {%- assign seen_colors = '' -%}
+        {%- assign display_count = 0 -%}
+        {%- for variant in product.variants -%}
+          {%- if display_count >= max_display -%}{%- break -%}{%- endif -%}
+          {%- assign color_value = variant[option_key] -%}
+
+          {%- unless seen_colors contains color_value -%}
+            {%- liquid
+              assign is_active = false
+              if color_value == selected_color
+                assign is_active = true
+              endif
+              assign color_hex = '#ccc'
+              assign color_lower = color_value | downcase | strip
+              if color_lower == 'black'
+                assign color_hex = '#000000'
+              elsif color_lower == 'white'
+                assign color_hex = '#FFFFFF'
+              elsif color_lower == 'wine' or color_lower == 'burgundy' or color_lower == 'maroon'
+                assign color_hex = '#722F37'
+              elsif color_lower == 'red'
+                assign color_hex = '#C0392B'
+              elsif color_lower == 'navy' or color_lower == 'navy blue'
+                assign color_hex = '#1B2A4A'
+              elsif color_lower == 'blue'
+                assign color_hex = '#2E86C1'
+              elsif color_lower == 'green' or color_lower == 'olive'
+                assign color_hex = '#2E7D32'
+              elsif color_lower == 'bottle green'
+                assign color_hex = '#006A4E'
+              elsif color_lower == 'grey' or color_lower == 'gray'
+                assign color_hex = '#808080'
+              elsif color_lower == 'charcoal grey' or color_lower == 'charcoal gray' or color_lower == 'charcoal'
+                assign color_hex = '#36454F'
+              elsif color_lower == 'brown' or color_lower == 'chocolate'
+                assign color_hex = '#5D4037'
+              elsif color_lower == 'tan' or color_lower == 'beige' or color_lower == 'khaki'
+                assign color_hex = '#C8B88A'
+              elsif color_lower == 'pink' or color_lower == 'rose' or color_lower == 'dusty pink'
+                assign color_hex = '#DCAE96'
+              elsif color_lower == 'deep rust' or color_lower == 'rust'
+                assign color_hex = '#8B3A2F'
+              elsif color_lower == 'teal' or color_lower == 'teal soft'
+                assign color_hex = '#008080'
+              elsif color_lower == 'purple' or color_lower == 'plum'
+                assign color_hex = '#7B1FA2'
+              elsif color_lower == 'orange'
+                assign color_hex = '#E65100'
+              elsif color_lower == 'yellow' or color_lower == 'gold'
+                assign color_hex = '#F9A825'
+              elsif color_lower == 'cream' or color_lower == 'ivory' or color_lower == 'off white'
+                assign color_hex = '#FFFDD0'
+              elsif color_lower == 'camel'
+                assign color_hex = '#C19A6B'
+              endif
+            -%}
+
+            <a
+              href="{{ variant.url | within: collection }}"
+              class="spectrum-groups__pill{% if is_active %} spectrum-groups__pill--active{% endif %}"
+              {% if is_active %}aria-current="page"{% endif %}
+              title="{{ color_value | escape }}"
+            >
+              {%- if variant.featured_image != blank -%}
+                <img
+                  class="spectrum-groups__pill-img"
+                  src="{{ variant.featured_image | image_url: width: 60 }}"
+                  alt="{{ color_value | escape }}"
+                  width="24"
+                  height="24"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <span class="spectrum-groups__dot" style="background-color: {{ color_hex }};{% if color_lower == 'white' or color_lower == 'cream' or color_lower == 'ivory' or color_lower == 'off white' %} border: 1px solid #ccc;{% endif %}"></span>
+              {%- endif -%}
+              <span class="spectrum-groups__pill-label">{{ color_value }}</span>
+            </a>
+
+            {%- assign seen_colors = seen_colors | append: '|||' | append: color_value -%}
+            {%- assign display_count = display_count | plus: 1 -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+{%- endif -%}
