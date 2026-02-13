@@ -47,44 +47,6 @@
     },
     "170998461498dec8a7": {
       "type": "apps",
-      "blocks": {
-        "foxsell_cps_box_pro_y7VXew": {
-          "type": "shopify://apps/foxsell/blocks/cps_box_pro/8af31731-4b2e-455d-bbf0-ce3debb3c4bf",
-          "settings": {
-            "featured_collection": "",
-            "featured_product_list": [
-              "printed-flare-pants",
-              "printed-halter-neck-dress",
-              "printed-halter-neck-top",
-              "printed-ruched-mini-dress",
-              "printed-shirt-dress",
-              "printed-wrap-dress",
-              "printed-resort-shirt"
-            ],
-            "add_to_cart_text": "",
-            "view_details_text": "View Details",
-            "sale_text": "",
-            "section_background": "linear-gradient(274deg, rgba(255, 255, 255, 1) 100%, rgba(0, 0, 0, 1) 100%)",
-            "title_card_color": "#ffffff",
-            "card_text_color": "#000000",
-            "sale_label_color": "#000000",
-            "sale_text_color": "#ffffff",
-            "button_color": "#000000",
-            "primary_button_text_color": "#ffffff",
-            "secondary_button_text_color": "#000000",
-            "slide_color": "#ffffff",
-            "arrow_background_color": "#4b4c49",
-            "arrow_color": "#ffffff",
-            "crop_images": false,
-            "show_add_to_cart": false,
-            "show_view_details": true,
-            "sale_label_position": "top_left"
-          }
-        }
-      },
-      "block_order": [
-        "foxsell_cps_box_pro_y7VXew"
-      ],
       "disabled": true,
       "settings": {
         "include_margins": true

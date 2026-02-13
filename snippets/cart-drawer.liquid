@@ -416,70 +416,47 @@
 </script>
 
 <style>
-  /* =============================================
-     Cart drawer card layout — override Dawn table
-     ============================================= */
-
-  /* Kill all Dawn table/grid styles on our card items */
-  .cart-drawer .cart-item--card,
-  .cart-drawer .cart-item.cart-item--card {
-    display: flex !important;
-    grid-template: none !important;
+  /* Cart line item card layout */
+  .cart-item--card {
+    display: flex;
     gap: 1.2rem;
     padding: 1.6rem 0;
     border-bottom: 1px solid #e8e8e8;
     position: relative;
-    margin-bottom: 0 !important;
   }
-
   .cart-item--card .loading-overlay {
-    position: absolute !important;
+    position: absolute;
     inset: 0;
     background: rgba(255,255,255,0.7);
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    padding: 0 !important;
   }
-  .cart-item--card .loading-overlay.hidden { display: none !important; }
-  .cart-item--card .loading-overlay:not(.hidden) ~ * { visibility: visible !important; }
+  .cart-item--card .loading-overlay.hidden { display: none; }
 
-  /* Image */
-  .cart-item--card .cart-item__media-link {
+  .cart-item__media-link {
     flex-shrink: 0;
-    width: 110px;
-    display: block;
+    width: 120px;
   }
   .cart-item--card .cart-item__image {
-    width: 110px !important;
-    max-width: 110px !important;
+    width: 100%;
     height: auto;
     display: block;
     border-radius: 4px;
     object-fit: cover;
   }
 
-  /* Info column */
-  .cart-item--card .cart-item__info {
+  .cart-item__info {
     flex: 1;
     min-width: 0;
-    display: flex !important;
+    display: flex;
     flex-direction: column;
-    gap: 0.8rem;
-    width: auto !important;
-  }
-  .cart-item--card .cart-item__info > * {
-    max-width: none !important;
-    margin: 0 !important;
+    gap: 0.6rem;
   }
 
   /* Row 1: title + X */
-  .cart-item--card .cart-item__top-row {
+  .cart-item__top-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -490,12 +467,9 @@
     font-weight: 600;
     color: #1a1a1a;
     text-decoration: none;
-    line-height: 1.4;
-    display: block;
-    word-break: normal !important;
-    overflow-wrap: break-word;
+    line-height: 1.3;
   }
-  .cart-item--card .cart-item__remove-btn {
+  .cart-item__remove-btn {
     background: none;
     border: none;
     cursor: pointer;
@@ -503,122 +477,111 @@
     color: #666;
     flex-shrink: 0;
     line-height: 1;
-    min-width: auto;
-    min-height: auto;
-    margin: 0;
   }
-  .cart-item--card .cart-item__remove-btn:hover { color: #1a1a1a; }
-  .cart-item--card .cart-item__remove-btn::before,
-  .cart-item--card .cart-item__remove-btn::after { content: none !important; }
+  .cart-item__remove-btn:hover { color: #1a1a1a; }
 
-  /* Row 2: variant + qty inline */
-  .cart-item--card .cart-item__controls-row {
-    display: flex !important;
+  /* Row 2: variant + qty */
+  .cart-item__controls-row {
+    display: flex;
     align-items: center;
     gap: 1rem;
     flex-wrap: wrap;
   }
-  .cart-item--card .cart-item__variant-selector {
+  .cart-item__variant-selector {
     position: relative;
     display: inline-flex;
     align-items: center;
   }
-  .cart-item--card .cart-item__variant-select {
+  .cart-item__variant-select {
     appearance: none;
     -webkit-appearance: none;
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 0.6rem 2.8rem 0.6rem 1rem;
+    padding: 0.5rem 2.8rem 0.5rem 1rem;
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 500;
     background: #fff;
     cursor: pointer;
     color: #1a1a1a;
-    min-width: 60px;
-    height: 34px;
+    min-width: 70px;
   }
-  .cart-item--card .cart-item__variant-select:focus {
+  .cart-item__variant-select:focus {
     outline: none;
     border-color: #1a1a1a;
   }
-  .cart-item--card .cart-item__variant-chevron {
+  .cart-item__variant-chevron {
     position: absolute;
     right: 8px;
     pointer-events: none;
     color: #1a1a1a;
   }
 
-  .cart-item--card .cart-item__qty-input {
+  .cart-item__qty-input {
     border: 1px solid #ccc;
     border-radius: 4px;
-    display: inline-flex !important;
+    display: inline-flex;
     align-items: center;
-    height: 34px;
   }
-  .cart-item--card .cart-item__qty-input .quantity__button {
-    width: 34px;
-    height: 34px;
-    display: flex !important;
+  .cart-item__qty-input .quantity__button {
+    width: 32px;
+    height: 32px;
+    display: flex;
     align-items: center;
     justify-content: center;
     background: none;
     border: none;
     cursor: pointer;
     color: #1a1a1a;
-    padding: 0;
-    min-width: auto;
-    min-height: auto;
   }
-  .cart-item--card .cart-item__qty-input .quantity__input {
-    width: 34px;
-    height: 34px;
+  .cart-item__qty-input .quantity__input {
+    width: 32px;
+    height: 32px;
     text-align: center;
     border: none;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
     font-size: 1.3rem;
-    font-weight: 600;
+    font-weight: 500;
     padding: 0;
     -moz-appearance: textfield;
     color: #1a1a1a;
-    background: transparent;
   }
-  .cart-item--card .cart-item__qty-input .quantity__input::-webkit-inner-spin-button,
-  .cart-item--card .cart-item__qty-input .quantity__input::-webkit-outer-spin-button {
+  .cart-item__qty-input .quantity__input::-webkit-inner-spin-button,
+  .cart-item__qty-input .quantity__input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* Row 3: price inline */
-  .cart-item--card .cart-item__price-row {
-    display: flex !important;
-    align-items: baseline;
+  /* Row 3: price */
+  .cart-item__price-row {
+    display: flex;
+    align-items: center;
     gap: 0.6rem;
     flex-wrap: wrap;
   }
-  .cart-item--card .cart-item__sale-price {
+  .cart-item__sale-price {
     font-size: 1.4rem;
     font-weight: 700;
     color: #1a1a1a;
   }
-  .cart-item--card .cart-item__regular-price {
+  .cart-item__regular-price {
     font-size: 1.4rem;
     font-weight: 700;
     color: #1a1a1a;
   }
-  .cart-item--card .cart-item__compare-price {
+  .cart-item__compare-price {
     font-size: 1.3rem;
     color: #999;
     text-decoration: line-through;
   }
-  .cart-item--card .cart-item__discount-badge {
+  .cart-item__discount-badge {
     font-size: 1.2rem;
     font-weight: 600;
     color: #e45959;
   }
 
   /* Row 4: low stock */
-  .cart-item--card .cart-item__low-stock {
+  .cart-item__low-stock {
     font-size: 1.2rem;
     color: #e45959;
     margin: 0;
@@ -626,100 +589,74 @@
     align-items: center;
     gap: 0.3rem;
   }
-  .cart-item--card .cart-item__low-stock-icon {
+  .cart-item__low-stock-icon {
     font-size: 1.3rem;
   }
 
-  /* Container */
-  .cart-drawer .drawer__cart-items-wrapper {
+  /* Override table styles that may leak */
+  .drawer__cart-items-wrapper {
     padding: 0 1.5rem;
-  }
-
-  /* Hide Dawn's cart-remove-button default styling inside our cards */
-  .cart-item--card cart-remove-button {
-    display: contents !important;
-    margin: 0 !important;
   }
 </style>
 
 <script>
-  /* Prevent variant selects from triggering CartItems.onChange (which expects quantity inputs) */
-  document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('change', function(e) {
-      if (e.target.matches('.cart-item__variant-select')) {
-        e.stopImmediatePropagation();
-        handleVariantSwap(e.target);
-      }
-    }, true); /* capture phase — fires before CartItems listener */
-  });
+  /* Variant swap in cart drawer */
+  document.addEventListener('change', function(e) {
+    if (!e.target.matches('.cart-item__variant-select')) return;
 
-  function handleVariantSwap(select) {
+    var select = e.target;
     var newVariantId = parseInt(select.value);
     var oldVariantId = parseInt(select.dataset.currentVariantId);
     var lineIndex = parseInt(select.dataset.lineIndex);
-    var cartItem = select.closest('.cart-item--card');
 
     if (newVariantId === oldVariantId) return;
 
-    /* Show loading state */
-    if (cartItem) {
-      var overlay = cartItem.querySelector('.loading-overlay');
-      if (overlay) overlay.classList.remove('hidden');
-    }
+    var cartDrawerItems = select.closest('cart-drawer-items');
+    if (!cartDrawerItems) return;
 
-    /* Step 1: get current quantity */
-    var qtyInput = cartItem ? cartItem.querySelector('.quantity__input') : null;
-    var currentQty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-
-    /* Step 2: remove old line item */
+    /* Remove old variant, then add new one */
     fetch(routes.cart_change_url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ line: lineIndex, quantity: 0 })
     })
     .then(function(r) { return r.json(); })
     .then(function() {
-      /* Step 3: add new variant with same quantity */
       return fetch(routes.cart_add_url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ items: [{ id: newVariantId, quantity: currentQty }] })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: [{ id: newVariantId, quantity: 1 }] })
       });
     })
     .then(function(r) { return r.json(); })
     .then(function() {
-      /* Step 4: refresh cart drawer section */
-      return fetch(window.location.pathname + '?section_id=cart-drawer');
-    })
-    .then(function(r) { return r.text(); })
-    .then(function(html) {
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(html, 'text/html');
-      var newContents = doc.querySelector('.js-contents');
-      var currentContents = document.querySelector('#CartDrawer-Form .js-contents');
-      if (newContents && currentContents) {
-        currentContents.innerHTML = newContents.innerHTML;
-      }
-      /* Update cart icon bubble */
-      return fetch('?section_id=cart-icon-bubble');
-    })
-    .then(function(r) { return r.text(); })
-    .then(function(bubbleHtml) {
-      var parser = new DOMParser();
-      var doc = parser.parseFromString(bubbleHtml, 'text/html');
-      var newBubble = doc.querySelector('.shopify-section');
-      var currentBubble = document.getElementById('cart-icon-bubble');
-      if (newBubble && currentBubble) {
-        currentBubble.innerHTML = newBubble.innerHTML;
-      }
+      /* Refresh the cart drawer by fetching updated section */
+      fetch(window.location.pathname + '?section_id=cart-drawer')
+        .then(function(r) { return r.text(); })
+        .then(function(html) {
+          var parser = new DOMParser();
+          var doc = parser.parseFromString(html, 'text/html');
+          var newContents = doc.querySelector('.js-contents');
+          var currentContents = document.querySelector('#CartDrawer-Form .js-contents');
+          if (newContents && currentContents) {
+            currentContents.innerHTML = newContents.innerHTML;
+          }
+          /* Update cart icon bubble */
+          fetch('?section_id=cart-icon-bubble')
+            .then(function(r) { return r.text(); })
+            .then(function(bubbleHtml) {
+              var bubbleDoc = parser.parseFromString(bubbleHtml, 'text/html');
+              var newBubble = bubbleDoc.querySelector('.shopify-section');
+              var currentBubble = document.getElementById('cart-icon-bubble');
+              if (newBubble && currentBubble) {
+                currentBubble.innerHTML = newBubble.innerHTML;
+              }
+            });
+        });
     })
     .catch(function(err) {
       console.error('Variant swap failed:', err);
       select.value = oldVariantId;
-      if (cartItem) {
-        var overlay = cartItem.querySelector('.loading-overlay');
-        if (overlay) overlay.classList.add('hidden');
-      }
     });
-  }
+  });
 </script>

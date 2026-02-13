@@ -1,0 +1,277 @@
+/* ==========================================================================
+   Search Drawer — full-page overlay with search + popular choices + trends
+   z-index: 99999998 (above header 999999, below cart-drawer 99999999)
+   ========================================================================== */
+
+/* ---------- Trigger button reset (inherits ul.search_btn styles) ---------- */
+ul.search_btn li button.search-drawer__trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  letter-spacing: -0.56px;
+  line-height: inherit;
+}
+
+/* Home-header white state */
+.home-header ul.search_btn li button.search-drawer__trigger {
+  color: #f3f4f7 !important;
+}
+.home-header ul.search_btn li button.search-drawer__trigger:hover {
+  color: #f3f4f7;
+  text-decoration: underline;
+  text-decoration-color: #fff !important;
+}
+
+/* Scrolled state */
+.scrolled-past-header ul.search_btn li button.search-drawer__trigger {
+  color: #000 !important;
+}
+.scrolled-past-header ul.search_btn li button.search-drawer__trigger:hover {
+  text-decoration: underline;
+  text-decoration-color: #a60017 !important;
+}
+
+/* ---------- Drawer container ---------- */
+search-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 99999998;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+search-drawer.active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ---------- Overlay backdrop ---------- */
+.search-drawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity var(--duration-default, 200ms) ease;
+}
+
+search-drawer.active .search-drawer__overlay {
+  opacity: 1;
+}
+
+/* ---------- Inner panel (slides down from top) ---------- */
+.search-drawer__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-height: 100vh;
+  max-height: 100dvh;
+  background: #fff;
+  transform: translateY(-100%);
+  transition: transform var(--duration-default, 200ms) ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+search-drawer.active .search-drawer__inner {
+  transform: translateY(0);
+}
+
+/* ---------- Drawer header (back + search input + submit) ---------- */
+.search-drawer__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  flex-shrink: 0;
+}
+
+.search-drawer__back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-foreground));
+  flex-shrink: 0;
+}
+
+.search-drawer__back svg {
+  width: 20px;
+  height: 20px;
+}
+
+.search-drawer__form {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.search-drawer__input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-family: "gt_alpina_tw", var(--font-body-family);
+  font-size: 1.6rem;
+  color: rgb(var(--color-foreground));
+  background: transparent;
+  padding: 0.6rem 0;
+}
+
+.search-drawer__input::placeholder {
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.search-drawer__submit {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(var(--color-foreground));
+  flex-shrink: 0;
+}
+
+.search-drawer__submit svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Scrollable content ---------- */
+.search-drawer__content {
+  overflow-y: auto;
+  flex: 1;
+  overscroll-behavior: contain;
+}
+
+.search-drawer__body {
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* ---------- Popular Choices ---------- */
+.search-drawer__popular {
+  margin-bottom: 2.5rem;
+}
+
+.search-drawer__section-heading {
+  font-family: "gt_alpina_tw", var(--font-heading-family);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(var(--color-foreground), 0.6);
+  margin: 0 0 1.2rem;
+}
+
+.search-drawer__chips {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.4rem;
+}
+
+.search-drawer__chips::-webkit-scrollbar {
+  display: none;
+}
+
+.search-drawer__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.4rem;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 100px;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+  font-family: "gt_alpina_tw", var(--font-body-family);
+  font-size: 1.3rem;
+  font-weight: 500;
+  white-space: nowrap;
+  letter-spacing: 0.6px;
+  transition: border-color var(--duration-default, 200ms) ease,
+              background-color var(--duration-default, 200ms) ease;
+  flex-shrink: 0;
+}
+
+.search-drawer__chip:hover {
+  border-color: rgba(var(--color-foreground), 0.4);
+  background-color: rgba(var(--color-foreground), 0.03);
+}
+
+.search-drawer__chip svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* ---------- In Trends ---------- */
+.search-drawer__trends {
+  /* no extra margin — already pushed down by popular section */
+}
+
+.search-drawer__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* ---------- Desktop layout (>=990px) ---------- */
+@media screen and (min-width: 990px) {
+  .search-drawer__header {
+    padding: 1.2rem 4rem;
+  }
+
+  .search-drawer__body {
+    display: flex;
+    gap: 4rem;
+    padding: 3rem 4rem;
+    max-width: calc(var(--page-width) + 8rem);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .search-drawer__popular {
+    width: 28rem;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .search-drawer__chips {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .search-drawer__trends {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-drawer__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+
+  .search-drawer__input {
+    font-size: 1.8rem;
+  }
+}
+
+/* ---------- Prevent body scroll when open ---------- */
+body.search-drawer-open {
+  overflow: hidden;
+}
