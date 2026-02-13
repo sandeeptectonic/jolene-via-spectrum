@@ -349,3 +349,356 @@ class FacetRemove extends HTMLElement {
 }
 
 customElements.define('facet-remove', FacetRemove);
+
+/* =============================================
+   SPECTRUM TOOLBAR & DRAWER
+   ============================================= */
+
+(function () {
+  'use strict';
+
+  // --- FILTER BUTTON: Open Spectrum drawer ---
+  const filterOpenBtn = document.getElementById('SpectrumFilterOpen');
+  if (filterOpenBtn) {
+    filterOpenBtn.addEventListener('click', () => {
+      const drawer = document.querySelector('.spectrum-drawer');
+      if (!drawer) return;
+      const details = drawer.querySelector('.mobile-facets__disclosure');
+      const summary = details?.querySelector('summary');
+      if (!details || !summary) return;
+
+      // Force-clear any inline display:none before opening
+      details.style.removeProperty('display');
+
+      // Trigger the MenuDrawer's open via summary click
+      summary.click();
+
+      // After MenuDrawer processes, ensure display is not hidden
+      requestAnimationFrame(() => {
+        details.style.removeProperty('display');
+      });
+    });
+  }
+
+  // --- Helper: close drawer properly via summary click (triggers MenuDrawer.closeMenuDrawer) ---
+  function closeSpectrumDrawer(triggerElement) {
+    if (!triggerElement) return;
+    const details = triggerElement.closest('details');
+    const summary = details?.querySelector('summary');
+    if (summary && details?.hasAttribute('open')) {
+      summary.click();
+    }
+  }
+
+  // --- DRAWER CLOSE BUTTON ---
+  // Intercept before MenuDrawer's onCloseButtonClick to use proper close path
+  document.addEventListener('click', (e) => {
+    const closeBtn = e.target.closest('.spectrum-drawer__close');
+    if (!closeBtn) return;
+    e.stopPropagation(); // Prevent MenuDrawer's onCloseButtonClick (uses closeSubmenu, not closeMenuDrawer)
+    closeSpectrumDrawer(closeBtn);
+  }, true); // Capture phase to fire before MenuDrawer's handler
+
+  // --- DRAWER: Category navigation ---
+  document.addEventListener('click', (e) => {
+    const navItem = e.target.closest('.spectrum-drawer__nav-item');
+    if (!navItem) return;
+
+    const targetId = navItem.dataset.target;
+    const nav = navItem.closest('.spectrum-drawer__nav');
+    const body = navItem.closest('.spectrum-drawer__body');
+    if (!nav || !body) return;
+
+    nav.querySelectorAll('.spectrum-drawer__nav-item').forEach((btn) => btn.classList.remove('is-active'));
+    body.querySelectorAll('.spectrum-drawer__panel').forEach((p) => p.classList.remove('is-active'));
+
+    navItem.classList.add('is-active');
+    const targetPanel = document.getElementById(targetId);
+    if (targetPanel) targetPanel.classList.add('is-active');
+  });
+
+  // --- DRAWER: VIEW RESULTS button ---
+  document.addEventListener('click', (e) => {
+    const applyBtn = e.target.closest('.spectrum-drawer__apply');
+    if (!applyBtn) return;
+    e.stopPropagation(); // Prevent MenuDrawer's onCloseButtonClick
+    closeSpectrumDrawer(applyBtn);
+  }, true); // Capture phase
+
+  // --- DRAWER: RESET button ---
+  document.addEventListener('click', (e) => {
+    const resetBtn = e.target.closest('.spectrum-drawer__reset');
+    if (!resetBtn) return;
+    e.preventDefault();
+
+    // Immediately uncheck all checkboxes in the drawer form
+    const form = resetBtn.closest('form') || document.getElementById('FacetFiltersFormMobile');
+    if (form) {
+      form.querySelectorAll('.spectrum-drawer__input:checked').forEach((cb) => {
+        cb.checked = false;
+      });
+      // Clear price range inputs
+      form.querySelectorAll('.spectrum-drawer__price-range input[type="number"]').forEach((input) => {
+        input.value = '';
+      });
+    }
+
+    // Trigger AJAX render with no filter params (base URL)
+    const resetUrl = resetBtn.href || '';
+    const searchParams = resetUrl.indexOf('?') === -1 ? '' : resetUrl.slice(resetUrl.indexOf('?') + 1);
+    FacetFiltersForm.toggleActiveFacets();
+    FacetFiltersForm.renderPage(searchParams);
+  });
+
+  // --- DRAWER: Click outside (on overlay backdrop) to close ---
+  document.addEventListener('click', (e) => {
+    // Only close if clicking directly on the .mobile-facets overlay (not its children)
+    if (e.target.classList.contains('mobile-facets') && e.target.closest('.spectrum-drawer')) {
+      closeSpectrumDrawer(e.target);
+    }
+  });
+
+  // --- SORT DROPDOWN ---
+  const sortBtn = document.getElementById('SpectrumSortBtn');
+  const sortDropdown = document.getElementById('SpectrumSortDropdown');
+
+  if (sortBtn && sortDropdown) {
+    sortBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = sortDropdown.classList.toggle('is-open');
+      sortBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    sortDropdown.addEventListener('click', (e) => {
+      const option = e.target.closest('.spectrum-toolbar__sort-option');
+      if (!option) return;
+
+      const sortValue = option.dataset.value;
+
+      // Update active state
+      sortDropdown.querySelectorAll('.spectrum-toolbar__sort-option').forEach((o) => {
+        o.classList.remove('is-active');
+        o.removeAttribute('aria-selected');
+      });
+      option.classList.add('is-active');
+      option.setAttribute('aria-selected', 'true');
+
+      // Close dropdown
+      sortDropdown.classList.remove('is-open');
+      sortBtn.setAttribute('aria-expanded', 'false');
+
+      // Update sort_by in URL and trigger AJAX render
+      const url = new URL(window.location);
+      url.searchParams.set('sort_by', sortValue);
+      const searchParams = url.searchParams.toString();
+      FacetFiltersForm.renderPage(searchParams);
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#SpectrumSortWrapper')) {
+        sortDropdown.classList.remove('is-open');
+        sortBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sortDropdown.classList.contains('is-open')) {
+        sortDropdown.classList.remove('is-open');
+        sortBtn.setAttribute('aria-expanded', 'false');
+        sortBtn.focus();
+      }
+    });
+  }
+
+  // --- GRID TOGGLE ---
+  const gridToggle = document.getElementById('SpectrumGridToggle');
+
+  function getProductGrid() {
+    return document.getElementById('product-grid');
+  }
+
+  function applyGridPreference() {
+    const stored = sessionStorage.getItem('spectrum-grid-cols');
+    if (!stored) return;
+
+    const grid = getProductGrid();
+    if (!grid) return;
+
+    // Remove existing grid column classes
+    const classesToRemove = [];
+    grid.classList.forEach((cls) => {
+      if (cls.match(/grid--\d+-col-desktop/)) {
+        classesToRemove.push(cls);
+      }
+    });
+    classesToRemove.forEach((cls) => grid.classList.remove(cls));
+
+    grid.classList.add('grid--' + stored + '-col-desktop');
+
+    // Update active button state
+    if (gridToggle) {
+      gridToggle.querySelectorAll('button').forEach((btn) => {
+        btn.classList.toggle('is-active', btn.dataset.cols === stored);
+      });
+    }
+  }
+
+  if (gridToggle) {
+    // Set initial active state
+    const defaultCols = sessionStorage.getItem('spectrum-grid-cols');
+    if (defaultCols) {
+      applyGridPreference();
+    } else {
+      // Detect current grid columns from existing class
+      const grid = getProductGrid();
+      if (grid) {
+        const match = Array.from(grid.classList).find((cls) => cls.match(/grid--(\d+)-col-desktop/));
+        if (match) {
+          const cols = match.match(/grid--(\d+)-col-desktop/)[1];
+          gridToggle.querySelectorAll('button').forEach((btn) => {
+            btn.classList.toggle('is-active', btn.dataset.cols === cols);
+          });
+        }
+      }
+    }
+
+    gridToggle.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-cols]');
+      if (!btn) return;
+
+      const cols = btn.dataset.cols;
+      sessionStorage.setItem('spectrum-grid-cols', cols);
+
+      // Update active state
+      gridToggle.querySelectorAll('button').forEach((b) => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      applyGridPreference();
+    });
+  }
+
+  // --- PATCH: Re-apply grid preference after AJAX renders ---
+  const origRenderProductGridContainer = FacetFiltersForm.renderProductGridContainer;
+  FacetFiltersForm.renderProductGridContainer = function (html) {
+    origRenderProductGridContainer(html);
+    applyGridPreference();
+  };
+
+  // --- PATCH: Re-init drawer nav after AJAX filter updates ---
+  const origRenderAdditionalElements = FacetFiltersForm.renderAdditionalElements;
+  FacetFiltersForm.renderAdditionalElements = function (html) {
+    origRenderAdditionalElements(html);
+    // Re-apply first nav item as active if no active state exists
+    const nav = document.getElementById('SpectrumFilterNav');
+    if (nav && !nav.querySelector('.is-active')) {
+      const firstNav = nav.querySelector('.spectrum-drawer__nav-item');
+      if (firstNav) firstNav.classList.add('is-active');
+      const body = nav.closest('.spectrum-drawer__body');
+      if (body) {
+        const firstPanel = body.querySelector('.spectrum-drawer__panel');
+        if (firstPanel) firstPanel.classList.add('is-active');
+      }
+    }
+  };
+
+  // --- PRICE RANGE SLIDER ---
+  function initPriceSliders() {
+    document.querySelectorAll('.spectrum-price-slider').forEach((slider) => {
+      const rangeMin = slider.querySelector('.spectrum-price-slider__range--min');
+      const rangeMax = slider.querySelector('.spectrum-price-slider__range--max');
+      const trackFill = slider.querySelector('.spectrum-price-slider__track-fill');
+      const inputMin = slider.querySelector('input[type="number"][name$=".gte"]') ||
+                       slider.querySelectorAll('.spectrum-price-slider__input')[0];
+      const inputMax = slider.querySelector('input[type="number"][name$=".lte"]') ||
+                       slider.querySelectorAll('.spectrum-price-slider__input')[1];
+
+      if (!rangeMin || !rangeMax || !trackFill) return;
+
+      const sliderMin = parseFloat(rangeMin.min) || 0;
+      const sliderMax = parseFloat(rangeMin.max) || 100;
+
+      function updateTrackFill() {
+        const minVal = parseFloat(rangeMin.value) || 0;
+        const maxVal = parseFloat(rangeMax.value) || sliderMax;
+        const range = sliderMax - sliderMin;
+        if (range <= 0) return;
+        const leftPct = ((minVal - sliderMin) / range) * 100;
+        const rightPct = ((maxVal - sliderMin) / range) * 100;
+        trackFill.style.left = leftPct + '%';
+        trackFill.style.width = (rightPct - leftPct) + '%';
+      }
+
+      // Slider → text input sync (real-time)
+      rangeMin.addEventListener('input', () => {
+        const minVal = parseFloat(rangeMin.value);
+        const maxVal = parseFloat(rangeMax.value);
+        if (minVal > maxVal) rangeMin.value = maxVal;
+        if (inputMin) inputMin.value = Math.round(rangeMin.value);
+        updateTrackFill();
+      });
+
+      rangeMax.addEventListener('input', () => {
+        const minVal = parseFloat(rangeMin.value);
+        const maxVal = parseFloat(rangeMax.value);
+        if (maxVal < minVal) rangeMax.value = minVal;
+        if (inputMax) inputMax.value = Math.round(rangeMax.value);
+        updateTrackFill();
+      });
+
+      // Slider change → trigger form submission
+      rangeMin.addEventListener('change', () => {
+        if (inputMin) {
+          inputMin.value = Math.round(rangeMin.value);
+          inputMin.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+
+      rangeMax.addEventListener('change', () => {
+        if (inputMax) {
+          inputMax.value = Math.round(rangeMax.value);
+          inputMax.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      });
+
+      // Text input → slider sync
+      if (inputMin) {
+        inputMin.addEventListener('change', () => {
+          let val = parseFloat(inputMin.value) || 0;
+          if (val < sliderMin) val = sliderMin;
+          if (val > parseFloat(rangeMax.value)) val = parseFloat(rangeMax.value);
+          rangeMin.value = val;
+          inputMin.value = Math.round(val);
+          updateTrackFill();
+        });
+      }
+
+      if (inputMax) {
+        inputMax.addEventListener('change', () => {
+          let val = parseFloat(inputMax.value) || sliderMax;
+          if (val > sliderMax) val = sliderMax;
+          if (val < parseFloat(rangeMin.value)) val = parseFloat(rangeMin.value);
+          rangeMax.value = val;
+          inputMax.value = Math.round(val);
+          updateTrackFill();
+        });
+      }
+
+      // Initial fill
+      updateTrackFill();
+    });
+  }
+
+  // Init on page load
+  initPriceSliders();
+
+  // Re-init after AJAX filter updates
+  const origRenderFilters = FacetFiltersForm.renderFilters;
+  if (origRenderFilters) {
+    FacetFiltersForm.renderFilters = function (html) {
+      origRenderFilters(html);
+      requestAnimationFrame(initPriceSliders);
+    };
+  }
+})();

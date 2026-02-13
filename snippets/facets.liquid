@@ -33,6 +33,75 @@
   </div>
 {% endcomment %}
 <div class="facets-container{% if filter_type == 'drawer' %} facets-container-drawer{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+  {%- if filter_type == 'drawer' -%}
+    {%- comment -%} Spectrum Toolbar: FILTER | SORT BY | Grid Toggles {%- endcomment -%}
+    <div class="spectrum-toolbar" id="SpectrumToolbar">
+      <button type="button" class="spectrum-toolbar__filter-btn" id="SpectrumFilterOpen" aria-label="Open filters">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M1 3h14M4 8h8M6 13h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        FILTER
+      </button>
+      <div class="spectrum-toolbar__sort" id="SpectrumSortWrapper">
+        <button type="button" class="spectrum-toolbar__sort-btn" id="SpectrumSortBtn" aria-expanded="false" aria-controls="SpectrumSortDropdown">
+          SORT BY
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="spectrum-toolbar__sort-dropdown" id="SpectrumSortDropdown" role="listbox" aria-label="Sort options">
+          {%- for option in results.sort_options -%}
+            {%- case option.value -%}
+              {%- when 'manual' -%}{%- assign custom_label = 'FEATURED' -%}
+              {%- when 'best-selling' -%}{%- assign custom_label = 'POPULAR' -%}
+              {%- when 'price-ascending' -%}{%- assign custom_label = 'LOWEST PRICE' -%}
+              {%- when 'price-descending' -%}{%- assign custom_label = 'HIGHEST PRICE' -%}
+              {%- when 'created-descending' -%}{%- assign custom_label = 'NEW TO OLD' -%}
+              {%- when 'created-ascending' -%}{%- assign custom_label = 'OLD TO NEW' -%}
+              {%- when 'title-ascending' -%}{%- assign custom_label = 'ALPHABETICALLY, A-Z' -%}
+              {%- when 'title-descending' -%}{%- assign custom_label = 'ALPHABETICALLY, Z-A' -%}
+              {%- else -%}{%- assign custom_label = option.name -%}
+            {%- endcase -%}
+            <button type="button" class="spectrum-toolbar__sort-option{% if option.value == sort_by %} is-active{% endif %}" data-value="{{ option.value | escape }}" role="option"{% if option.value == sort_by %} aria-selected="true"{% endif %}>
+              {{ custom_label }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="spectrum-toolbar__spacer"></div>
+      <div class="spectrum-toolbar__grid-toggle" id="SpectrumGridToggle">
+        <button type="button" data-cols="2" title="2 per row" aria-label="2 per row grid">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <rect x="13" y="2" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <rect x="2" y="13" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+            <rect x="13" y="13" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          </svg>
+        </button>
+        <button type="button" data-cols="3" title="3 per row" aria-label="3 per row grid" class="small-hide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="9.25" y="2" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="16.5" y="2" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="2" y="9.25" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="9.25" y="9.25" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="16.5" y="9.25" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="2" y="16.5" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="9.25" y="16.5" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+            <rect x="16.5" y="16.5" width="5.5" height="5.5" stroke="currentColor" stroke-width="1.2" fill="none"/>
+          </svg>
+        </button>
+        <button type="button" data-cols="5" title="5 per row" aria-label="5 per row grid" class="small-hide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 5h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 10h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 15h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M3 20h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  {%- endif -%}
   {%- if filter_type == 'vertical' or filter_type == 'horizontal' -%}
     <facet-filters-form class="facets small-hide">
       <form
@@ -629,6 +698,7 @@
     {%- endif -%}
   {%- endif -%}
   {% comment %}  Drawer and mobile filter {% endcomment %}
+  {%- unless filter_type == 'drawer' -%}
   <menu-drawer
     class="mobile-facets__wrapper{% if filter_type == 'horizontal' or filter_type == 'vertical' %} medium-hide large-up-hide{% endif %}"
     data-breakpoint="mobile"
@@ -1125,6 +1195,186 @@
       </facet-filters-form>
     </details>
   </menu-drawer>
+  {%- endunless -%}
+
+  {%- if filter_type == 'drawer' -%}
+  {%- comment -%} Spectrum two-panel filter drawer (slides from LEFT) {%- endcomment -%}
+
+  {%- liquid
+    comment
+      Resolve metaobject-driven filter config.
+      Priority: collection-level override → shop-level default → show all filters.
+    endcomment
+
+    assign spectrum_filter_config = nil
+    assign spectrum_filter_entries = nil
+    assign spectrum_has_config = false
+
+    if collection.metafields.custom.spectrum_main_filter_config.value != blank
+      assign spectrum_filter_config = collection.metafields.custom.spectrum_main_filter_config.value
+    elsif shop.metafields.custom.spectrum_main_filter_default.value != blank
+      assign spectrum_filter_config = shop.metafields.custom.spectrum_main_filter_default.value
+    endif
+
+    if spectrum_filter_config != blank
+      assign spectrum_filter_entries = spectrum_filter_config.filter_entries.value
+      if spectrum_filter_entries != blank and spectrum_filter_entries.size > 0
+        assign spectrum_has_config = true
+      endif
+    endif
+
+    comment
+      Build ordered filter list. When config exists, iterate config entries and match
+      to Shopify filters by param_name. When no config, use all filters as-is.
+    endcomment
+
+    assign spectrum_ordered_filters = '' | split: ','
+    assign spectrum_ordered_labels = '' | split: ','
+
+    if spectrum_has_config
+      for entry in spectrum_filter_entries
+        assign entry_param = entry.filter_param
+        assign entry_label = entry.display_label
+        for filter in results.filters
+          if filter.param_name == entry_param
+            assign spectrum_ordered_filters = spectrum_ordered_filters | concat: filter | split: '|||NEVER_SPLIT|||'
+            break
+          endif
+        endfor
+      endfor
+    endif
+  -%}
+
+  {%- comment -%} DEBUG: Print config resolution to console {%- endcomment -%}
+  <script>
+    console.group('[SPECTRUM] Filter Config Debug');
+    console.log('spectrum_has_config:', {{ spectrum_has_config | json }});
+    console.log('collection metafield raw:', {{ collection.metafields.custom.spectrum_main_filter_config | json }});
+    console.log('collection metafield .value:', {{ collection.metafields.custom.spectrum_main_filter_config.value | json }});
+    console.log('shop metafield raw:', {{ shop.metafields.custom.spectrum_main_filter_default | json }});
+    console.log('shop metafield .value:', {{ shop.metafields.custom.spectrum_main_filter_default.value | json }});
+    console.log('spectrum_filter_config:', {{ spectrum_filter_config | json }});
+    console.log('spectrum_filter_entries:', {{ spectrum_filter_entries | json }});
+    console.log('spectrum_filter_entries size:', {{ spectrum_filter_entries.size | json }});
+    console.log('Available Shopify filters:');
+    {%- for filter in results.filters -%}
+      console.log('  filter[{{ forloop.index0 }}]: param_name={{ filter.param_name | json }}, label={{ filter.label | json }}, type={{ filter.type | json }}');
+    {%- endfor -%}
+    {%- if spectrum_has_config -%}
+      console.log('Config entries matched against filters:');
+      {%- for entry in spectrum_filter_entries -%}
+        console.log('  entry[{{ forloop.index0 }}]: filter_param={{ entry.filter_param | json }}, display_label={{ entry.display_label | json }}');
+      {%- endfor -%}
+    {%- endif -%}
+    console.groupEnd();
+  </script>
+
+  <menu-drawer class="mobile-facets__wrapper spectrum-drawer" data-breakpoint="mobile">
+    <details class="mobile-facets__disclosure disclosure-has-popup">
+      <summary class="mobile-facets__open-wrapper focus-offset spectrum-drawer__summary-hidden">
+        <span class="mobile-facets__open">
+          {% render 'icon-filter' %}
+          <span class="mobile-facets__open-label button-label">{{ 'products.facets.filter_button' | t }}</span>
+        </span>
+      </summary>
+      <facet-filters-form>
+        <form id="FacetFiltersFormMobile" class="mobile-facets">
+          <div class="mobile-facets__inner gradient spectrum-drawer__inner">
+            <div class="spectrum-drawer__header">
+              <h2 class="spectrum-drawer__title">FILTERS</h2>
+              <button type="button" class="spectrum-drawer__close" aria-label="Close filters">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M13.067 12.183L7.884 7l5.183-5.183a.625.625 0 10-.884-.884L7 6.116 1.817.933a.625.625 0 10-.884.884L6.116 7 .933 12.183a.625.625 0 10.884.884L7 7.884l5.183 5.183a.625.625 0 00.884-.884z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+            <div class="spectrum-drawer__body">
+              <nav class="spectrum-drawer__nav" id="SpectrumFilterNav">
+                {%- if spectrum_has_config -%}
+                  {%- assign nav_index = 0 -%}
+                  {%- for entry in spectrum_filter_entries -%}
+                    {%- assign entry_param = entry.filter_param -%}
+                    {%- assign entry_label = entry.display_label -%}
+                    {%- for filter in results.filters -%}
+                      {%- if filter.param_name == entry_param -%}
+                        {%- assign nav_index = nav_index | plus: 1 -%}
+                        {%- assign nav_display_label = entry_label | default: filter.label -%}
+                        <div role="button" tabindex="0"
+                          class="spectrum-drawer__nav-item{% if nav_index == 1 %} is-active{% endif %}"
+                          data-target="spectrum-filter-{{ entry_param | handle }}"
+                          aria-controls="spectrum-filter-{{ entry_param | handle }}">
+                          {{ nav_display_label }}
+                        </div>
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for filter in results.filters -%}
+                    <div role="button" tabindex="0"
+                      class="spectrum-drawer__nav-item{% if forloop.first %} is-active{% endif %}"
+                      data-target="spectrum-filter-{{ filter.param_name | handle }}"
+                      aria-controls="spectrum-filter-{{ filter.param_name | handle }}">
+                      {{ filter.label }}
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </nav>
+              <div class="spectrum-drawer__content">
+                {%- if spectrum_has_config -%}
+                  {%- assign panel_index = 0 -%}
+                  {%- for entry in spectrum_filter_entries -%}
+                    {%- assign entry_param = entry.filter_param -%}
+                    {%- for filter in results.filters -%}
+                      {%- if filter.param_name == entry_param -%}
+                        {%- assign panel_index = panel_index | plus: 1 -%}
+                        <div class="spectrum-drawer__panel{% if panel_index == 1 %} is-active{% endif %}"
+                             id="spectrum-filter-{{ entry_param | handle }}">
+                          {%- case filter.type -%}
+                            {%- when 'boolean', 'list' -%}
+                              {%- render 'spectrum-filter-values', filter: filter, entry: entry -%}
+                            {%- when 'price_range' -%}
+                              {%- render 'spectrum-filter-price', filter: filter -%}
+                          {%- endcase -%}
+                        </div>
+                        {%- break -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endfor -%}
+                {%- else -%}
+                  {%- for filter in results.filters -%}
+                    <div class="spectrum-drawer__panel{% if forloop.first %} is-active{% endif %}"
+                         id="spectrum-filter-{{ filter.param_name | handle }}">
+                      {%- case filter.type -%}
+                        {%- when 'boolean', 'list' -%}
+                          {%- render 'spectrum-filter-values', filter: filter -%}
+                        {%- when 'price_range' -%}
+                          {%- render 'spectrum-filter-price', filter: filter -%}
+                      {%- endcase -%}
+                    </div>
+                  {%- endfor -%}
+                {%- endif -%}
+              </div>
+            </div>
+            <div class="spectrum-drawer__footer">
+              <a href="{{ results_url }}" class="spectrum-drawer__reset" id="SpectrumFilterReset">RESET</a>
+              <button type="button" class="spectrum-drawer__apply" id="SpectrumFilterApply">
+                VIEW RESULTS
+              </button>
+            </div>
+          </div>
+          {% if results.current_vendor or results.current_type %}
+            <input type="hidden" name="q" value="{{ results.current_vendor }}{{ results.current_type }}">
+          {% endif %}
+          {%- if results.terms -%}
+            <input type="hidden" name="q" value="{{ results.terms | escape }}">
+            <input name="options[prefix]" type="hidden" value="last">
+          {%- endif -%}
+        </form>
+      </facet-filters-form>
+    </details>
+  </menu-drawer>
+  {%- endif -%}
 
   {% comment %}
     <div class="active-facets active-facets-mobile medium-hide large-up-hide">

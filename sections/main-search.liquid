@@ -247,7 +247,6 @@
         {% endif %}
       >
         {%- if search.filters != empty -%}
-          {% comment %}
             {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
               <aside
                 aria-labelledby="verticalTitle"
@@ -264,7 +263,6 @@
                 %}
               </aside>
             {%- endif -%}
-          {% endcomment %}
         {%- endif -%}
         <div class="product-grid-container" id="ProductGridContainer">
           {%- if search.results.size == 0 and search.filters != empty -%}

@@ -1,0 +1,51 @@
+{%- comment -%}
+  Renders checkbox filter values for the Spectrum drawer.
+  Params: filter (Shopify filter object), entry (optional metaobject config entry)
+{%- endcomment -%}
+
+{%- liquid
+  assign included_values = nil
+  if entry != blank and entry.included_values != blank
+    assign included_values = entry.included_values.value
+  endif
+-%}
+
+<ul class="spectrum-drawer__values list-unstyled" role="list">
+  {%- for value in filter.values -%}
+    {%- liquid
+      assign show_value = true
+      if included_values != nil
+        assign show_value = false
+        for iv in included_values
+          if iv == value.value or iv == value.label
+            assign show_value = true
+            break
+          endif
+        endfor
+      endif
+    -%}
+    {%- if show_value -%}
+      <li class="spectrum-drawer__value-item">
+        <label class="spectrum-drawer__checkbox{% if value.count == 0 and value.active == false %} spectrum-drawer__checkbox--disabled{% endif %}">
+          <input type="checkbox"
+            class="spectrum-drawer__input"
+            name="{{ value.param_name }}"
+            value="{{ value.value }}"
+            id="SpectrumFilter-{{ filter.param_name | escape }}-{{ forloop.index }}"
+            {% if value.active %}checked{% endif %}
+            {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+          <span class="spectrum-drawer__check-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+            </svg>
+            <svg class="spectrum-drawer__checkmark" width="11" height="7" viewBox="0 0 11 7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M1.5 3.5L2.833 4.75 4.167 6 9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="spectrum-drawer__value-label">{{ value.label | escape }}</span>
+          <span class="spectrum-drawer__value-count">({{ value.count }})</span>
+        </label>
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>

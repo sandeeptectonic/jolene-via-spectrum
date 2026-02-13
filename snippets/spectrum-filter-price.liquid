@@ -1,0 +1,89 @@
+{%- comment -%}
+  Renders price range slider filter for the Spectrum drawer.
+  Params: filter (Shopify filter object)
+{%- endcomment -%}
+
+{%- liquid
+  assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+
+  if uses_comma_decimals
+    assign range_max_val = filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.'
+  else
+    assign range_max_val = filter.range_max | money_without_currency | replace: ',', ''
+  endif
+
+  assign min_val = 0
+  assign max_val = range_max_val
+
+  if filter.min_value.value
+    if uses_comma_decimals
+      assign min_val = filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.'
+    else
+      assign min_val = filter.min_value.value | money_without_currency | replace: ',', ''
+    endif
+  endif
+
+  if filter.max_value.value
+    if uses_comma_decimals
+      assign max_val = filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.'
+    else
+      assign max_val = filter.max_value.value | money_without_currency | replace: ',', ''
+    endif
+  endif
+-%}
+
+<div class="spectrum-drawer__price-range">
+  <price-range class="spectrum-price-slider" data-min="0" data-max="{{ range_max_val }}">
+    {%- comment -%} Dual-thumb slider {%- endcomment -%}
+    <div class="spectrum-price-slider__track-wrapper">
+      <div class="spectrum-price-slider__track">
+        <div class="spectrum-price-slider__track-fill"></div>
+      </div>
+      <input type="range"
+        class="spectrum-price-slider__range spectrum-price-slider__range--min"
+        min="0"
+        max="{{ range_max_val }}"
+        value="{{ min_val }}"
+        step="1"
+        aria-label="Minimum price">
+      <input type="range"
+        class="spectrum-price-slider__range spectrum-price-slider__range--max"
+        min="0"
+        max="{{ range_max_val }}"
+        value="{{ max_val }}"
+        step="1"
+        aria-label="Maximum price">
+    </div>
+
+    {%- comment -%} Text inputs (hidden, drive form submission) {%- endcomment -%}
+    <div class="spectrum-price-slider__inputs">
+      <div class="spectrum-price-slider__input-group">
+        <span class="spectrum-price-slider__currency">{{ cart.currency.symbol }}</span>
+        <input type="number"
+          class="spectrum-price-slider__input"
+          name="{{ filter.min_value.param_name }}"
+          id="SpectrumFilter-{{ filter.label | escape }}-GTE"
+          value="{{ min_val }}"
+          min="0"
+          max="{{ range_max_val }}"
+          placeholder="0">
+      </div>
+      <span class="spectrum-price-slider__separator">—</span>
+      <div class="spectrum-price-slider__input-group">
+        <span class="spectrum-price-slider__currency">{{ cart.currency.symbol }}</span>
+        <input type="number"
+          class="spectrum-price-slider__input"
+          name="{{ filter.max_value.param_name }}"
+          id="SpectrumFilter-{{ filter.label | escape }}-LTE"
+          value="{{ max_val }}"
+          min="0"
+          max="{{ range_max_val }}"
+          placeholder="{{ range_max_val }}">
+      </div>
+    </div>
+  </price-range>
+</div>

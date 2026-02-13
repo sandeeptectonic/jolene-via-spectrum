@@ -1110,3 +1110,663 @@ input.mobile-facets__checkbox {
     padding: 0 1rem 1rem;
   }
 }
+
+/* =============================================
+   SPECTRUM TOOLBAR
+   ============================================= */
+
+.spectrum-toolbar {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  padding: 0;
+  margin: 0 0 2.4rem;
+  width: 100%;
+  min-height: 4.8rem;
+  background: rgb(var(--color-background));
+}
+
+.spectrum-toolbar__filter-btn {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  border: none;
+  padding: 0 2rem;
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: 0.8rem;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.spectrum-toolbar__filter-btn:hover {
+  opacity: 0.85;
+}
+
+.spectrum-toolbar__filter-btn svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.spectrum-toolbar__sort {
+  position: relative;
+}
+
+.spectrum-toolbar__sort-btn {
+  background: none;
+  border: none;
+  border-left: 1px solid rgba(var(--color-foreground), 0.1);
+  padding: 0.1rem 1.6rem;
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgb(var(--color-foreground));
+  white-space: nowrap;
+}
+
+.spectrum-toolbar__sort-btn:hover {
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.spectrum-toolbar__sort-btn svg {
+  width: 1rem;
+  height: 0.6rem;
+  transition: transform 0.2s ease;
+}
+
+.spectrum-toolbar__sort-btn[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.spectrum-toolbar__sort-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.08);
+  z-index: 10;
+  min-width: 22rem;
+  padding: 0.4rem 0;
+}
+
+.spectrum-toolbar__sort-dropdown.is-open {
+  display: block;
+}
+
+.spectrum-toolbar__sort-option {
+  display: block;
+  width: 100%;
+  padding: 0.8rem 2rem;
+  border: none;
+  background: none;
+  text-align: left;
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: rgb(var(--color-foreground));
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.spectrum-toolbar__sort-option:hover {
+  color: rgba(var(--color-foreground), 0.5);
+}
+
+.spectrum-toolbar__sort-option.is-active {
+  color: #6B6B6B;
+}
+
+.spectrum-toolbar__spacer {
+  flex: 1;
+}
+
+.spectrum-toolbar__grid-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-left: 1px solid rgba(var(--color-foreground), 0.1);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.spectrum-toolbar__grid-toggle button {
+  background: none;
+  border: none;
+  padding: 1.2rem 1rem;
+  cursor: pointer;
+  color: rgba(var(--color-foreground), 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.spectrum-toolbar__grid-toggle button:hover {
+  color: rgba(var(--color-foreground), 0.7);
+}
+
+.spectrum-toolbar__grid-toggle button.is-active {
+  color: rgb(var(--color-foreground));
+}
+
+.spectrum-toolbar__grid-toggle button svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+/* =============================================
+   SPECTRUM DRAWER (Two-Panel, from LEFT)
+   ============================================= */
+
+/* Force details visible — override any inline display:none set by menu-drawer component */
+.spectrum-drawer .mobile-facets__disclosure {
+  display: flex !important;
+}
+
+.spectrum-drawer__summary-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Break stacking context trap: custom.css sets z-index:9999999!important on
+   .disclosure-has-popup[open] > summary + *, which traps position:fixed children.
+   Override with higher specificity to free .mobile-facets to root stacking context. */
+.spectrum-drawer .disclosure-has-popup[open] > summary + facet-filters-form {
+  z-index: auto !important;
+}
+
+/* Override z-index and background for Spectrum drawer to sit above sticky header (z-index: 999999) */
+.spectrum-drawer .mobile-facets {
+  z-index: 99999999;
+  background-color: rgba(var(--color-foreground), 0.5) !important;
+  pointer-events: auto !important;
+  cursor: default;
+}
+
+.spectrum-drawer .mobile-facets__inner {
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 36rem;
+  border-width: 0 var(--drawer-border-width) 0 0;
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1), visibility 0.4s;
+}
+
+.js .spectrum-drawer .disclosure-has-popup:not(.menu-opening) .mobile-facets__inner {
+  transform: translateX(-105vw);
+}
+
+.spectrum-drawer .menu-opening .mobile-facets__inner {
+  transform: translateX(0);
+}
+
+/* Backdrop fade-in for Spectrum drawer */
+.spectrum-drawer .mobile-facets {
+  transition: background-color 0.4s ease;
+}
+
+.js .spectrum-drawer .disclosure-has-popup:not(.menu-opening) .mobile-facets {
+  background-color: rgba(var(--color-foreground), 0) !important;
+}
+
+.spectrum-drawer .menu-opening .mobile-facets {
+  background-color: rgba(var(--color-foreground), 0.5) !important;
+}
+
+.spectrum-drawer__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* --- Header --- */
+.spectrum-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.4rem 1.6rem 2rem;
+  flex-shrink: 0;
+}
+
+.spectrum-drawer__title {
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.spectrum-drawer__close {
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  cursor: pointer;
+  color: rgb(var(--color-foreground));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.spectrum-drawer__close:hover {
+  opacity: 0.6;
+}
+
+/* --- Two-panel body --- */
+.spectrum-drawer__body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+}
+
+.spectrum-drawer__nav {
+  width: auto;
+  min-width: 9rem;
+  max-width: 12rem;
+  border-right: 1px solid rgba(var(--color-foreground), 0.1);
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.spectrum-drawer__nav-item {
+  display: block;
+  width: 100%;
+  padding: 1.2rem;
+  font-family: var(--font-heading-family);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: rgba(var(--color-foreground), 0.5);
+  transition: color 0.15s ease, background-color 0.15s ease;
+  white-space: normal;
+  word-break: break-word;
+  text-transform: uppercase;
+}
+
+.spectrum-drawer__nav-item:hover {
+  color: rgb(var(--color-foreground));
+  background-color: rgba(var(--color-foreground), 0.03);
+}
+
+.spectrum-drawer__nav-item.is-active {
+  color: rgb(var(--color-foreground));
+  font-weight: 700;
+  background-color: #F1F1F1;
+}
+
+/* --- Right content panel --- */
+.spectrum-drawer__content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.2rem 1.6rem;
+  min-width: 0;
+}
+
+.spectrum-drawer__panel {
+  display: none;
+}
+
+.spectrum-drawer__panel.is-active {
+  display: block;
+}
+
+/* --- Checkbox values --- */
+.spectrum-drawer__values {
+  margin: 0;
+  padding: 0;
+}
+
+.spectrum-drawer__value-item {
+  list-style: none;
+}
+
+.spectrum-drawer__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0 0.6rem 0.4rem;
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: rgb(var(--color-foreground));
+}
+
+.spectrum-drawer__checkbox--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Hidden native checkbox (sr-only) */
+.spectrum-drawer__input {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+}
+
+/* Custom checkbox icon */
+.spectrum-drawer__check-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.spectrum-drawer__check-icon > svg:first-child {
+  width: 100%;
+  height: 100%;
+}
+
+.spectrum-drawer__checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+
+/* Checked state: filled box + visible checkmark */
+.spectrum-drawer__input:checked + .spectrum-drawer__check-icon > svg:first-child rect {
+  fill: rgb(var(--color-foreground));
+  stroke: rgb(var(--color-foreground));
+}
+
+.spectrum-drawer__input:checked + .spectrum-drawer__check-icon .spectrum-drawer__checkmark {
+  display: block;
+}
+
+.spectrum-drawer__input:checked + .spectrum-drawer__check-icon .spectrum-drawer__checkmark path {
+  stroke: rgb(var(--color-background));
+}
+
+.spectrum-drawer__value-label {
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  margin-left: 0.2rem;
+}
+
+.spectrum-drawer__value-count {
+  color: rgba(var(--color-foreground), 0.45);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+/* --- Price Range Slider --- */
+.spectrum-drawer__price-range {
+  padding: 1.5rem 0 1rem;
+}
+
+.spectrum-price-slider {
+  display: block;
+}
+
+.spectrum-price-slider__track-wrapper {
+  position: relative;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+}
+
+.spectrum-price-slider__track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(var(--color-foreground), 0.15);
+  border-radius: 1px;
+}
+
+.spectrum-price-slider__track-fill {
+  position: absolute;
+  height: 100%;
+  background: rgb(var(--color-foreground));
+  border-radius: 1px;
+}
+
+.spectrum-price-slider__range {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+}
+
+.spectrum-price-slider__range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: rgb(var(--color-background));
+  border: 2px solid rgb(var(--color-foreground));
+  cursor: pointer;
+  pointer-events: all;
+  position: relative;
+  z-index: 2;
+}
+
+.spectrum-price-slider__range::-moz-range-thumb {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  background: rgb(var(--color-background));
+  border: 2px solid rgb(var(--color-foreground));
+  cursor: pointer;
+  pointer-events: all;
+  position: relative;
+  z-index: 2;
+}
+
+.spectrum-price-slider__range:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(var(--color-foreground), 0.15);
+}
+
+.spectrum-price-slider__range:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(var(--color-foreground), 0.15);
+}
+
+/* Text inputs below slider */
+.spectrum-price-slider__inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.spectrum-price-slider__input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.spectrum-price-slider__currency {
+  font-size: 1.2rem;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+.spectrum-price-slider__input {
+  width: 100%;
+  border: 1px solid rgba(var(--color-foreground), 0.15);
+  border-radius: 0;
+  padding: 0.5rem 0.6rem;
+  font-size: 1.2rem;
+  color: rgb(var(--color-foreground));
+  background: transparent;
+  font-family: var(--font-body-family);
+  -moz-appearance: textfield;
+}
+
+.spectrum-price-slider__input::-webkit-outer-spin-button,
+.spectrum-price-slider__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.spectrum-price-slider__separator {
+  color: rgba(var(--color-foreground), 0.3);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* --- Footer --- */
+.spectrum-drawer__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.6rem;
+  border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  flex-shrink: 0;
+  gap: 1.5rem;
+  background-color: rgb(var(--color-background));
+}
+
+.spectrum-drawer__reset {
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  background: none;
+  border: none;
+  padding: 0 2.4rem;
+  text-transform: uppercase;
+}
+
+.spectrum-drawer__reset:hover {
+  opacity: 0.6;
+}
+
+.spectrum-drawer__apply {
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  border: none;
+  padding: 0.8rem 2rem;
+  font-family: var(--font-heading-family);
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  text-transform: uppercase;
+}
+
+.spectrum-drawer__apply:hover {
+  opacity: 0.85;
+}
+
+/* Hide old sort dropdown in drawer mode */
+.facets-container-drawer .mobile_flex_row {
+  display: none !important;
+}
+
+.facets-container-drawer .sort-by-prd-count,
+.sort-by-prd-count {
+  display: none !important;
+}
+
+/* =============================================
+   PRODUCT GRID: List View
+   ============================================= */
+
+.product-grid--list .grid__item {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+@media screen and (min-width: 750px) {
+  .product-grid--list .card-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .product-grid--list .card__media,
+  .product-grid--list .card .media {
+    width: 25rem;
+    flex-shrink: 0;
+  }
+
+  .product-grid--list .card__content {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* =============================================
+   RESPONSIVE: Toolbar + Drawer
+   ============================================= */
+
+@media screen and (max-width: 749px) {
+  .spectrum-toolbar__filter-btn {
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .spectrum-toolbar__sort-btn {
+    padding: 1rem 1.2rem;
+    font-size: 1.1rem;
+  }
+
+  .spectrum-drawer__nav {
+    min-width: 7.5rem;
+    max-width: 10rem;
+  }
+
+  .spectrum-drawer__nav-item {
+    padding: 1rem;
+    font-size: 1.05rem;
+  }
+
+  .spectrum-drawer .mobile-facets__inner {
+    max-width: 90vw;
+  }
+
+  .spectrum-drawer__content {
+    padding: 1rem 1.2rem;
+  }
+
+  .spectrum-drawer__checkbox {
+    font-size: 1.2rem;
+  }
+}
