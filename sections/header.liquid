@@ -42,6 +42,7 @@
 {%- if section.settings.enable_country_selector or section.settings.enable_language_selector -%}
   {{ 'component-localization-form.css' | asset_url | stylesheet_tag: preload: true }}
 {%- endif -%}
+<link rel="stylesheet" href="{{ 'section-search-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
 {%- if settings.cart_type == "drawer" -%}
   {{ 'component-cart-drawer.css' | asset_url | stylesheet_tag }}
@@ -656,12 +657,10 @@
         </details> {% endcomment %}
       </details-modal>
       <ul class="search_btn">
-        <li><a href="{{ shop.url }}/search"><div class="s_icon">Search</div>
+        <li><button type="button" class="search-drawer__trigger" aria-label="Open search"><div class="s_icon">Search</div>
         <svg class="modal__toggle-open icon icon-search" width="16" height="16" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-                
           <path fill="#F3F4F7" d="M13.3539 12.6462L10.2245 9.51749C11.1315 8.42856 11.5838 7.03186 11.4873 5.61795C11.3908 4.20404 10.7528 2.88177 9.70623 1.92622C8.65963 0.97067 7.28492 0.455399 5.86808 0.487599C4.45125 0.519799 3.10137 1.09699 2.09926 2.0991C1.09714 3.10122 0.519951 4.4511 0.487751 5.86793C0.455551 7.28477 0.970822 8.65948 1.92637 9.70608C2.88193 10.7527 4.20419 11.3906 5.6181 11.4871C7.03201 11.5837 8.42871 11.1314 9.51764 10.2244L12.6464 13.3537C12.6928 13.4002 12.748 13.437 12.8087 13.4622C12.8694 13.4873 12.9344 13.5003 13.0001 13.5003C13.0658 13.5003 13.1309 13.4873 13.1916 13.4622C13.2523 13.437 13.3074 13.4002 13.3539 13.3537C13.4003 13.3073 13.4372 13.2521 13.4623 13.1914C13.4875 13.1307 13.5004 13.0657 13.5004 13C13.5004 12.9343 13.4875 12.8692 13.4623 12.8085C13.4372 12.7478 13.4003 12.6927 13.3539 12.6462ZM1.50014 5.99999C1.50014 5.10997 1.76406 4.23994 2.25853 3.49992C2.753 2.7599 3.4558 2.18313 4.27807 1.84253C5.10033 1.50194 6.00513 1.41282 6.87805 1.58646C7.75096 1.76009 8.55279 2.18867 9.18212 2.81801C9.81146 3.44735 10.24 4.24917 10.4137 5.12208C10.5873 5.995 10.4982 6.8998 10.1576 7.72207C9.81701 8.54433 9.24023 9.24714 8.50021 9.7416C7.76019 10.2361 6.89016 10.5 6.00014 10.5C4.80707 10.4987 3.66325 10.0241 2.81962 9.18051C1.976 8.33688 1.50147 7.19306 1.50014 5.99999Z"></path>
-          
-      </svg></a>
+      </svg></button>
       </li>
       </ul>
       {%- if shop.customer_accounts_enabled -%}
@@ -710,6 +709,31 @@
     </div> 
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+
+{%- liquid
+  assign popular_blocks = section.blocks | where: 'type', 'search_popular_choice'
+  assign trends_collection = section.settings.search_drawer_trends_collection
+-%}
+{% render 'search-drawer',
+  placeholder: section.settings.search_drawer_placeholder,
+  popular_heading: section.settings.search_drawer_popular_heading,
+  trends_heading: section.settings.search_drawer_trends_heading,
+  trends_collection: trends_collection,
+  trends_limit: section.settings.search_drawer_trends_limit,
+  popular_blocks: popular_blocks,
+  section_id: section.id
+%}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var trigger = document.querySelector('.search-drawer__trigger');
+    var drawer = document.querySelector('search-drawer');
+    if (trigger && drawer) {
+      trigger.addEventListener('click', function () {
+        drawer.open();
+      });
+    }
+  });
+</script>
 
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
@@ -872,7 +896,7 @@
 {
   "name": "t:sections.header.name",
   "class": "section-header",
-  "max_blocks": 3,
+  "max_blocks": 11,
   "settings": [
     {
       "type": "select",
@@ -1006,6 +1030,42 @@
     },
     {
       "type": "header",
+      "content": "Search drawer"
+    },
+    {
+      "type": "text",
+      "id": "search_drawer_placeholder",
+      "label": "Search placeholder",
+      "default": "Search for products..."
+    },
+    {
+      "type": "text",
+      "id": "search_drawer_popular_heading",
+      "label": "Popular choices heading",
+      "default": "Popular Choices"
+    },
+    {
+      "type": "text",
+      "id": "search_drawer_trends_heading",
+      "label": "Trends heading",
+      "default": "In Trends"
+    },
+    {
+      "type": "collection",
+      "id": "search_drawer_trends_collection",
+      "label": "Trends collection"
+    },
+    {
+      "type": "range",
+      "id": "search_drawer_trends_limit",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4,
+      "label": "Trends products limit"
+    },
+    {
+      "type": "header",
       "content": "t:sections.all.spacing"
     },
     {
@@ -1046,6 +1106,25 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "search_popular_choice",
+      "name": "Search popular choice",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Display label",
+          "info": "Text shown on the chip (e.g. DRESSES)"
+        },
+        {
+          "type": "text",
+          "id": "search_query",
+          "label": "Search query",
+          "info": "Search term used when clicked (e.g. dress)"
+        }
+      ]
     },
     {
       "type": "blogs",

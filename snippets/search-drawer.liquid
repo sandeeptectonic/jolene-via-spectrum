@@ -1,0 +1,170 @@
+{% comment %}
+  Renders the search drawer overlay.
+
+  Accepts:
+  - placeholder: {String} Search input placeholder text
+  - popular_heading: {String} Heading for popular choices section
+  - trends_heading: {String} Heading for trends section
+  - trends_collection: {Object} Collection Liquid object for trend products
+  - trends_limit: {Number} Max products to show (default 8)
+  - popular_blocks: {Array} Blocks of type search_popular_choice
+  - section_id: {String} Parent section ID
+
+  Usage:
+  {% render 'search-drawer',
+    placeholder: section.settings.search_drawer_placeholder,
+    popular_heading: section.settings.search_drawer_popular_heading,
+    trends_heading: section.settings.search_drawer_trends_heading,
+    trends_collection: trends_collection,
+    trends_limit: section.settings.search_drawer_trends_limit,
+    popular_blocks: popular_blocks,
+    section_id: section.id
+  %}
+{% endcomment %}
+
+{%- liquid
+  assign placeholder = placeholder | default: 'Search for products...'
+  assign popular_heading = popular_heading | default: 'Popular Choices'
+  assign trends_heading = trends_heading | default: 'In Trends'
+  assign trends_limit = trends_limit | default: 4
+-%}
+
+<search-drawer id="SearchDrawer" role="dialog" aria-modal="true" aria-label="{{ 'general.search.search' | t }}">
+  <div class="search-drawer__overlay" data-search-drawer-overlay></div>
+  <div class="search-drawer__inner">
+    {%- comment -%} Header: back + search input + submit {%- endcomment -%}
+    <div class="search-drawer__header">
+      <button type="button" class="search-drawer__back" aria-label="Close search" data-search-drawer-close>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5"/>
+          <path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-drawer__form">
+        <input
+          type="search"
+          name="q"
+          class="search-drawer__input"
+          placeholder="{{ placeholder | escape }}"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          data-search-drawer-input
+        >
+        <input type="hidden" name="options[prefix]" value="last">
+        <button type="submit" class="search-drawer__submit" aria-label="{{ 'general.search.search' | t }}">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+
+    {%- comment -%} Scrollable content {%- endcomment -%}
+    <div class="search-drawer__content">
+      <div class="search-drawer__body">
+
+        {%- comment -%} Popular Choices {%- endcomment -%}
+        <div class="search-drawer__popular">
+          <h2 class="search-drawer__section-heading">{{ popular_heading }}</h2>
+          <div class="search-drawer__chips">
+            {%- if popular_blocks.size > 0 -%}
+              {%- for block in popular_blocks -%}
+                {%- if block.settings.search_query != blank -%}
+                  {%- assign chip_label = block.settings.label | default: block.settings.search_query -%}
+                  <a href="{{ routes.search_url }}?q={{ block.settings.search_query | url_encode }}&options%5Bprefix%5D=last" class="search-drawer__chip" {{ block.shopify_attributes }}>
+                    {{ chip_label }}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M5 12h14"/>
+                      <path d="M12 5l7 7-7 7"/>
+                    </svg>
+                  </a>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- else -%}
+              <a href="{{ routes.search_url }}?q=dress&options%5Bprefix%5D=last" class="search-drawer__chip">
+                DRESSES
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="{{ routes.search_url }}?q=pants&options%5Bprefix%5D=last" class="search-drawer__chip">
+                BOTTOMS
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              </a>
+              <a href="{{ routes.search_url }}?q=tops&options%5Bprefix%5D=last" class="search-drawer__chip">
+                TOPS
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- comment -%} In Trends {%- endcomment -%}
+        {%- liquid
+          if trends_collection == blank
+            assign trends_collection = collections['best-sellers']
+          endif
+        -%}
+        {%- if trends_collection != blank and trends_collection.products.size > 0 -%}
+          <div class="search-drawer__trends">
+            <h2 class="search-drawer__section-heading">{{ trends_heading }}</h2>
+            <div class="search-drawer__grid">
+              {%- for product in trends_collection.products limit: trends_limit -%}
+                {% render 'card-product',
+                  card_product: product,
+                  show_secondary_image: true,
+                  section_id: section_id
+                %}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+</search-drawer>
+
+<script>
+  if (!customElements.get('search-drawer')) {
+    customElements.define('search-drawer', class SearchDrawer extends HTMLElement {
+      constructor() {
+        super();
+        this._onKeyDown = this._onKeyDown.bind(this);
+      }
+
+      connectedCallback() {
+        this.overlay = this.querySelector('[data-search-drawer-overlay]');
+        this.input = this.querySelector('[data-search-drawer-input]');
+        this.closeButtons = this.querySelectorAll('[data-search-drawer-close]');
+
+        this.overlay.addEventListener('click', () => this.close());
+        this.closeButtons.forEach(btn => btn.addEventListener('click', () => this.close()));
+      }
+
+      open() {
+        this.classList.add('active');
+        document.body.classList.add('search-drawer-open');
+        document.addEventListener('keydown', this._onKeyDown);
+        /* Focus input after transition */
+        setTimeout(() => {
+          if (this.input) this.input.focus();
+        }, parseInt(getComputedStyle(document.documentElement).getPropertyValue('--duration-default') || 200));
+      }
+
+      close() {
+        this.classList.remove('active');
+        document.body.classList.remove('search-drawer-open');
+        document.removeEventListener('keydown', this._onKeyDown);
+        /* Restore focus to trigger */
+        const trigger = document.querySelector('.search-drawer__trigger');
+        if (trigger) trigger.focus();
+      }
+
+      _onKeyDown(e) {
+        if (e.key === 'Escape') this.close();
+      }
+    });
+  }
+</script>
