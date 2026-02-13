@@ -74,6 +74,14 @@
             "page": "{{ product.metafields.custom.size_chart.value }}"
           }
         },
+        "pair_it_with_block": {
+          "type": "pair_it_with",
+          "settings": {
+            "heading": "PAIR IT WITH",
+            "padding_top": 24,
+            "padding_bottom": 0
+          }
+        },
         "2baa1702-693d-4ee1-ba54-2026c9259280": {
           "type": "shopify://apps/estimated-delivery-date-cp/blocks/clickpost-edd/052d4955-0ec2-4e86-8e1f-f971acb44560",
           "settings": {
@@ -111,7 +119,8 @@
         "buy_buttons",
         "a1a0af01-437e-47b7-bb50-0154ae98e5c9",
         "e62cc860-9e64-4fb2-80cb-3de42e0215fd",
-        "2baa1702-693d-4ee1-ba54-2026c9259280"
+        "2baa1702-693d-4ee1-ba54-2026c9259280",
+        "pair_it_with_block"
       ],
       "settings": {
         "sizechart1": "shopify://shop_images/Size_Fit_Guide_-_Topwear.jpg",
