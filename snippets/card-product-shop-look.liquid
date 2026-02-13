@@ -1,0 +1,560 @@
+{% comment %}
+  Product card for Shop by Look section
+  Matches Jolene's product card design with size selector and pricing
+
+  Accepts:
+  - card_product: {Object} Product object
+  - section_id: {String} Section ID for unique form IDs
+  - show_atc_mobile: {Boolean} Show ATC on mobile
+  - show_atc_desktop: {Boolean} Show ATC on desktop
+
+  Usage:
+  {% render 'card-product-shop-look',
+    card_product: product,
+    section_id: section.id,
+    show_atc_mobile: section.settings.show_atc_mobile,
+    show_atc_desktop: section.settings.show_atc_desktop
+  %}
+{% endcomment %}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign on_sale = false
+    assign sale_percentage = 0
+    if card_product.compare_at_price > card_product.price
+      assign on_sale = true
+      assign price_diff = card_product.compare_at_price | minus: card_product.price
+      assign sale_percentage = price_diff | times: 100 | divided_by: card_product.compare_at_price | round
+    endif
+
+    assign first_available_variant = card_product.selected_or_first_available_variant
+    assign has_variants = false
+    if card_product.has_only_default_variant == false
+      assign has_variants = true
+    endif
+  -%}
+
+  <div class="card-shop-look" data-variant-id="{{ first_available_variant.id }}">
+    <!-- Product Image (clickable link) -->
+    <a href="{{ card_product.url }}" class="card-shop-look__image" aria-label="{{ card_product.title | escape }}">
+      {%- if card_product.featured_media -%}
+        <img
+          srcset="
+            {%- if card_product.featured_media.width >= 240 -%}{{ card_product.featured_media | image_url: width: 240 }} 240w,{%- endif -%}
+            {%- if card_product.featured_media.width >= 360 -%}{{ card_product.featured_media | image_url: width: 360 }} 360w,{%- endif -%}
+            {%- if card_product.featured_media.width >= 480 -%}{{ card_product.featured_media | image_url: width: 480 }} 480w,{%- endif -%}
+            {%- if card_product.featured_media.width >= 560 -%}{{ card_product.featured_media | image_url: width: 560 }} 560w,{%- endif -%}
+            {{ card_product.featured_media | image_url }} {{ card_product.featured_media.width }}w
+          "
+          sizes="280px"
+          src="{{ card_product.featured_media | image_url: width: 360 }}"
+          alt="{{ card_product.featured_media.alt | escape }}"
+          loading="lazy"
+          width="{{ card_product.featured_media.width }}"
+          height="{{ card_product.featured_media.height }}"
+        >
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+
+    </a>
+
+    <!-- Product Info -->
+    <div class="card-shop-look__info">
+      <!-- Title Row: title + mobile ATC icon -->
+      <div class="card-shop-look__title-row">
+        <a href="{{ card_product.url }}" class="card-shop-look__title-link">
+          <h3 class="card-shop-look__title">
+            {{ card_product.title | upcase }}
+          </h3>
+        </a>
+
+        {%- if show_atc_mobile -%}
+          {%- liquid
+            assign product_form_id_mobile = 'shop-look-form-mobile-' | append: card_product.id | append: '-' | append: section_id
+          -%}
+          <div class="card-shop-look__atc-mobile">
+            <product-form data-section-id="{{ section_id }}">
+              {%- form 'product', card_product, id: product_form_id_mobile, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" value="{{ first_available_variant.id }}" disabled data-variant-input>
+                <button
+                  type="submit"
+                  name="add"
+                  class="card-shop-look__atc-icon-btn"
+                  {% unless first_available_variant.available %}disabled{% endunless %}
+                  aria-label="{{ 'products.product.add_to_cart' | t }}"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                  </svg>
+                </button>
+              {%- endform -%}
+            </product-form>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <!-- Variant Selector -->
+      {%- if has_variants -%}
+        <div class="card-shop-look__size">
+          <select class="card-shop-look__size-select" data-variant-select>
+            {%- for variant in card_product.variants -%}
+              <option
+                value="{{ variant.id }}"
+                {% if variant.id == first_available_variant.id %}selected{% endif %}
+                {% unless variant.available %}disabled{% endunless %}
+              >
+                {{ variant.title }}{% unless variant.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- endif -%}
+
+      <!-- Price -->
+      <div class="card-shop-look__price">
+        {%- if on_sale -%}
+          <span class="card-shop-look__price-sale">{{ card_product.price | money }}</span>
+          <span class="card-shop-look__price-strike">{{ card_product.compare_at_price | money }}</span>
+          <span class="card-shop-look__price-discount">{{ sale_percentage }}% OFF</span>
+        {%- else -%}
+          <span class="card-shop-look__price-regular">
+            {{ card_product.price | money }}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <!-- Tax Disclaimer -->
+      <div class="card-shop-look__tax">
+        EXCLUSIVE OF ALL TAXES
+      </div>
+
+      <!-- Desktop Add to Cart Button (Optional) -->
+      {%- if show_atc_desktop -%}
+        <div class="card-shop-look__atc-wrapper show-desktop">
+          {%- liquid
+            assign product_form_id = 'shop-look-form-' | append: card_product.id | append: '-' | append: section_id
+            assign has_multiple_variants = false
+            if card_product.variants.size > 1
+              assign has_multiple_variants = true
+            endif
+          -%}
+
+          {%- if has_multiple_variants -%}
+            <modal-opener data-modal="#QuickAdd-{{ card_product.id }}-{{ section_id }}">
+              <button
+                type="button"
+                class="card-shop-look__atc button button--primary button--full-width"
+                aria-haspopup="dialog"
+              >
+                <span class="card-shop-look__atc-text">{{ 'products.product.add_to_cart' | t }}</span>
+                <span class="card-shop-look__atc-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 01-8 0"/>
+                  </svg>
+                </span>
+                <div class="loading-overlay__spinner hidden">
+                  <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+            </modal-opener>
+            <quick-add-modal
+              id="QuickAdd-{{ card_product.id }}-{{ section_id }}"
+              class="quick-add-modal"
+            >
+              <div role="dialog" aria-label="{{ 'products.product.choose_product_options' | t: product_name: card_product.title }}" aria-modal="true" class="quick-add-modal__content" tabindex="-1">
+              </div>
+            </quick-add-modal>
+          {%- else -%}
+            <product-form data-section-id="{{ section_id }}">
+              {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}" disabled>
+                <button
+                  type="submit"
+                  name="add"
+                  class="card-shop-look__atc button button--primary button--full-width"
+                  {% if card_product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                >
+                  <span class="card-shop-look__atc-text">
+                    {%- if card_product.selected_or_first_available_variant.available -%}
+                      {{ 'products.product.add_to_cart' | t }}
+                    {%- else -%}
+                      {{ 'products.product.sold_out' | t }}
+                    {%- endif -%}
+                  </span>
+                  <span class="card-shop-look__atc-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                      <line x1="3" y1="6" x2="21" y2="6"/>
+                      <path d="M16 10a4 4 0 01-8 0"/>
+                    </svg>
+                  </span>
+                  <div class="loading-overlay__spinner hidden">
+                    <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                    </svg>
+                  </div>
+                </button>
+              {%- endform -%}
+            </product-form>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+<style>
+/* ====================================
+   Shop by Look Product Card
+   Jolene design with size selector and pricing
+   ==================================== */
+
+.card-shop-look {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 0;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  height: 100%;
+}
+
+.card-shop-look:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-shop-look:hover {
+    transform: none;
+  }
+}
+
+/* Image Container (clickable link) */
+.card-shop-look__image {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.card-shop-look__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-shop-look__image .placeholder-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+}
+
+
+/* Info Section */
+.card-shop-look__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  flex: 1;
+}
+
+@media screen and (min-width: 750px) {
+  .card-shop-look__info {
+    padding: 1.4rem;
+    gap: 1rem;
+  }
+}
+
+/* Title Link */
+.card-shop-look__title-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-shop-look__title-link:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+/* Title */
+.card-shop-look__title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0;
+  color: #000000;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 3.4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .card-shop-look__title {
+    font-size: 1.3rem;
+    min-height: 3.6rem;
+  }
+}
+
+/* Size Selector */
+.card-shop-look__size {
+  position: relative;
+}
+
+.card-shop-look__size-select {
+  width: 100%;
+  padding: 0.8rem 3rem 0.8rem 1rem;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #000000;
+  border: 1px solid #d0d0d0;
+  border-radius: 0;
+  background: #ffffff;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23000000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+}
+
+/* Price */
+.card-shop-look__price {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.card-shop-look__price-sale {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+.card-shop-look__price-strike {
+  text-decoration: line-through;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #666666;
+}
+
+.card-shop-look__price-discount {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #d62828;
+  text-transform: uppercase;
+}
+
+.card-shop-look__price-regular {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Tax Disclaimer */
+.card-shop-look__tax {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #666666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .card-shop-look__tax {
+    font-size: 1.1rem;
+  }
+}
+
+/* ====================================
+   Add to Cart Button
+   ==================================== */
+
+/* Mobile ATC icon button in title row */
+.card-shop-look__atc-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 749px) {
+  .card-shop-look__atc-mobile {
+    display: block;
+    flex-shrink: 0;
+  }
+}
+
+.card-shop-look__atc-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #000000;
+  cursor: pointer;
+}
+
+.card-shop-look__atc-icon-btn:hover {
+  opacity: 0.7;
+}
+
+.card-shop-look__atc-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Desktop ATC wrapper */
+.card-shop-look__atc-wrapper {
+  margin-top: 0.8rem;
+  display: none; /* Hidden by default */
+}
+
+/* Desktop: show if show-desktop is set */
+@media screen and (min-width: 750px) {
+  .card-shop-look__atc-wrapper {
+    margin-top: 1rem;
+  }
+
+  .card-shop-look__atc-wrapper.show-desktop {
+    display: block;
+  }
+}
+
+.card-shop-look__atc {
+  margin-top: 0;
+  font-size: 1.2rem;
+  padding: 0.8rem 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .card-shop-look__atc {
+    font-size: 1.3rem;
+    padding: 1rem 1.2rem;
+  }
+}
+
+/* ====================================
+   Mobile: Horizontal Layout
+   ==================================== */
+
+@media screen and (max-width: 749px) {
+  .card-shop-look {
+    flex-direction: row;
+  }
+
+  .card-shop-look__image {
+    width: 110px;
+    height: auto;
+    flex-shrink: 0;
+    aspect-ratio: auto;
+  }
+
+  .card-shop-look__info {
+    padding: 0.8rem;
+    gap: 0.5rem;
+  }
+
+  .card-shop-look__title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .card-shop-look__title-link {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-shop-look__title {
+    font-size: 1rem;
+    line-height: 1.3;
+    min-height: auto;
+    -webkit-line-clamp: 2;
+  }
+
+  .card-shop-look__size {
+    order: 2;
+  }
+
+  .card-shop-look__size-select {
+    padding: 0.5rem 2rem 0.5rem 0.8rem;
+    font-size: 1.1rem;
+    width: 100%;
+  }
+
+  .card-shop-look__price {
+    order: 3;
+    margin-top: 0;
+    align-items: baseline;
+    gap: 0.3rem;
+  }
+
+  .card-shop-look__price-sale {
+    font-size: 1.1rem;
+  }
+
+  .card-shop-look__price-strike {
+    font-size: 0.9rem;
+  }
+
+  .card-shop-look__price-discount {
+    font-size: 0.9rem;
+  }
+
+  .card-shop-look__price-regular {
+    font-size: 1.1rem;
+  }
+
+  .card-shop-look__tax {
+    display: none;
+  }
+
+}
+
+/* ====================================
+   ATC Button: Mobile Icon / Desktop Text
+   ==================================== */
+
+/* Default: hide icon (desktop shows text) */
+.card-shop-look__atc-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 749px) {
+  .card-shop-look__atc-icon {
+    display: inline-flex;
+  }
+}
+
+/* Loading state inherits Dawn's .button.loading from base.css */
+.card-shop-look__atc.loading > .loading-overlay__spinner {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+</style>

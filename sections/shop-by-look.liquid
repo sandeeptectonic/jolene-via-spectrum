@@ -1,0 +1,354 @@
+{% comment %}
+  Shop by Look Section
+  Interactive lookbook with hotspots and bulk add-to-cart
+  Data sourced from metaobjects (look + spectrum_look_hotspot)
+{% endcomment %}
+
+{{ 'section-shop-by-look.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .section-{{ section.id }}-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .section-{{ section.id }}-bg {
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+{%- comment -%} Resolve look from the configured source {%- endcomment -%}
+{%- case section.settings.source -%}
+  {%- when 'product_metafield' -%}
+    {%- assign look = product.metafields.custom.spectrum_look.value -%}
+  {%- when 'collection_metafield' -%}
+    {%- assign look = collection.metafields.custom.spectrum_look.value -%}
+  {%- else -%}
+    {%- assign look_handle = section.settings.look -%}
+    {%- assign look = shop.metaobjects.spectrum_look[look_handle] -%}
+{%- endcase -%}
+
+{%- assign image_index = section.settings.image_index | default: 0 -%}
+{%- assign look_image = nil -%}
+{%- if look.images.value != blank -%}
+  {%- for img in look.images.value -%}
+    {%- if forloop.index0 == image_index -%}
+      {%- assign look_image = img -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- if look_image == nil -%}
+    {%- assign look_image = look.images.value.first -%}
+  {%- endif -%}
+{%- endif -%}
+{%- assign hotspots = look.hotspots.value -%}
+
+<div class="shop-by-look section-{{ section.id }}-padding section-{{ section.id }}-bg color-{{ section.settings.color_scheme }}">
+  <div class="shop-by-look__container section-{{ section.id }}-container">
+    {%- if section.settings.title != blank -%}
+      <div class="title-wrapper-with-link title-wrapper--self-padded-mobile">
+        <h2 class="title {{ section.settings.heading_size }}">
+          {{ section.settings.title | escape }}
+        </h2>
+      </div>
+    {%- endif -%}
+
+    {%- if look != blank -%}
+      <div class="shop-by-look__grid shop-by-look__grid--50-50">
+
+        <!-- LEFT/TOP: Hotspot Image -->
+        <div class="shop-by-look__image-wrapper">
+          {%- if look_image != blank -%}
+            <div class="shop-by-look__image-container">
+              <img
+                srcset="
+                  {%- if look_image.width >= 375 -%}{{ look_image | image_url: width: 375 }} 375w,{%- endif -%}
+                  {%- if look_image.width >= 750 -%}{{ look_image | image_url: width: 750 }} 750w,{%- endif -%}
+                  {%- if look_image.width >= 1100 -%}{{ look_image | image_url: width: 1100 }} 1100w,{%- endif -%}
+                  {%- if look_image.width >= 1500 -%}{{ look_image | image_url: width: 1500 }} 1500w,{%- endif -%}
+                  {%- if look_image.width >= 1780 -%}{{ look_image | image_url: width: 1780 }} 1780w,{%- endif -%}
+                  {%- if look_image.width >= 2000 -%}{{ look_image | image_url: width: 2000 }} 2000w,{%- endif -%}
+                  {%- if look_image.width >= 3000 -%}{{ look_image | image_url: width: 3000 }} 3000w,{%- endif -%}
+                  {{ look_image | image_url }} {{ look_image.width }}w
+                "
+                sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 5rem), 100vw"
+                src="{{ look_image | image_url: width: 1500 }}"
+                loading="lazy"
+                alt="{{ look_image.alt | escape }}"
+                width="{{ look_image.width }}"
+                height="{{ look_image.height }}"
+              >
+
+              <!-- Hotspot Markers -->
+              <div class="shop-by-look__hotspots">
+                {%- for hotspot in hotspots -%}
+                  {%- if hotspot.product.value != blank -%}
+                    <button
+                      class="shop-by-look__hotspot"
+                      style="left: {{ hotspot.pos_x.value }}%; top: {{ hotspot.pos_y.value }}%;"
+                      data-product-index="{{ forloop.index0 }}"
+                      aria-label="View {{ hotspot.product.value.title | escape }}"
+                      type="button"
+                    >
+                      <span class="shop-by-look__hotspot-pulse"></span>
+                      <span class="shop-by-look__hotspot-dot"></span>
+                    </button>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- else -%}
+            <div class="shop-by-look__placeholder">
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- RIGHT/BOTTOM: Product Panel -->
+        <div class="shop-by-look__products-wrapper">
+          {%- if hotspots.size > 0 -%}
+            <div class="shop-by-look__product-list-wrapper">
+              <ul
+                class="shop-by-look__product-list"
+                role="list"
+              >
+                {%- for hotspot in hotspots -%}
+                  {%- assign hotspot_product = hotspot.product.value -%}
+                  {%- if hotspot_product != blank -%}
+                    <li
+                      class="shop-by-look__product-item"
+                      data-product-index="{{ forloop.index0 }}"
+                    >
+                      {% render 'card-product-shop-look',
+                        card_product: hotspot_product,
+                        section_id: section.id,
+                        show_atc_mobile: section.settings.show_atc_mobile,
+                        show_atc_desktop: section.settings.show_atc_desktop
+                      %}
+                    </li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
+
+            <!-- Bulk Add-to-Cart Component -->
+            <shop-by-look-bulk-add data-section-id="{{ section.id }}">
+              <button
+                type="button"
+                class="button button--primary button--full-width shop-by-look__bulk-button"
+                data-bulk-add-button
+              >
+                <span>{{ section.settings.bulk_add_text }}</span>
+                <div class="loading-overlay__spinner hidden">
+                  <svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                  </svg>
+                </div>
+              </button>
+            </shop-by-look-bulk-add>
+          {%- else -%}
+            <div class="shop-by-look__empty">
+              <p>No products in this look</p>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- else -%}
+      <div class="shop-by-look__empty">
+        <p>No look assigned. Select a look metaobject or ensure the product/collection has a look metafield.</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'shop-by-look.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Shop by Look",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop the Look"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "header",
+      "content": "Look data source"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Look source",
+      "options": [
+        {
+          "value": "section_setting",
+          "label": "Section setting (pick a look)"
+        },
+        {
+          "value": "product_metafield",
+          "label": "Product metafield (PDP)"
+        },
+        {
+          "value": "collection_metafield",
+          "label": "Collection metafield (PLP)"
+        }
+      ],
+      "default": "section_setting",
+      "info": "Choose where the look data comes from. Use 'Section setting' for homepage/custom pages, 'Product metafield' for PDP, or 'Collection metafield' for PLP."
+    },
+    {
+      "type": "metaobject",
+      "id": "look",
+      "label": "Look",
+      "metaobject_type": "spectrum_look"
+    },
+    {
+      "type": "number",
+      "id": "image_index",
+      "label": "Image index",
+      "default": 0,
+      "info": "Zero-based index into the look's images list. 0 = first image, 1 = second, etc. Falls back to first image if out of range, or to single image field if images list is empty."
+    },
+    {
+      "type": "text",
+      "id": "bulk_add_text",
+      "label": "Add to cart button text",
+      "default": "ADD LOOK TO BAG"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "Accent 1"
+        },
+        {
+          "value": "accent-2",
+          "label": "Accent 2"
+        },
+        {
+          "value": "background-1",
+          "label": "Background 1"
+        },
+        {
+          "value": "background-2",
+          "label": "Background 2"
+        },
+        {
+          "value": "inverse",
+          "label": "Inverse"
+        }
+      ],
+      "default": "background-1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "min": 600,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "label": "Max width",
+      "default": 1200
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    },
+    {
+      "type": "header",
+      "content": "Individual product actions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_atc_mobile",
+      "label": "Show individual Add to Cart on mobile",
+      "default": false,
+      "info": "Shows Add to Cart button on each product card when viewed on mobile devices"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_atc_desktop",
+      "label": "Show individual Add to Cart on desktop",
+      "default": false,
+      "info": "Shows Add to Cart button on each product card when viewed on desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop by Look"
+    }
+  ]
+}
+{% endschema %}
