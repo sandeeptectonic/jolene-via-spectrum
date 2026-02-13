@@ -1,0 +1,189 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "lookbook",
+      "blocks": {
+        "product_DKMGyG": {
+          "type": "product",
+          "settings": {
+            "product": "dr-013polo-dressscarlet-red",
+            "product_thumb": "shopify://shop_images/muse_daires_04.jpg",
+            "product_thumb2": "shopify://shop_images/muse_daires_04.jpg"
+          }
+        },
+        "product_KCihAV": {
+          "type": "product",
+          "settings": {
+            "product": "beige-track-pant",
+            "product_thumb": "shopify://shop_images/Screenshot_2024-02-03_at_3.38.17_PM.png",
+            "product_thumb2": "shopify://shop_images/Screenshot_2024-02-03_at_3.38.17_PM.png"
+          }
+        },
+        "product_QnAk9U": {
+          "type": "product",
+          "settings": {
+            "product": "ts007oversized-teejava-brown",
+            "product_thumb": "shopify://shop_images/Screenshot_2024-02-03_at_3.42.47_PM.png",
+            "product_thumb2": "shopify://shop_images/Screenshot_2024-02-03_at_3.42.47_PM.png"
+          }
+        },
+        "product_X8P3h6": {
+          "type": "product",
+          "settings": {
+            "product": "ts-001oversized-tee-puff-printecru",
+            "product_thumb": "shopify://shop_images/fnal_cropped.jpg",
+            "product_thumb2": "shopify://shop_images/fnal_cropped.jpg"
+          }
+        },
+        "product_U4RnFb": {
+          "type": "product",
+          "settings": {
+            "product": "dr-004sleeveless-sheath-dressscarlet-red",
+            "product_thumb": "shopify://shop_images/IMG_8542_1.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_8542_1.jpg"
+          }
+        },
+        "product_eHg8jb": {
+          "type": "product",
+          "settings": {
+            "product": "b011straight-fit-chinomandarin",
+            "product_thumb": "shopify://shop_images/IMG_7965.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_7965.jpg"
+          }
+        },
+        "product_dEbL8h": {
+          "type": "product",
+          "settings": {
+            "product": "ts007oversized-teepowder-pink",
+            "product_thumb": "shopify://shop_images/DSC00636_1.jpg",
+            "product_thumb2": "shopify://shop_images/DSC00636_1.jpg"
+          }
+        },
+        "product_QBMxjH": {
+          "type": "product",
+          "settings": {
+            "product": "b001mini-flare-chinoslate-rose",
+            "product_thumb": "shopify://shop_images/IMG_8167.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_8167.jpg"
+          }
+        },
+        "product_ACeQh6": {
+          "type": "product",
+          "settings": {
+            "product": "dn005denim-pantdark-indigo",
+            "product_thumb": "shopify://shop_images/IMG_8180.heic",
+            "product_thumb2": "shopify://shop_images/IMG_8180.heic"
+          }
+        },
+        "product_rMPqTR": {
+          "type": "product",
+          "settings": {
+            "product": "dn005denim-pantice-blue",
+            "product_thumb": "shopify://shop_images/DSC00612_3.jpg",
+            "product_thumb2": "shopify://shop_images/DSC00612_3.jpg"
+          }
+        },
+        "product_mmzFjg": {
+          "type": "product",
+          "settings": {
+            "product": "dr-013polo-dressscarlet-red",
+            "product_thumb": "shopify://shop_images/IMG_0381.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_0381.jpg"
+          }
+        },
+        "product_bAEiGH": {
+          "type": "product",
+          "settings": {
+            "product": "pink-active-jacket",
+            "product_thumb": "shopify://shop_images/IMG_0961.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_0961.jpg"
+          }
+        },
+        "product_GBkKk6": {
+          "type": "product",
+          "settings": {
+            "product": "dr-004sleeveless-sheath-dressscarlet-red",
+            "product_thumb": "shopify://shop_images/IMG_7967.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_7967.jpg"
+          }
+        },
+        "product_pdeV76": {
+          "type": "product",
+          "settings": {
+            "product": "dr020button-down-batwing-sleeve-shirt-dressbrown",
+            "product_thumb": "shopify://shop_images/WhatsApp_Image_2024-03-08_at_17.16.32.jpg",
+            "product_thumb2": "shopify://shop_images/WhatsApp_Image_2024-03-08_at_17.16.32.jpg"
+          }
+        },
+        "product_dRYhiY": {
+          "type": "product",
+          "settings": {
+            "product": "dn002denim-pantscarlet-red",
+            "product_thumb": "shopify://shop_images/IMG_8168.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_8168.jpg"
+          }
+        },
+        "product_E8LTxW": {
+          "type": "product",
+          "settings": {
+            "product": "dr-007pleated-tie-up-dressblack",
+            "product_thumb": "shopify://shop_images/jolene_black_dress.jpg",
+            "product_thumb2": "shopify://shop_images/jolene_black_dress.jpg"
+          }
+        },
+        "product_DGBhTy": {
+          "type": "product",
+          "settings": {
+            "product": "dr020button-down-batwing-sleeve-shirt-dressbrown",
+            "product_thumb": "shopify://shop_images/WhatsApp_Image_2024-03-08_at_17.15.26.jpg",
+            "product_thumb2": "shopify://shop_images/WhatsApp_Image_2024-03-08_at_17.15.26.jpg"
+          }
+        },
+        "product_nTTFUP": {
+          "type": "product",
+          "settings": {
+            "product": "b011straight-fit-chinomandarin",
+            "product_thumb": "shopify://shop_images/IMG_0008_1.jpg",
+            "product_thumb2": "shopify://shop_images/IMG_0008_1.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "product_DKMGyG",
+        "product_KCihAV",
+        "product_QnAk9U",
+        "product_X8P3h6",
+        "product_U4RnFb",
+        "product_eHg8jb",
+        "product_dEbL8h",
+        "product_QBMxjH",
+        "product_ACeQh6",
+        "product_rMPqTR",
+        "product_mmzFjg",
+        "product_bAEiGH",
+        "product_GBkKk6",
+        "product_pdeV76",
+        "product_dRYhiY",
+        "product_E8LTxW",
+        "product_DGBhTy",
+        "product_nTTFUP"
+      ],
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

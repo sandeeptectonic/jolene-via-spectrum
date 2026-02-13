@@ -1,0 +1,144 @@
+{% comment %}
+  Renders product variant-picker
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  - update_url: {Boolean} whether or not to update url when changing variants. If false, the url isn't updated. Default: true (optional).
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+{%- unless product.has_only_default_variant -%}
+  {%- if block.settings.picker_type == 'button' -%}
+    <variant-radios
+      id="variant-radios-{{ section.id }}"
+      class="no-js-hidden product_varient_size"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {% assign counter = 0 %}
+      {%- for productMainHeading in product.options_with_values -%}
+        <fieldset class="js product-form__input ">
+          {% comment %} <legend class="form__label product_size_heading">{{ productMainHeading.name }}</legend> {% endcomment %}
+          <div class="size_and_chart">
+            <legend class="form__label product_size_heading">{{ productMainHeading.name }}</legend>
+            <div class="prodcuTs-ze_chart">
+              <svg
+                class="size_chart_icon"
+                width="16"
+                height="7"
+                viewBox="0 0 16 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M15.1577 5.82841L15.1572 1.17167C15.1573 1.04033 15.1314 0.910273 15.0811 0.788927C15.0309 0.667581 14.9572 0.557323 14.8644 0.464451C14.7715 0.371579 14.6612 0.297912 14.5399 0.247656C14.4185 0.197401 14.2885 0.171542 14.1571 0.171558L1.84331 0.171116C1.71197 0.171101 1.58191 0.196959 1.46056 0.247215C1.33922 0.29747 1.22896 0.371137 1.13609 0.464009C1.04322 0.556881 0.969549 0.667139 0.919294 0.788485C0.869038 0.909832 0.84318 1.03989 0.843195 1.17123L0.843638 5.82797C0.843622 5.95931 0.86948 6.08937 0.919736 6.21072C0.96999 6.33206 1.04366 6.44232 1.13653 6.53519C1.2294 6.62806 1.33966 6.70173 1.46101 6.75199C1.58235 6.80224 1.71241 6.8281 1.84375 6.82808L14.1576 6.82853C14.2889 6.82854 14.419 6.80268 14.5403 6.75243C14.6617 6.70217 14.7719 6.6285 14.8648 6.53563C14.9577 6.44276 15.0313 6.3325 15.0816 6.21116C15.1318 6.08981 15.1577 5.95975 15.1577 5.82841ZM1.84331 5.82797L1.84375 1.17123L4.67218 1.17123L4.67174 3.49982C4.67174 3.56552 4.68468 3.63057 4.70982 3.69127C4.73496 3.75197 4.77181 3.80712 4.81826 3.85357C4.86472 3.90003 4.91987 3.93688 4.98057 3.96202C5.04126 3.98716 5.10632 4.0001 5.17201 4.0001C5.23771 4.0001 5.30277 3.98716 5.36346 3.96202C5.42416 3.93688 5.47931 3.90003 5.52576 3.85357C5.57222 3.80712 5.60907 3.75197 5.63421 3.69127C5.65935 3.63057 5.67229 3.56552 5.67229 3.49982L5.67185 1.17123H7.50061L7.50016 3.49982C7.50016 3.6325 7.55287 3.75975 7.64669 3.85357C7.74051 3.94739 7.86776 4.0001 8.00044 4.0001C8.13312 4.0001 8.26037 3.94739 8.35419 3.85357C8.44801 3.75975 8.50072 3.6325 8.50072 3.49982L8.50028 1.17123H10.329L10.3286 3.49982C10.3286 3.56552 10.3415 3.63057 10.3667 3.69127C10.3918 3.75197 10.4287 3.80712 10.4751 3.85357C10.5216 3.90003 10.5767 3.93688 10.6374 3.96202C10.6981 3.98716 10.7632 4.0001 10.8289 4.0001C10.8946 4.0001 10.9596 3.98716 11.0203 3.96202C11.081 3.93688 11.1362 3.90003 11.1826 3.85357C11.2291 3.80712 11.2659 3.75197 11.2911 3.69127C11.3162 3.63057 11.3291 3.56552 11.3291 3.49982L11.3287 1.17123L14.1571 1.17123L14.1571 5.82841L1.84331 5.82797Z" fill="#090E22"/>
+              </svg>
+
+              <p>Size & Fit Guide</p>
+            </div>
+          </div>
+          {% render 'product-variant-options',
+            product: product,
+            option: productMainHeading,
+            block: block,
+            customize_image: product.options_with_values,
+            variant: product.variant,
+            counter: counter
+          %}
+        </fieldset>
+      {%- endfor -%}
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-radios>
+  {%- else -%}
+    <variant-selects
+      id="variant-selects-{{ section.id }}"
+      class="no-js-hidden"
+      data-section="{{ section.id }}"
+      data-url="{{ product.url }}"
+      {% if update_url == false %}
+        data-update-url="false"
+      {% endif %}
+      {{ block.shopify_attributes }}
+    >
+      {%- for option in product.options_with_values -%}
+        <div class="product-form__input product-form__input--dropdown">
+          <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
+            {{ option.name }}
+          </label>
+          <div class="select">
+            <select
+              id="Option-{{ section.id }}-{{ forloop.index0 }}"
+              class="select__select"
+              name="options[{{ option.name | escape }}]"
+              form="{{ product_form_id }}"
+            >
+              {% render 'product-variant-options', product: product, option: option, block: block %}
+            </select>
+            {% render 'icon-caret' %}
+          </div>
+        </div>
+      {%- endfor -%}
+      <script type="application/json">
+        {{ product.variants | json }}
+      </script>
+    </variant-selects>
+  {%- endif -%}
+{%- endunless -%}
+<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label" for="Variants-{{ section.id }}">
+      {{- 'products.product.product_variants' | t -}}
+    </label>
+    <div class="select">
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}
+              selected="selected"
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            value="{{ variant.id }}"
+          >
+            {%- liquid
+              echo variant.title
+              echo variant.price | money | strip_html | prepend: ' - '
+              if variant.available == false
+                echo 'products.product.sold_out' | t | prepend: ' - '
+              endif
+              if variant.quantity_rule.increment > 1
+                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+              endif
+              if variant.quantity_rule.min > 1
+                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+              endif
+              if variant.quantity_rule.max != null
+                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+              endif
+              # TODO: enable theme-check once `item_count_for_variant` is accepted as valid filter
+              # theme-check-disable
+              assign cart_quantity = cart | item_count_for_variant: variant.id
+              # theme-check-enable
+              if cart_quantity > 0
+                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+              endif
+            -%}
+          </option>
+        {%- endfor -%}
+      </select>
+      {% render 'icon-caret' %}
+    </div>
+  </div>
+</noscript>

@@ -1,0 +1,295 @@
+{{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+
+<div
+  class="utility-bar color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} utility-bar--bottom-border{% endif %}"
+  {{ block.shopify_attributes }}
+>
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when 'announcement' -%}
+      <div class="announcement-bar color-{{ block.settings.color_scheme }} gradient" role="region" aria-label="{{ 'sections.header.announcement' | t }}" {{ block.shopify_attributes }}>
+        {%- if block.settings.message_one != blank -%}
+          {%- if block.settings.link != blank -%}
+            <!-- <a href="{{ block.settings.link }}" class="announcement-bar__link link link--text focus-inset animate-arrow"> -->
+          {%- endif -%}
+              <div class="page-width marquee enable-animation marquee--hover-pause">
+
+  <ul style="list-style: none" class="marquee__content">
+      <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+        <a href="{{ block.settings.link_one }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_one | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+                </a>
+                </li>
+      <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+        <a href="{{ block.settings.link_two }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_two | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+      <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+        <a href="{{ block.settings.link_three }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_three | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+      <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+        <a href="{{ block.settings.link_four }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_four | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+      <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+        <a href="{{ block.settings.link_five }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_five | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+  </ul>
+
+        <ul style="list-style: none" aria-hidden="true" class="marquee__content">
+                <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                  <a href="{{ block.settings.link_one }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_one | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+            <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+              <a href="{{ block.settings.link_two }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_two | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+                <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                  <a href="{{ block.settings.link_three }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_three | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+                <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                  <a href="{{ block.settings.link_four }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_four | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+
+                </li>
+                <li class="announcement-bar__message {{ block.settings.text_alignment }} h5">
+                  <a href="{{ block.settings.link_five }}" class="announcement-bar__link link link--text focus-inset animate-arrow">
+                  {{ block.settings.message_five | escape }}
+                  {%- if block.settings.link != blank -%}
+                    {% render 'icon-arrow' %}
+                  {%- endif -%}
+              </a>
+                  
+                </li>
+        </ul>
+
+              </div>
+          {%- if block.settings.link != blank -%}
+            
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+  {%- endcase -%}
+{%- endfor -%}
+</div>
+{% schema %}
+{
+  "name": "t:sections.announcement-bar.name",
+  "max_blocks": 12,
+  "class": "announcement-bar-section",
+  "blocks": [
+    {
+      "type": "announcement",
+      "name": "t:sections.announcement-bar.blocks.announcement.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "message_one",
+          "default": "Message one",
+          "label": "Announcement one"
+        },
+        {
+          "type": "url",
+          "id": "link_one",
+          "label": "Link one"
+        },
+        {
+          "type": "text",
+          "id": "message_two",
+          "default": "Message two",
+          "label": "Announcement two"
+        },
+        {
+          "type": "url",
+          "id": "link_two",
+          "label": "Link two"
+        },
+             {
+          "type": "text",
+          "id": "message_three",
+          "default": "Message three",
+          "label": "Announcement three"
+        },
+        {
+          "type": "url",
+          "id": "link_three",
+          "label": "Link three"
+        },
+             {
+          "type": "text",
+          "id": "message_four",
+          "default": "Message four",
+          "label": "Announcement four"
+        },
+        {
+          "type": "url",
+          "id": "link_four",
+          "label": "Link four"
+        },
+             {
+          "type": "text",
+          "id": "message_five",
+          "default": "Message five",
+          "label": "Announcement five"
+        },
+        {
+          "type": "url",
+          "id": "link_five",
+          "label": "Link five"
+        },
+       
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__1.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.options__3.label"
+            }
+          ],
+          "default": "center",
+          "label": "t:sections.announcement-bar.blocks.announcement.settings.text_alignment.label"
+        },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "accent-1"
+    }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "announcement"
+      }
+    ]
+  }
+}
+{% endschema %}
+<style>
+
+.marquee {
+  --gap: 1rem;
+  height: 50px;
+  align-items: center;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: var(--gap);
+}
+.marquee__content {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-around;
+  gap: var(--gap);
+  min-width: 100%;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__content {
+    animation-play-state: paused !important;
+  }
+}
+
+/* Enable animation */
+.enable-animation .marquee__content {
+  animation: scroll 20s linear infinite;
+}
+
+/* Pause on hover */
+.marquee--hover-pause:hover .marquee__content {
+  animation-play-state: paused;
+}
+
+.marquee--fit-content {
+  max-width: fit-content;
+}
+
+
+.marquee--pos-absolute .marquee__content:last-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.enable-animation .marquee--pos-absolute .marquee__content:last-child {
+  animation-name: scroll-abs;
+}
+
+@keyframes scroll-abs {
+  from {
+    transform: translateX(calc(100% + var(--gap)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+</style>

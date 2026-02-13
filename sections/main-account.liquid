@@ -1,0 +1,342 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="mobile_topbar">
+  <h4>My Account</h4>
+  <div class="flex_scroll">
+    <div class="flex_row_acc">
+      <div class="flex_box_menu">
+        <!-- <h3>my purchases</h3> -->
+        <div class="active_account_tab"><a href="{{ routes.account_url }}">Online Purchase</a></div>
+      </div>
+      <div class="flex_box_menu">
+        <!-- <h3>my account</h3> -->
+        <div><a href="{{ routes.account_addresses_url }}">Addresses</a></div>
+      </div>
+      <div class="flex_box_menu">
+        <a href="mailto:{{ shop.email }}">E-Mail</a>
+      </div>
+      <div class="flex_box_menu">
+        <a href=" {{ routes.account_logout_url }}">Sign Out</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="admin-flex_row">
+    <div class="sidebar-admin">
+      <h2>Hey {{ customer.first_name }}</h2>
+
+      <div class="sidebar-items">
+        <!-- <h3>My purchases</h3> -->
+        <button class="sidebar-btn active_account_tab" id="online-tab">
+          <a href="{{ routes.account_url }}">Online Purchase</a>
+        </button>
+      </div>
+      <div class="sidebar-items">
+        <!-- <h3>My account</h3> -->
+        {% comment %} <button class="sidebar-btn" id="online-tab">Profile</button> {% endcomment %}
+        <button class="sidebar-btn" id="online-tab"><a href="{{ routes.account_addresses_url }}">Addresses</a></button>
+      </div>
+
+      <!--
+        <div class="sidebar-items help-block">
+          <h3>Need help</h3>
+          <button class="sidebar-btn" id="online-tab"><a href="{{ shop.url }}/pages/faq">FAQ</a></button>
+        </div>
+      -->
+      {% if customer.phone %}
+        <!--
+          <div class="sidebar-call-action">
+            <h4>Call</h4>
+            <p>
+              <a href="tel:{{ customer.phone }}">{{ customer.phone }}</a>
+            </p>
+          </div>
+        -->
+      {% endif %}
+      <div class="sidebar-call-action">
+        <h4>E-mail</h4>
+        <p>
+          <a href="mailto:{{ shop.email }}">{{ shop.email }}</a>
+        </p>
+      </div>
+      <div class="logged-out">
+        <a href=" {{ routes.account_logout_url }}">Sign Out</a>
+      </div>
+    </div>
+    <div class="customer order section-{{ section.id }}-padding">
+      <svg style="display:none">
+        <symbol id="icon-discount" viewBox="0 0 12 12">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M7 0h3a2 2 0 012 2v3a1 1 0 01-.3.7l-6 6a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4l6-6A1 1 0 017 0zm2 2a1 1 0 102 0 1 1 0 00-2 0z" fill="currentColor">
+        </symbol>
+      </svg>
+      <div>
+        <h2 class="order_title">Online Purchases</h2>
+        {%- for order in customer.orders -%}
+          <div class="order-info">
+            <div class="order-status">
+              {%- if order.cancelled -%}
+                {%- assign cancelled_at = order.cancelled_at | time_tag: format: 'date_at_time' -%}
+                <h3 class="canceled_order">Order Cancelled</h3>
+                {% comment %} <p>{{ 'customer.order.cancelled_reason' | t: reason: order.cancel_reason_label }}</p> {% endcomment %}
+              {% else %}
+                <h3 id="orderConfirmation{{ order.id }}">Order Confirmed</h3>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="order-detailed-box">
+            <div class="order-text-info">
+              <div class="prd-detail-block">
+                <h3>Order Date</h3>
+                {%- assign order_date = order.created_at | time_tag: format: 'date_at_time' -%}
+                <p>{{ order.created_at | time_tag: format: 'date' }}</p>
+              </div>
+              <div class="prd-detail-block">
+                <h3>Order ID</h3>
+                <p>{{ order.name }}</p>
+              </div>
+              <div class="order-del-address">
+                <h3>Delivery Address & Contact</h3>
+                <div class="order-address-block">
+                  <h4 class="custmer_name">
+                    {{ order.shipping_address.first_name }}
+                  </h4>
+                  <p>
+                    {{ order.shipping_address.address1 }}
+                    {{ order.shipping_address.address2 }}
+                  </p>
+                  <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province_code }}</p>
+                  <p>{{ order.shipping_address.zip }}, {{ order.shipping_address.country }}</p>
+                  <div class="cust_phone">{{ order.shipping_address.phone }}</div>
+                </div>
+              </div>
+              <div class="order-del-address ord_total_price">
+                <h3>Total Order Price</h3>
+                <h2 class="order-total-price">
+                  {{ order.total_net_amount | money_with_currency }}
+                </h2>
+                <!--
+                  <div class="ordered-pymnt-mthd">
+                    {% assign status = order.financial_status_label %}
+                    <h3>
+                      {% if status == 'Pending' %}
+                        {{ 'Pay on delivery' }}
+                      {% else %}
+                        {{ order.financial_status_label -}}
+                      {%- endif %}
+                    </h3>
+                  </div>
+                -->
+              </div>
+            </div>
+            <div class="abt-ordered-prd">
+              {% assign count = 0 %}
+              {%- for line_item in order.line_items -%}
+                {% assign count = count | plus: 1 %}
+              {% endfor %}
+              <h3>Includes {{ count }} Items</h3>
+              <div class="ord-prd-admin {% if count > 2 %}scrollabe_div {% endif %}">
+                {%- for line_item in order.line_items -%}
+                  <div class="ord-single-prd">
+                    <div class="ord-prd-img">
+                      <img src="//{{ shop.domain }}/cdn/shop/{{ line_item.image }}">
+                    </div>
+                    <div class="ord-single-prd-info">
+                      <div class="ord-single-top">
+                        <h4>{{ line_item.title | split: '-' | first }}</h4>
+                        {%- if order.cancelled -%}
+                        {% else %}
+                          {% assign cp_url = 'https://jolene.clickpost.in/?waybill=' %}
+                          {% assign waybill = line_item.fulfillment.tracking_number %}
+                          {% if waybill %}
+                            <a
+                              class="track-btn"
+                              href="{{cp_url}}{{waybill}}"
+                              target="_blank"
+                              id="{{ waybill }}"
+                              style="display:none"
+                            >
+                              Track Order
+                            </a>
+                          {% endif %}
+                          <button
+                            class="track-btn"
+                            onclick="getCp({{ waybill }})"
+                            id="{{ order.id }}"
+                            style="display:none"
+                          >
+                            Returns & Exchanges
+                          </button>
+                        {% endif %}
+                        <script>
+                          async function returnCheck() {
+                             var waybill = "{{ waybill }}";
+                             var return_id = "{{ order.id }}";
+                             const currentDate = new Date();
+                                   currentDate.setUTCHours(currentDate.getUTCHours() + 5);
+                                   currentDate.setUTCMinutes(currentDate.getUTCMinutes() + 30);
+                             const currentDateTime = currentDate.toISOString().slice(0, 19).replace("T", " ");
+                           if(waybill != ''){
+                              try {
+                                   const response_return = await fetch('https://jolene.clickpost.in/api/v1/track-order?null=null&waybill='+waybill);
+                                   const return_data = await response_return.json();
+                                   var StartDateTime = return_data.result[waybill].latest_status.timestamp;
+
+                                   const status = return_data.result[waybill].latest_status.status;
+                                   var sevenDaysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+                                   const initialDateTime = new Date(StartDateTime);
+                                         sevenDaysInMilliseconds = 7 * 24 * 60 * 60 * 1000;
+                                   const resultTimestamp = initialDateTime.getTime() + sevenDaysInMilliseconds;
+                                   const resultDate = new Date(resultTimestamp);
+                                         resultDate.setUTCHours(resultDate.getUTCHours() + 5);
+                                         resultDate.setUTCMinutes(resultDate.getUTCMinutes() + 30);
+                                   const FinalDateTime = resultDate.toISOString().slice(0, 19).replace("T", " ");
+
+
+                                  if(status == 'Delivered' ) {
+                                       document.getElementById('orderConfirmation{{ order.id }}').style.display = 'none';
+                                       if(FinalDateTime >= currentDateTime){
+                                       document.getElementById(return_id).style.display = 'block';
+                                       }
+                                   }else{
+                                          document.getElementById(waybill).style.display = 'block';
+                                       }
+
+                                   waybill = '';
+                                   return_id = '';
+
+                                    } catch (error) {
+                                      console.error('Error:', error);
+                                       }
+                                     }
+                                }
+                          returnCheck();
+                        </script>
+
+                        {% assign waybill = '' %}
+                        <h5>
+                          {%- if line_item.original_price != line_item.final_price
+                            or line_item.unit_price_measurement
+                          -%}
+                            <dl>
+                              {%- if line_item.original_price != line_item.final_price -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                </dt>
+                                <dd class="regular-price">
+                                  <s>{{ line_item.original_price | money }}</s>
+                                </dd>
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.sale_price' | t }}</span>
+                                </dt>
+                                <dd>
+                                  <span>{{ line_item.final_price | money }}</span>
+                                </dd>
+                              {%- else -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+                                </dt>
+                                <dd>
+                                  {{ line_item.original_price | money }}
+                                </dd>
+                              {%- endif -%}
+                              {%- if line_item.unit_price_measurement -%}
+                                <dt>
+                                  <span class="visually-hidden">{{ 'products.product.price.unit_price' | t }}</span>
+                                </dt>
+                                <dd class="unit-price">
+                                  <span>
+                                    {%- capture unit_price_separator -%}
+                                <span aria-hidden="true">/</span
+                                ><span class="visually-hidden">{{ 'accessibility.unit_price_separator' | t }}&nbsp;</span>
+                              {%- endcapture -%}
+                                    {%- capture unit_price_base_unit -%}
+                                {%- if line_item.unit_price_measurement.reference_value != 1 -%}
+                                  {{- line_item.unit_price_measurement.reference_value -}}
+                                {%- endif -%}
+                                {{ line_item.unit_price_measurement.reference_unit }}
+                              {%- endcapture -%}
+                                    <span data-unit-price>{{ line_item.unit_price | money }}</span>
+                                    {{- unit_price_separator -}}
+                                    {{- unit_price_base_unit -}}
+                                  </span>
+                                </dd>
+                              {%- endif -%}
+                            </dl>
+                          {%- else -%}
+                            <span>{{ line_item.final_price | money }}</span>
+                          {%- endif -%}
+                        </h5>
+                      </div>
+                      <div class="ord-single-bottom">
+                        <div class="qty-ord">
+                          <h4>Qty</h4>
+                          <h5>{{ line_item.quantity }}</h5>
+                        </div>
+                        <div class="qty-ord">
+                          <h4>Size</h4>
+                          <h5>{{ line_item.title | split: '/' | first | split: '-' | last }}</h5>
+                        </div>
+                        {% comment %}
+                          <div class="qty-ord">
+                           <h4>Color</h4>
+                           <h5>{{ line_item.title  | split: '/' | last }}</h5>
+                          </div>
+                        {% endcomment %}
+                      </div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+          </div>
+          <div class="ord-divider"></div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.main-order.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

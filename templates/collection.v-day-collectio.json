@@ -1,0 +1,172 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "inner-banner": {
+      "type": "vacation-wear-banner",
+      "settings": {
+        "image": "shopify://shop_images/Jolene-collage-4.jpg",
+        "image_2": "shopify://shop_images/Jolene-collage-4_ee222dc7-63f9-4715-b289-6161820aceb5.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "medium"
+      }
+    },
+    "product-grid": {
+      "type": "vacation-wear-grid",
+      "blocks": {
+        "263c20bd-f28c-47b3-8c48-0b4d1a82135b": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "section_image": "shopify://shop_images/7.png",
+            "product1": "ts007oversized-teeecru",
+            "product2": "b010mom-fit-chinosandstone",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "ff7e0301-02c9-4533-820b-e75461a572b8": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "section_image": "shopify://shop_images/Jolene_D3_1910236479.jpg",
+            "product1": "ts-001oversized-tee-puff-printecru",
+            "product2": "dn005denim-pantdark-indigo",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "6e217d0f-8eab-4f46-8fe4-969b8bb07d6b": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "section_image": "shopify://shop_images/Jolene_D3_1910239743_1751acc7-bec0-4563-a77d-1c2927159563.jpg",
+            "product1": "t005classic-fit-with-box-pleatsand",
+            "product2": "dn002denim-pantecru",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "c5a5d665-e1e4-4cde-a395-638a724d1932": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "section_image": "shopify://shop_images/Jolene_D3_1910232022.jpg",
+            "product1": "t008classic-fit-without-box-pleatwhite",
+            "product2": "b001mini-flare-chinoslate-rose",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "text_9nRrJy": {
+          "type": "text",
+          "settings": {
+            "product1": "",
+            "product2": "",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        }
+      },
+      "block_order": [
+        "263c20bd-f28c-47b3-8c48-0b4d1a82135b",
+        "ff7e0301-02c9-4533-820b-e75461a572b8",
+        "6e217d0f-8eab-4f46-8fe4-969b8bb07d6b",
+        "c5a5d665-e1e4-4cde-a395-638a724d1932",
+        "text_9nRrJy"
+      ],
+      "settings": {
+        "products_per_page": 50,
+        "columns_desktop": 3,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "enable_sorting": true,
+        "columns_mobile": "1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_yqxrMX": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_qRF4NB": {
+          "type": "heading",
+          "settings": {
+            "heading": "No Returns applicable for this collection. Only store credits will be given. Exchanges supported.",
+            "heading_size": "h2"
+          }
+        },
+        "text_qwAjwH": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>"
+          }
+        },
+        "button_dXnpCN": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Button label",
+            "button_link": "",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_qRF4NB",
+        "text_qwAjwH",
+        "button_dXnpCN"
+      ],
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "inner-banner",
+    "product-grid",
+    "rich_text_yqxrMX"
+  ]
+}

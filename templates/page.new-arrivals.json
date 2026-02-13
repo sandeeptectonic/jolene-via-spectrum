@@ -1,0 +1,137 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "new-arrivals",
+      "blocks": {
+        "2_products_DATeiL": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "olive-printed-placket-dress",
+            "product_1_img": "shopify://shop_images/1_6854e8a6-f416-4f31-b449-72535e366b6e.jpg",
+            "product_2": "maroon-schiffli-fit-flare-midi-dress",
+            "product_2_img": "shopify://shop_images/1-_17__1.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_XzLXGA": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "mustard-printed-high-neck-dress",
+            "product_1_img": "shopify://shop_images/3_f678c962-1c23-44a2-85bb-f739152fa351.jpg",
+            "product_2": "black-halter-neck-drop-waisted-dress",
+            "product_2_img": "shopify://shop_images/midnight_square.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_EJXXij": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "black-embroidered-shirt",
+            "product_1_img": "shopify://shop_images/Mask_group-11.jpg",
+            "product_2": "blue-white-striped-seersucker-dress-with-belt",
+            "product_2_img": "shopify://shop_images/4-_7__1.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_gXQeLw": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "summer-bloom-halter-neck-top",
+            "product_1_img": "shopify://shop_images/Mask_group-5.jpg",
+            "product_2": "black-multicolor-printed-bodycon-dress",
+            "product_2_img": "shopify://shop_images/4-_7.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_jLrpHM": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "navy-printed-high-neck-dress",
+            "product_1_img": "shopify://shop_images/3_2_6c579940-b46a-433b-9134-347b4b28b247.jpg",
+            "product_2": "black-printed-fit-and-flare-dress",
+            "product_2_img": "shopify://shop_images/6-_5.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_e48enY": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "classic-red-and-white-striped-shirt",
+            "product_1_img": "shopify://shop_images/Mask_group-2.jpg",
+            "product_2": "maroon-schiffli-tiered-dress",
+            "product_2_img": "shopify://shop_images/3-_10.jpg",
+            "make_large": false
+          }
+        },
+        "2_products_VyhwYK": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "navy-printed-maxi-dress",
+            "product_1_img": "shopify://shop_images/Mask_group-6.jpg",
+            "product_2": "white-embroidered-shirt",
+            "product_2_img": "shopify://shop_images/5-_13__1.jpg",
+            "make_large": false
+          }
+        },
+        "2_banners_product_xMjxQV": {
+          "type": "2_banners_product",
+          "disabled": true,
+          "settings": {
+            "image_1": "shopify://shop_images/PRMD2.webp",
+            "image_2": "shopify://shop_images/PRMD3.webp",
+            "image_3": "shopify://shop_images/PRMD1.webp",
+            "title_1": "",
+            "title_2": "",
+            "product": "printed-ruched-mini-dress"
+          }
+        },
+        "2_products_6kNgD6": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "t008classic-fit-without-box-pleatwhite",
+            "product_1_img": "shopify://shop_images/pw1_1.jpg",
+            "product_2": "black-floral-button-down-top",
+            "product_2_img": "shopify://shop_images/Cropped_Image_5.png",
+            "make_large": false
+          }
+        },
+        "2_products_ETmw3k": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "brown-printed-halter-neck-dress",
+            "product_1_img": "shopify://shop_images/5_1_dbdd6457-d643-4ab1-affc-9c84c4dc3ddf.jpg",
+            "product_2": "",
+            "make_large": false
+          }
+        }
+      },
+      "block_order": [
+        "2_products_DATeiL",
+        "2_products_XzLXGA",
+        "2_products_EJXXij",
+        "2_products_gXQeLw",
+        "2_products_jLrpHM",
+        "2_products_e48enY",
+        "2_products_VyhwYK",
+        "2_banners_product_xMjxQV",
+        "2_products_6kNgD6",
+        "2_products_ETmw3k"
+      ],
+      "settings": {
+        "heading": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

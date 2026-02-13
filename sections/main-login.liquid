@@ -1,0 +1,258 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="account_page">
+  <div class="auth-page-wrap">
+    <div class="customer register section-{{ section.id }}-padding">
+      <div class="recovery-password">
+        <div>
+          {%- if recover_success == true -%}
+            <h3 class="form__message" tabindex="-1" autofocus>
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 13 13">
+                <path d="M6.5 12.35C9.73087 12.35 12.35 9.73086 12.35 6.5C12.35 3.26913 9.73087 0.65 6.5 0.65C3.26913 0.65 0.65 3.26913 0.65 6.5C0.65 9.73086 3.26913 12.35 6.5 12.35Z" fill="#428445" stroke="white" stroke-width="0.7"/>
+                <path d="M5.53271 8.66357L9.25213 4.68197" stroke="white"/>
+                <path d="M4.10645 6.7688L6.13766 8.62553" stroke="white">
+              </svg>
+              {{ 'customer.recover_password.success' | t }}
+            </h3>
+          {%- endif -%}
+
+          {%- if shop.checkout.guest_login -%}
+            <div hidden>
+              <hr>
+              <h2>{{ 'customer.login_page.guest_title' | t }}</h2>
+
+              {%- form 'guest_login' -%}
+                <button>
+                  {{ 'customer.login_page.guest_continue' | t }}
+                </button>
+              {%- endform -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Login Form 1 -->
+        <div class="acc_block_user">
+          <div class="acc_left_block">
+            <img src="https://cdn.shopify.com/s/files/1/0761/2707/6643/files/login_reg_left.png?v=1698405325">
+          </div>
+          <div id="recoveryBox" class="box-wrap">
+            <span>
+              {{ 'customer.recover_password.title' | t }}
+            </span>
+            <p>
+              {{ 'customer.recover_password.subtext' | t }}
+            </p>
+
+            {%- form 'recover_customer_password' -%}
+              {% assign recover_success = form.posted_successfully? %}
+              <div class="form-label">
+                <input
+                  type="email"
+                  value=""
+                  name="email"
+                  id="RecoverEmail"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  autocomplete="email"
+                  {% if form.errors %}
+                    aria-invalid="true"
+                    aria-describedby="RecoverEmail-email-error"
+                    autofocus
+                  {% endif %}
+                  placeholder="{{ 'customer.login_page.email' | t }}"
+                >
+              </div>
+              {%- if form.errors -%}
+                <div class="errors error_forgot">
+                  <ul>
+                    <li>{{ form.errors.messages.form }}</li>
+                  </ul>
+                </div>
+              {%- endif -%}
+              <button>
+                {{ 'customer.login_page.submit' | t }}
+              </button>
+
+              <div class="form-link">
+                <span>Already a Member? <a href="/account/login">Log In</a></span>
+              </div>
+            {%- endform -%}
+          </div>
+          <div id="signIn" class="box-wrap">
+            <span>Welcome to Jolene </span>
+            {%- form 'customer_login', novalidate: 'novalidate' -%}
+              <input type="hidden" name="checkout_url" value="/">
+
+              <div>
+                <div class="form-label">
+                  {% if recover_success == true %}
+                    <div class="success_msg" style="color:green;">
+                      The password recovery email has been successfully sent.
+                    </div>
+                  {% endif %}
+                  <input
+                    type="email"
+                    name="customer[email]"
+                    id="CustomerEmail"
+                    autocomplete="email"
+                    autocorrect="off"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    {% if form.errors contains 'form' %}
+                      aria-invalid="true"
+                    {% endif %}
+                    placeholder="{{ 'customer.login_page.email' | t }}"
+                  >
+                </div>
+
+                {%- if form.password_needed -%}
+                  <div class="form-label">
+                    <input
+                      type="password"
+                      value=""
+                      name="customer[password]"
+                      id="CustomerPassword"
+                      autocomplete="current-password"
+                      autocomplete="off"
+                      {% if form.errors contains 'form' %}
+                        aria-invalid="true"
+                      {% endif %}
+                      placeholder="{{ 'customer.login_page.password' | t }}"
+                    >
+                  </div>
+                  <div class="err" id="err" style="color:red;">
+                    {%- if form.errors -%}
+                      {{ form.errors | default_errors }}
+                    {%- endif -%}
+                  </div>
+                  <div class="form-label1 fg_psw">
+                    <div class="form-link">
+                      <a class="text_center" href="#recover" onclick="recovery()">
+                        {{ 'customer.login_page.forgot_password' | t }}
+                      </a>
+                    </div>
+                  </div>
+                {%- endif -%}
+
+                <button id="customer_login_form">Log in</button>
+                <div class="form-link">
+                  <span class="not_member">Not a Member? <a href="/account/register">Sign Up</a></span>
+                </div>
+              </div>
+            {%- endform -%}
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+              var stat_number = '';
+              var otp = '';
+              var phone = '';
+              var inputEmail = '';
+              var inputPassword = '';
+              var otp1 = '';
+              var otp2 =   '';
+              var otp3 =  '';
+              var otp4 =  '';
+
+             const currentUrl = window.location.href;
+
+             if(currentUrl == '{{ shop.url }}/account/login#recover'){
+               document.getElementById('signIn').style.display = 'none';
+
+             }else{
+               document.getElementById('signIn').style.display = 'block';
+               document.getElementById('recoveryBox').style.display = 'none';
+             }
+           function recovery(){
+
+               document.getElementById('recoveryBox').style.display = 'block';
+               document.getElementById('signIn').style.display = 'none';
+               document.getElementById('recoveryBox').style.display = 'block';
+            }
+             var errDiv = document.getElementById("err");
+                     if (errDiv.innerHTML == '' ) {
+
+                             document.getElementById("wrongEmail").style.display = "none";
+
+                     }else{
+
+                        document.getElementById("wrongEmail").style.display = "block";
+
+                        document.getElementById("emailform").style.display = "block";
+                        errDiv.style.display = "none";
+                     }
+
+
+
+              document.getElementById("eyeclose").style.display = "none";
+
+              if(err>0){
+               document.getElementById("emailform").style.display = "block";
+              }
+
+
+
+
+      // Eye Lash
+
+         function eyelash(){
+           var passType = document.getElementById('sing-up-pass');
+
+            if(passType.type == "password"){
+               passType.type = "text";
+               document.getElementById("eyeopen").style.display = "none";
+              document.getElementById("eyeclose").style.display = "block";
+            }else{
+              passType.type = "password";
+              document.getElementById("eyeclose").style.display = "none";
+              document.getElementById("eyeopen").style.display = "block";
+            }
+         }
+    </script>
+    {% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+    {% endschema %}
+  </div>
+</div>

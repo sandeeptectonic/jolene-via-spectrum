@@ -1,0 +1,217 @@
+ 
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="section-{{ section.id }}-padding">
+ <div class="lookbook_wrap">
+          <div class="lb_grid_wrap">
+            
+            <div class="lb_grid">
+              {% for block in section.blocks %}
+                {% assign product =  block.settings.product %}
+                 {% assign image = block.settings.product_thumb | default:product.featured_image %}
+                 
+                   <div class="lb_grid_img lb_grid_img_{{ forloop.index }}" id="lb_img_1">
+                       <img src="{{ image | image_url:width:800 }}" />
+                      <!-- {% for media in product.media %}
+                         {% if media.media_type == "image" %}
+                              <img src="{{ media.preview_image | image_url:width:500 }}" />
+                         {% endif %}  
+                      {% endfor %}  -->
+                     <h2 class="lb_heading" style="display: none">{{ product.title }}</h2>
+                     <img class="lp_featured_img"  style="display: none"  src="{{ product.featured_image | image_url:width:500 }}" />
+                       {% if product.description != blank %}
+                     <div class="lb_des" style="display: none">{{ product.description | strip_html}}</div>
+                         {% endif %}  
+                     {% if block.settings.product_thumb2 != blank %}
+                        <img class="lp_large_img" style="display: none" src="{{ block.settings.product_thumb2 | image_url:width:800 }}" />
+                     {% endif %}  
+                     
+
+                     <a href="{{ product.url }}"  class="lb_btn" style="display: none">Discover</a>
+                   </div>
+              {% endfor %} 
+            </div>
+           
+            <!-- <div class="lb_sec_2">
+              <div class="lb_inner_sec_1">
+            <div class="lb_img lb_img_4"><img src="https://picsum.photos/400/3400" /></div>
+            <div class="lb_img lb_img_5"><img src="https://picsum.photos/400/3400" /></div>
+              </div>
+            <div class="lb_inner_sec_2">
+            <div class="lb_img lb_img_6"><img src="https://picsum.photos/400/3400" /></div>
+            </div>
+            </div>
+           
+          </div>
+          <div class="lookbook_right_box">
+          <div class="lb_sec_3">
+          <div class="lb_img lb_img_7"><img src="https://picsum.photos/400/3400" /></div>
+            </div>
+            <div class="lb_sec_4">
+            <div class="lb_img lb_img_8"><img src="https://picsum.photos/400/3400" /></div>
+            <div class="lb_img lb_img_9"><img src="https://picsum.photos/400/3400" /></div>
+            </div>
+          </div> -->
+        </div>
+
+
+<!-- HTML markup -->
+<div id="lg_Modal" class="lg_modal">
+  <div class="lg_modal-content">
+    <div class="image-container">
+      <span class="lg_close">&times;</span>
+      <img class="modalImg" src="https://picsum.photos/400/400" />
+    </div>
+    <div class="content-container">
+      <div class="product__title">
+      <h2>Title</h2>
+      </div>
+      <div class="modalFeatImg_box">
+        <img class="modalFeatImg" src="" />
+      </div>
+      <div class="prd_description">
+      <p>Description Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+      <a href="#" class="btn" target="_blank">Discover</a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+ // Get the modal
+var modal = document.getElementById("lg_Modal");
+
+// Get the image containers and insert them inside the modal
+var imgContainers = document.querySelectorAll(".lb_grid_img");
+var modalImg = document.querySelector(".lg_modal-content .modalImg");
+var modalfeatImg = document.querySelector(".lg_modal-content .modalFeatImg");
+var modalTitle = document.querySelector(".lg_modal-content h2");
+var modalDescription = document.querySelector(".lg_modal-content p");
+var modalLink = document.querySelector(".lg_modal-content a");
+
+imgContainers.forEach(function(imgContainer) {
+  imgContainer.addEventListener("click", function() {
+    // Check screen width
+    if (window.innerWidth >= 757) {
+      var productImage = this.querySelector(".lp_large_img");
+      var featuredImage = this.querySelector(".lp_featured_img");
+      var productTitleElement = this.querySelector("h2");
+      var productDescriptionElement = this.querySelector(".lb_des");
+      var productLinkElement = this.querySelector("a");
+
+      modalImg.src = productImage.src;
+      modalfeatImg.src = featuredImage.src;
+      modalTitle.textContent = productTitleElement ? productTitleElement.textContent : "";
+      modalDescription.textContent = productDescriptionElement ? productDescriptionElement.textContent : "";
+      modalLink.href = productLinkElement ? productLinkElement.href : "";
+
+      modal.style.display = "flex";
+    } else {
+      var productLinkElement = this.querySelector("a");
+      window.location.href = productLinkElement;
+
+    }
+  });
+});
+
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("lg_close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+
+// Get the modal overlay
+var modalOverlay = document.querySelector(".lg_modal");
+
+// When the user clicks outside the modal content, close the modal
+modalOverlay.addEventListener("click", function(event) {
+  if (event.target === modalOverlay) {
+    modal.style.display = "none";
+  }
+});
+
+
+
+</script>
+
+</div>
+
+{% schema %}
+{
+  "name": "Looktest",
+  "tag": "section",
+  "class": "section",
+   "blocks": [
+      {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Select Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_thumb",
+          "label": "Product Thumb"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_thumb2",
+          "label": "Product Thumb Large"
+        }
+      ] 
+    }  
+   ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ],
+   "presets": [
+    {
+      "name": "Looktest" 
+    }
+  ]
+}
+{% endschema %}

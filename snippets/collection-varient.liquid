@@ -1,0 +1,50 @@
+<style>
+  .variant-option {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  .variant-option.selected {
+    background-color: #e0e0e0;
+  }
+  .variant-option.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+
+<div>
+  <form action="/cart/add" method="post" enctype="multipart/form-data">
+     {% assign printedSizes = '' %}
+    {% for variant in product.variants %}
+      {% if product.variants.size > 1 %}
+
+    {% if printedSizes != variant.option1 %}
+        <div
+          class="
+            variant-option
+            {% comment %} {% if variant == product.selected_or_first_available_variant %} selected{% endif %} {% endcomment %}
+            {% if variant.available == false %} disabled{% endif %}
+          "
+        >
+          {{ variant.option1 }}
+          <input
+            type="radio"
+            name="id"
+            id="variant_{{ variant.id }}"
+            value="{{ variant.id }}"
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            onclick="addToCart('{{ variant.id }}','1')"
+          >
+        </div>
+          {% assign printedSizes = variant.option1  %}
+
+    {% endif %}
+      {% endif %}
+    {% endfor %}
+  </form>
+</div>

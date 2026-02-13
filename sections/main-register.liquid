@@ -1,0 +1,269 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<div class="account_page">
+  <div class="customer register section-{{ section.id }}-padding">
+    <svg style="display: none">
+      <symbol id="icon-error" viewBox="0 0 13 13">
+        <circle cx="6.5" cy="6.50049" r="5.5" stroke="white" stroke-width="2"/>
+        <circle cx="6.5" cy="6.5" r="5.5" fill="#EB001B" stroke="#EB001B" stroke-width="0.7"/>
+        <path d="M5.87413 3.52832L5.97439 7.57216H7.02713L7.12739 3.52832H5.87413ZM6.50076 9.66091C6.88091 9.66091 7.18169 9.37267 7.18169 9.00504C7.18169 8.63742 6.88091 8.34917 6.50076 8.34917C6.12061 8.34917 5.81982 8.63742 5.81982 9.00504C5.81982 9.37267 6.12061 9.66091 6.50076 9.66091Z" fill="white"/>
+        <path d="M5.87413 3.17832H5.51535L5.52424 3.537L5.6245 7.58083L5.63296 7.92216H5.97439H7.02713H7.36856L7.37702 7.58083L7.47728 3.537L7.48617 3.17832H7.12739H5.87413ZM6.50076 10.0109C7.06121 10.0109 7.5317 9.57872 7.5317 9.00504C7.5317 8.43137 7.06121 7.99918 6.50076 7.99918C5.94031 7.99918 5.46982 8.43137 5.46982 9.00504C5.46982 9.57872 5.94031 10.0109 6.50076 10.0109Z" fill="white" stroke="#EB001B" stroke-width="0.7">
+      </symbol>
+    </svg>
+
+    <!-- Form 1 -->
+    <div class="acc_block_user">
+      <div class="acc_left_block">
+        <img src="https://cdn.shopify.com/s/files/1/0761/2707/6643/files/login_reg_left.png?v=1698405325">
+      </div>
+      <div id="signupform1" class="box-wrap">
+        <div class="form-content">
+          <span>Enter details to be a member</span>
+        </div>
+        {%- form 'create_customer', novalidate: 'novalidate' -%}
+          <div class="form-label">
+            <input
+              type="text"
+              name="customer[first_name]"
+              id="RegisterForm-FirstName"
+              {% if form.first_name %}
+                value="{{ form.first_name }}"
+              {% endif %}
+              autocomplete="given-name"
+              placeholder="{{ 'customer.register.first_name' | t }}"
+              aria-required="true"
+              onkeyup="changeHandle()"
+            >
+          </div>
+          <div class="form-label">
+            <input
+              type="text"
+              name="customer[last_name]"
+              id="RegisterForm-LastName"
+              {% if form.last_name %}
+                value="{{ form.last_name }}"
+              {% endif %}
+              autocomplete="family-name"
+              placeholder="{{ 'customer.register.last_name' | t }}"
+              aria-required="true"
+              onkeyup="changeHandle()"
+            >
+          </div>
+          <div class="form-label">
+            <input
+              type="email"
+              name="customer[email]"
+              id="RegisterForm-email"
+              {% if form.email %}
+                value="{{ form.email }}"
+              {% endif %}
+              spellcheck="false"
+              autocapitalize="off"
+              autocomplete="off"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="RegisterForm-email-error"
+              {% endif %}
+              placeholder="{{ 'customer.register.email' | t }}"
+              onkeyup="changeHandle()"
+            >
+          </div>
+          {%- if form.errors contains 'email' -%}
+            <div class="errors">
+              <ul>
+                <li>
+                  {{ form.errors.translated_fields.email | capitalize }}
+                  {{ form.errors.messages.email }}.
+                </li>
+              </ul>
+            </div>
+          {%- endif -%}
+          <div class="form-label">
+            <input type="tel" name="phone" id="sing-up-phone1" value="+91" required readonly>
+            <input
+              type="tel"
+              class="sing-up-number"
+              id="sing-up-phone"
+              name="customer[note][phone]"
+              maxLength="10"
+              minLength="10"
+              placeholder="Phone Number"
+              aria-required="true"
+              onkeyup="changeHandle()"
+            >
+            <div style="color:red;" id="SignInMessage"></div>
+            <div class="already-exist" id="phone-digit">Phone number must be 10 digits</div>
+          </div>
+          <p id="phoneError" style="color:red;"></p>
+          <div class="field-d-o-b">
+            <input
+              autocomplete="off"
+              class="text"
+              id="moveInDate"
+              name="customer[note][dob]"
+              placeholder="Date of Birth"
+              type="text"
+              spellcheck="false"
+              value=""
+              aria-required="true"
+              onkeyup="changeHandle()"
+            >
+            <p class="password-instruction">Enter in DD-MM-YYYY format</p>
+            <p class="error-message" id="form3Mes"></p>
+          </div>
+          <div class="form-label">
+            <input
+              type="password"
+              name="customer[password]"
+              id="RegisterForm-password"
+              aria-required="true"
+              {% if form.errors contains 'password' %}
+                aria-invalid="true"
+                aria-describedby="RegisterForm-password-error"
+              {% endif %}
+              placeholder="{{ 'customer.register.password' | t }}"
+              autocomplete="off"
+              onkeyup="changeHandle()"
+            >
+          </div>
+          {%- if form.errors contains 'password' -%}
+            <div class="errors">
+              <ul>
+                <li>
+                  {{ form.errors.translated_fields.password | capitalize }}
+                  {{ form.errors.messages.password }}.
+                </li>
+              </ul>
+            </div>
+          {%- endif -%}
+          <div class="form-label1">
+            <div class="sign-in-details">
+              <div class=" checkbox-field">
+                <input
+                  type="checkbox"
+                  onchange="myFunction()"
+                  class="largerCheckbox"
+                  name="check-box"
+                  id="check"
+                  checked
+                >
+                <label for="che"
+                  >Sign up for emails to get updates from Jolene on products, offers and your Member benefits</label
+                >
+              </div>
+              <p>
+                By creating an account, you agree to Jolene’s
+                <a href="/pages/privacy-policy" target="blank"> Privacy Policy</a> and
+                <a href="/pages/terms-conditions" target="blank">Terms of Use </a>.
+              </p>
+            </div>
+          </div>
+          <button id="checkbutton" disabled="true">Create Account</button>
+          <div class="already-exist">
+            {%- if form.errors contains 'email' -%}
+            {%- elsif form.errors contains 'password' -%}
+            {% else %}
+              {%- if form.errors -%}
+                {%- for field in form.errors -%}
+                  {%- if field == 'form' -%}
+                    {{ form.errors.messages[field] }}
+                  {%- else -%}
+                    <a href="#RegisterForm-{{ field }}">
+                      {{ form.errors.translated_fields[field] | capitalize }}
+                      {{ form.errors.messages[field] }}
+                    </a>
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+            {% endif %}
+          </div>
+          <div class="form-link">
+            <span>Already a Member? <a href="/account/login">Log In</a></span>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+     document.getElementById('phone-digit').style.display = 'none';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var signUpPhone = document.getElementById('sing-up-phone');
+      signUpPhone.addEventListener('blur', function() {
+          var phoneDigit = document.getElementById('phone-digit');
+          if (this.value.length < 10) {
+              phoneDigit.style.display = 'block';
+          } else {
+              phoneDigit.style.display = 'none';
+          }
+      });
+  });
+
+    function changeHandle(){
+
+      var firstName = document.getElementById('RegisterForm-FirstName').value;
+      var LastName = document.getElementById('RegisterForm-LastName').value;
+      var emailValid = document.getElementById('RegisterForm-email').value;
+      var phonevalid = document.getElementById('sing-up-phone').value;
+      var dobvalid = document.getElementById('moveInDate').value;
+      var pswvalid = document.getElementById('RegisterForm-password').value;
+      var buttonchecked = document.getElementById('checkbutton');
+      var phoneError = document.getElementById('phone-digit');
+        if(phonevalid.length == 10){
+          document.getElementById('phone-digit').style.display = 'none';
+        }
+         var match = phonevalid.match(/^(\d{3})(\d{3})(\d{4})$/);
+
+       if(firstName !== '' && LastName !== '' && emailValid !== '' && match !== null && dobvalid !== '' && pswvalid !== ''){
+         buttonchecked.disabled = false;
+       }else{
+         buttonchecked.disabled = true;
+       }
+      }
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-register.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

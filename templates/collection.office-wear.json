@@ -1,0 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "inner-banner": {
+      "type": "inner-collection-banner",
+      "settings": {
+        "image": "shopify://shop_images/0222548631_9_1_1_1_1.png",
+        "image_2": "shopify://shop_images/0222548631_9_1_1_1.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt"
+      }
+    },
+    "product-grid": {
+      "type": "inner-product-grid",
+      "blocks": {
+        "2ee749af-6f7b-4e7b-a125-a67051b37461": {
+          "type": "text",
+          "settings": {
+            "section_image": "shopify://shop_images/F6ADYTFI5GV_HH4KT_3.jpg",
+            "product1": "t005classic-fit-with-box-pleatsand",
+            "product2": "t007classic-fit-shirtwhite-blue-striped",
+            "product3": "dn003denim-pantdark-indigo",
+            "product4": "dn003denim-pantindigo",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "b3826acd-e64d-4aa6-a698-2d72a303b820": {
+          "type": "text",
+          "settings": {
+            "section_image": "shopify://shop_images/2010711832_1_1_1_1_1.png",
+            "product1": "women-grey-top",
+            "product2": "women-blue-jeans",
+            "product3": "",
+            "product4": "",
+            "product5": "garment-name-17",
+            "product6": "garment-name-18",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "c603d2d0-35a2-43c5-96ae-a3db31c88284": {
+          "type": "text",
+          "settings": {
+            "section_image": "shopify://shop_images/7643498330_2_1_1_4.png",
+            "product1": "garment-name-12",
+            "product2": "garment-name-13",
+            "product3": "women-white-vjc-sleve",
+            "product4": "",
+            "product5": "women-blue-jeans",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "b81cd735-c124-46f8-aac7-de7ec87585b0": {
+          "type": "text",
+          "settings": {
+            "section_image": "shopify://shop_images/Screenshot_2023-07-18_at_14-53-37_c1f6220b-f820-4000-8b4c-f0517a373b0f1664368315852-Sangria-Women-Purple-Ethnic-Motifs-Printed-Pleated-Gotta-Pat-1.jpg_AVIF_Image_540_x_720_pixels.png",
+            "product1": "women-purple-ethnic-motifs-printed-pleated-gotta-patti-kurta",
+            "product2": "women-ethnic-motifs-palazzos",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        }
+      },
+      "block_order": [
+        "2ee749af-6f7b-4e7b-a125-a67051b37461",
+        "b3826acd-e64d-4aa6-a698-2d72a303b820",
+        "c603d2d0-35a2-43c5-96ae-a3db31c88284",
+        "b81cd735-c124-46f8-aac7-de7ec87585b0"
+      ],
+      "settings": {
+        "products_per_page": 50,
+        "columns_desktop": 3,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "inner-banner",
+    "product-grid"
+  ]
+}

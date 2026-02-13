@@ -1,0 +1,72 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "new-arrivals",
+      "blocks": {
+        "2_products_VyhwYK": {
+          "type": "2_products",
+          "settings": {
+            "product_1": "printed-halter-neck-top",
+            "product_1_img": "shopify://shop_images/Mask_group.png",
+            "product_2": "printed-flare-pants",
+            "product_2_img": "shopify://shop_images/IMG_0265_2_1.png",
+            "make_large": false
+          }
+        },
+        "2_banners_MpLDK6": {
+          "type": "2_banners",
+          "settings": {
+            "image_1": "shopify://shop_images/Mask_group_1.png",
+            "product_2_img": "printed-resort-shirt",
+            "image_2": "shopify://shop_images/IMG_0326_1.png",
+            "heading": "Printed Resort Shirt",
+            "content": ""
+          }
+        },
+        "2_banners_product_wmpaep": {
+          "type": "2_banners_product",
+          "settings": {
+            "image_1": "shopify://shop_images/Mask_group_2.png",
+            "image_2": "shopify://shop_images/Mask_group_3.png",
+            "image_3": "shopify://shop_images/Mask_group_4.png",
+            "title_1": "",
+            "title_2": "",
+            "product": "printed-shirt-dress"
+          }
+        },
+        "featured_collection_4exCjy": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "print-code-collection",
+            "product_thumb_1": "shopify://shop_images/IMG_0637_9a855448-2312-49f4-9ec7-29f62fa26500.jpg",
+            "product_thumb_2": "shopify://shop_images/Mask_group_6.png",
+            "product_thumb_3": "shopify://shop_images/Mask_group_7.png",
+            "product_thumb_4": "shopify://shop_images/IMG_0221_79a4a144-75c8-4c76-a4a0-93ddf60dbba1.jpg",
+            "product_thumb_5": "shopify://shop_images/IMG_0265_6c33a050-2d1d-48c3-9a7f-15931f330aa4.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "2_products_VyhwYK",
+        "2_banners_MpLDK6",
+        "2_banners_product_wmpaep",
+        "featured_collection_4exCjy"
+      ],
+      "settings": {
+        "heading": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

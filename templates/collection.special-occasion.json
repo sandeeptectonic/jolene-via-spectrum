@@ -1,0 +1,78 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "inner-banner": {
+      "type": "special-occassion-banner",
+      "settings": {
+        "image": "shopify://shop_images/woman-in-overalls-poses-by-brick-wall.jpg",
+        "image_2": "shopify://shop_images/Screenshot_2023-05-08_at_1.05_1.png",
+        "image_overlay_opacity": 0,
+        "image_height": "medium"
+      }
+    },
+    "product-grid": {
+      "type": "special-occassion-grid",
+      "blocks": {
+        "48c1abc6-970c-4cfb-835d-11afe7573aee": {
+          "type": "text",
+          "settings": {
+            "section_image": "shopify://shop_images/Screenshot_2023-07-18_at_14-53-37_c1f6220b-f820-4000-8b4c-f0517a373b0f1664368315852-Sangria-Women-Purple-Ethnic-Motifs-Printed-Pleated-Gotta-Pat-1.jpg_AVIF_Image_540_x_720_pixels.png",
+            "product1": "women-purple-ethnic-motifs-printed-pleated-gotta-patti-kurta",
+            "product2": "women-ethnic-motifs-palazzos",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        },
+        "1f0ac9a5-c5f3-4836-9b62-3ab3058895f6": {
+          "type": "text",
+          "settings": {
+            "product1": "single-breasted-formal-summer-suits",
+            "product2": "formal-summer-pants",
+            "product3": "",
+            "product4": "",
+            "product5": "",
+            "product6": "",
+            "product7": "",
+            "product8": ""
+          }
+        }
+      },
+      "block_order": [
+        "48c1abc6-970c-4cfb-835d-11afe7573aee",
+        "1f0ac9a5-c5f3-4836-9b62-3ab3058895f6"
+      ],
+      "settings": {
+        "products_per_page": 50,
+        "columns_desktop": 3,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "inner-banner",
+    "product-grid"
+  ]
+}

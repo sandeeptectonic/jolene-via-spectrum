@@ -1,0 +1,156 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "caption": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.descriptors.subtitle.value }}",
+            "text_style": "subtitle"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button"
+          }
+        },
+        "text_fkC7Cr": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.metafields.custom.apptile_size_chart.value }}",
+            "text_style": "body"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "a1a0af01-437e-47b7-bb50-0154ae98e5c9": {
+          "type": "product_info",
+          "settings": {
+            "return_heading": "Return and Exchange",
+            "return_info_para": "Enjoy a seamless 7-day paid return policy contingent to quality checks and free exchanges. Products sold in the Jolene Mid Year Sale, Annual Sale and Black Friday Sale event whether online or at the store, are NOT eligible for returns and exchanges.",
+            "free_shipping_heading": "Free Shipping",
+            "free_shipping_para": "Delivery in 3-7 working days. Free  shipping for all orders.",
+            "secure_transaction_heading": "Secure Transaction",
+            "secure_transaction_para": "Every purchase is safeguarded, granting you absolute tranquility."
+          }
+        },
+        "e62cc860-9e64-4fb2-80cb-3de42e0215fd": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "size chart",
+            "icon": "ruler",
+            "content": "<p>Size Chart Guideline</p><p></p><p></p><p></p><p></p>",
+            "page": "{{ product.metafields.custom.size_chart.value }}"
+          }
+        },
+        "2baa1702-693d-4ee1-ba54-2026c9259280": {
+          "type": "shopify://apps/estimated-delivery-date-cp/blocks/clickpost-edd/052d4955-0ec2-4e86-8e1f-f971acb44560",
+          "settings": {
+            "heading": "Delivery Estimation",
+            "color": "#000000",
+            "submit_color": "#ffffff",
+            "submit": "Check",
+            "edd_text": "You will receive this between",
+            "edd_color": "#008000",
+            "fail_color": "#ff0000",
+            "cod_text": "Cash on delivery",
+            "unservicable_text": "Pincode not servicable",
+            "cod": true,
+            "date_range": true,
+            "only_min": false,
+            "month": false,
+            "placeholder": "Enter your pincode",
+            "date_format": "2",
+            "enable_countdown": false,
+            "invalid_text": "Please enter a valid pincode",
+            "extra_text": "",
+            "helping_text": "",
+            "padding_top": 0,
+            "padding_bottom": 0
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "caption",
+        "price",
+        "variant_picker",
+        "text_fkC7Cr",
+        "buy_buttons",
+        "a1a0af01-437e-47b7-bb50-0154ae98e5c9",
+        "e62cc860-9e64-4fb2-80cb-3de42e0215fd",
+        "2baa1702-693d-4ee1-ba54-2026c9259280"
+      ],
+      "settings": {
+        "sizechart1": "shopify://shop_images/Size_Fit_Guide_-_Topwear.jpg",
+        "sizechart2": "shopify://shop_images/Size_Fit_Guide_-_Bottomwear.jpg",
+        "enable_sticky_info": true,
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "show",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Trending",
+        "heading_size": "h2",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "color_scheme": "background-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related-products"
+  ]
+}

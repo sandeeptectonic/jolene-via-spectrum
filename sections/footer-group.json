@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "0cc99331-6775-41df-aa00-5edf3aefe855": {
+          "type": "text",
+          "settings": {
+            "heading": "Heading",
+            "subtext": "<p><a href=\"http://1df768.myshopify.com/account\" title=\"http://1df768.myshopify.com/account\">Create An Account </a></p><p><a href=\"/pages/faq\" title=\"FAQ\">FAQ</a></p>"
+          }
+        },
+        "d5e33d2f-d63d-4c88-8212-ec3a7a3ea1ee": {
+          "type": "text",
+          "settings": {
+            "heading": "Heading",
+            "subtext": "<p><a href=\"https://jolene.clickpost.in/\" target=\"_blank\" title=\"https://jolene.clickpost.in/\">Track My Order</a></p><p><a href=\"https://1df768.myshopify.com/apps/return_prime\" target=\"_blank\" title=\"https://1df768.myshopify.com/apps/return_prime\">Returns & Exchanges</a></p><p><a href=\"/pages/return-refund-policy\" target=\"_blank\" title=\"Return & Refund Policy\">Return & Refund Policy</a></p>"
+          }
+        },
+        "c5009f4d-406d-4e0c-a624-540f01fc9769": {
+          "type": "text",
+          "settings": {
+            "heading": "Heading",
+            "subtext": "<p><a href=\"https://journal.jolene.club/\" target=\"_blank\" title=\"https://journal.jolene.club/\">Journal</a></p><p><a href=\"/pages/terms-conditions\" target=\"_blank\" title=\"Terms & Conditions\">Terms & Conditions</a></p><p><a href=\"/pages/privacy-policy\" target=\"_blank\" title=\"Privacy Policy\">Privacy Policy</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "0cc99331-6775-41df-aa00-5edf3aefe855",
+        "d5e33d2f-d63d-4c88-8212-ec3a7a3ea1ee",
+        "c5009f4d-406d-4e0c-a624-540f01fc9769"
+      ],
+      "settings": {
+        "newsletter_enable": false,
+        "newsletter_heading": "Subscribe to our emails",
+        "enable_follow_on_shop": true,
+        "show_social": true,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "payment_enable": true,
+        "show_policy": false,
+        "margin_top": 48,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

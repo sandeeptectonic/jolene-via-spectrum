@@ -1,0 +1,51 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-search",
+      "blocks": {
+        "faafd034-60db-4675-9c76-65ea771755de": {
+          "type": "product_info",
+          "settings": {
+            "return_heading": "7 Day Return",
+            "return_info_para": "Enjoy a seamless shopping experience, with a 7-day paid return policy contingent to quality checks.",
+            "free_shipping_heading": "Free Shipping",
+            "free_shipping_para": "Delivery in 3-7 working days. Free Shipping for orders of non-discounted items over INR 1800.",
+            "secure_transaction_heading": "Secure Transaction",
+            "secure_transaction_para": "Every purchase is safeguarded, granting you absolute tranquility."
+          }
+        }
+      },
+      "block_order": [
+        "faafd034-60db-4675-9c76-65ea771755de"
+      ],
+      "settings": {
+        "columns_desktop": 4,
+        "image_ratio": "adapt",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_filtering": true,
+        "filter_type": "drawer",
+        "enable_sorting": true,
+        "article_show_date": false,
+        "article_show_author": false,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

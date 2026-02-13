@@ -1,0 +1,331 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "home_collection_F7n8t7": {
+      "type": "home-collection",
+      "blocks": {
+        "heading_yKxfag": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/jolene_sale_banner_desktop_title_lower.jpg",
+            "heading": "Jolene Mid Year Sale",
+            "url_link": "shopify://collections/jolene-mid-year-sale"
+          }
+        }
+      },
+      "block_order": [
+        "heading_yKxfag"
+      ],
+      "settings": {}
+    },
+    "home_collection_HrGHkd": {
+      "type": "home-collection",
+      "blocks": {
+        "heading_GtnzXm": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/banner_3_010.jpg",
+            "heading": "Discover",
+            "url_link": "shopify://collections/black-friday-sale"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GtnzXm"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "170998461498dec8a7": {
+      "type": "apps",
+      "blocks": {
+        "foxsell_cps_box_pro_y7VXew": {
+          "type": "shopify://apps/foxsell/blocks/cps_box_pro/8af31731-4b2e-455d-bbf0-ce3debb3c4bf",
+          "settings": {
+            "featured_collection": "",
+            "featured_product_list": [
+              "printed-flare-pants",
+              "printed-halter-neck-dress",
+              "printed-halter-neck-top",
+              "printed-ruched-mini-dress",
+              "printed-shirt-dress",
+              "printed-wrap-dress",
+              "printed-resort-shirt"
+            ],
+            "add_to_cart_text": "",
+            "view_details_text": "View Details",
+            "sale_text": "",
+            "section_background": "linear-gradient(274deg, rgba(255, 255, 255, 1) 100%, rgba(0, 0, 0, 1) 100%)",
+            "title_card_color": "#ffffff",
+            "card_text_color": "#000000",
+            "sale_label_color": "#000000",
+            "sale_text_color": "#ffffff",
+            "button_color": "#000000",
+            "primary_button_text_color": "#ffffff",
+            "secondary_button_text_color": "#000000",
+            "slide_color": "#ffffff",
+            "arrow_background_color": "#4b4c49",
+            "arrow_color": "#ffffff",
+            "crop_images": false,
+            "show_add_to_cart": false,
+            "show_view_details": true,
+            "sale_label_position": "top_left"
+          }
+        }
+      },
+      "block_order": [
+        "foxsell_cps_box_pro_y7VXew"
+      ],
+      "disabled": true,
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "276e84eb-cfaf-4711-974e-74baf3d7444b": {
+      "type": "home-collection",
+      "blocks": {
+        "template--19104329662755__276e84eb-cfaf-4711-974e-74baf3d7444b-heading-1": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/city_wear_image_19_june.jpg",
+            "heading": "City Wear",
+            "url_link": "shopify://collections/modern-workwear"
+          }
+        }
+      },
+      "block_order": [
+        "template--19104329662755__276e84eb-cfaf-4711-974e-74baf3d7444b-heading-1"
+      ],
+      "settings": {}
+    },
+    "home_collection_cVfd9T": {
+      "type": "home-collection",
+      "blocks": {
+        "heading_DwwBBz": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/Lounge-Wear-Jolene_1.jpg",
+            "heading": "Athleisure",
+            "url_link": "shopify://collections/loungewear"
+          }
+        }
+      },
+      "block_order": [
+        "heading_DwwBBz"
+      ],
+      "settings": {}
+    },
+    "44a854d8-af70-4d7e-afe7-a718dda09ea5": {
+      "type": "home-collection",
+      "blocks": {
+        "template--19104329662755__44a854d8-af70-4d7e-afe7-a718dda09ea5-heading-1": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/Jolene_D3_1910239775_1.jpg",
+            "heading": "Tops",
+            "url_link": "shopify://collections/shirts-tops"
+          }
+        },
+        "7c82fc85-457f-427d-b74b-06ec990fe436": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/Mask_group_10.png",
+            "heading": "T-Shirts",
+            "url_link": "shopify://collections/t-shirts"
+          }
+        },
+        "a5cf6772-c5cb-4631-a798-9ee97949125b": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/blue_dress_desktop.jpg",
+            "heading": "Dresses",
+            "url_link": "shopify://collections/dresses"
+          }
+        },
+        "1d8858d3-8e02-418d-8cea-4a091a4a96d5": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/jeans_image_19_june.jpg",
+            "heading": "Jeans",
+            "url_link": "shopify://collections/denims"
+          }
+        }
+      },
+      "block_order": [
+        "template--19104329662755__44a854d8-af70-4d7e-afe7-a718dda09ea5-heading-1",
+        "7c82fc85-457f-427d-b74b-06ec990fe436",
+        "a5cf6772-c5cb-4631-a798-9ee97949125b",
+        "1d8858d3-8e02-418d-8cea-4a091a4a96d5"
+      ],
+      "settings": {}
+    },
+    "9a150da2-4084-489a-85ca-ea1e64c6ded0": {
+      "type": "custom-liquid",
+      "disabled": true,
+      "custom_css": [
+        "video {display: block;}"
+      ],
+      "settings": {
+        "custom_liquid": "<video class=\"desktop_banner-video\" width=\"100%\" data-lazy-video=\"\" data-video-autoplay=\"\" playsinline=\"\" autoplay=\"\" loop=\"\" muted title=\"\">\n            <source src=\"https://cdn.shopify.com/videos/c/o/v/1830d13ef1b1409a9b79146b59e1fb04.mp4\">     \n        </video>\n\n<video width=\"100%\" data-lazy-video=\"\" data-video-autoplay=\"\" playsinline=\"\" autoplay=\"\" loop=\"\" muted  title=\"\" class=\"mobile_banner_video\">\n\n  <source src=\"https://cdn.shopify.com/videos/c/o/v/d971d2b7743448f49193514db8945cf1.mp4\">  \n     \n        </video>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "bfd8195c-3638-4ee1-9a46-419475f244f5": {
+      "type": "image-banner",
+      "blocks": {
+        "bb0aaa3f-69dd-42c8-ae92-20589d164455": {
+          "type": "heading",
+          "settings": {
+            "heading": "NEW COLLECTIONS. NEW WORLD.",
+            "heading_size": "h1"
+          }
+        },
+        "c4eedf53-aa19-44bc-aa8d-4f71e2be3bb1": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "EXPLORE",
+            "button_link_2": "shopify://collections/new-arrivals",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "bb0aaa3f-69dd-42c8-ae92-20589d164455",
+        "c4eedf53-aa19-44bc-aa8d-4f71e2be3bb1"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".banner__box {background: transparent;}",
+        ".banner__box h2 {color: #000; font-size: 24px; font-family: gt_alpina_tw;}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/New-hero.jpg",
+        "image_3": "shopify://shop_images/Heor-Image_a2ac40d1-87d4-45d3-b8e9-750f01a9dff6.jpg",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "desktop_content_position": "middle-center",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "df344ee6-a72c-418e-ad59-e765811714f7": {
+      "type": "image-with-text",
+      "blocks": {
+        "template--19104329662755__df344ee6-a72c-418e-ad59-e765811714f7-heading-1": {
+          "type": "heading",
+          "settings": {
+            "heading": "Hello from Jolene",
+            "heading_size": "h0"
+          }
+        },
+        "template--19104329662755__df344ee6-a72c-418e-ad59-e765811714f7-text-1": {
+          "type": "text",
+          "settings": {
+            "text": "<p>JOLENE IS AN ULTRA MODERN CLOTHING BRAND THAT FEATURES SHARP SILHOUETTES AND SOFT FABRICS. IT’S MADE FOR WOMEN WHO DEMAND MORE FROM THEIR CLOTHES - FROM HIGH QUALITY FABRICS AND FORMS THAT SIT BEYOND TRENDS, TO CLOTHES THAT GO FROM DAY TO EVENING WITH EASE. MORE THAN ANYTHING ELSE, JOLENE IS MADE FOR WOMEN WHO TAKE PRIDE IN DRESSING WELL AND DOING THEIR JOB REALLY, REALLY WELL.</p>",
+            "text_style": "subtitle"
+          }
+        }
+      },
+      "block_order": [
+        "template--19104329662755__df344ee6-a72c-418e-ad59-e765811714f7-heading-1",
+        "template--19104329662755__df344ee6-a72c-418e-ad59-e765811714f7-text-1"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".image-with-text {padding: 0 !important; margin-bottom: var(--grid-desktop-horizontal-spacing);}",
+        ".image-with-text__grid {column-gap: var(--grid-desktop-horizontal-spacing); row-gap: var(--grid-desktop-horizontal-spacing);}",
+        ".image-with-text__content {display: flex; justify-content: space-between;}",
+        ".image-with-text__content h2 {font-size: 20px;}",
+        "@media screen and (max-width: 749px) {.image-with-text__content {padding: 16px; }}"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/lana.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "content_layout": "no-overlap",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "left",
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    },
+    "home_collection_Vi6rDx": {
+      "type": "home-collection",
+      "blocks": {
+        "heading_pwyyp7": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/Group_238087.jpg",
+            "heading": "Lookbook",
+            "url_link": "shopify://pages/lookbook"
+          }
+        }
+      },
+      "block_order": [
+        "heading_pwyyp7"
+      ],
+      "custom_css": [
+        "h2 {color: #ffffff;}",
+        "button {color: #ffffff;}"
+      ],
+      "settings": {}
+    },
+    "home_collection_BHgefH": {
+      "type": "home-collection",
+      "blocks": {
+        "heading_GFipEU": {
+          "type": "heading",
+          "settings": {
+            "image": "shopify://shop_images/Shop_in_stroe.jpg",
+            "heading": "SHOP IN-STORE",
+            "url_link": "shopify://pages/store-address"
+          }
+        }
+      },
+      "block_order": [
+        "heading_GFipEU"
+      ],
+      "custom_css": [
+        "h2 {color: #ffffff;}",
+        "button {color: #ffffff;}"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "home_collection_F7n8t7",
+    "home_collection_HrGHkd",
+    "170998461498dec8a7",
+    "276e84eb-cfaf-4711-974e-74baf3d7444b",
+    "home_collection_cVfd9T",
+    "44a854d8-af70-4d7e-afe7-a718dda09ea5",
+    "9a150da2-4084-489a-85ca-ea1e64c6ded0",
+    "bfd8195c-3638-4ee1-9a46-419475f244f5",
+    "df344ee6-a72c-418e-ad59-e765811714f7",
+    "home_collection_Vi6rDx",
+    "home_collection_BHgefH"
+  ]
+}

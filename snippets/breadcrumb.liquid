@@ -1,0 +1,97 @@
+<nav class="breadcrumb">
+  <a href="/">Home</a>
+  <span class="arrow_icon" id="arrow_breadcrumb">
+    <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2.82732 4L0.663038 1.83603L0.663033 1.83602C0.573831 1.74682 0.523718 1.62584 0.523718 1.49969C0.523718 1.37354 0.573831 1.25255 0.663033 1.16335C0.752234 1.07415 0.873218 1.02404 0.999369 1.02404C1.12552 1.02404 1.2465 1.07415 1.3357 1.16335L1.34718 1.17483L1.34749 1.17545L3.83589 3.66385L3.83602 3.66398L3.76531 3.73469C3.80027 3.76952 3.828 3.81092 3.84693 3.8565C3.86586 3.90209 3.8756 3.95096 3.8756 4.00031C3.8756 4.04967 3.86586 4.09854 3.84693 4.14412C3.828 4.1897 3.80027 4.2311 3.76531 4.26594L1.26531 6.76594C1.19486 6.83638 1.09931 6.87596 0.999681 6.87596C0.900053 6.87596 0.804504 6.83638 0.734056 6.76594C0.663608 6.69549 0.624031 6.59994 0.624031 6.50031C0.624031 6.40068 0.663608 6.30513 0.734056 6.23469L2.82732 4ZM2.82732 4L0.663346 6.16398C0.574144 6.25318 0.524031 6.37416 0.524031 6.50031C0.524031 6.62646 0.574144 6.74744 0.663346 6.83665C0.752547 6.92585 0.873531 6.97596 0.999681 6.97596C1.12583 6.97596 1.24682 6.92585 1.33602 6.83665L3.83589 4.33677C3.83592 4.33674 3.83594 4.33672 3.83597 4.3367L2.82732 4Z" fill="#090E22" stroke="#090E22" stroke-width="0.2"/>
+    </svg>
+  </span>
+  <a href="javascript:history.back()"> <span id="curUrl"></span></a>
+  <span class="prev_templ">
+    {% for collection in product.collections %}
+      <div hidden id="rjVal">{{ collection.title }}</div>
+    {% endfor %}
+    {% for collection in product.collections %}
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+    {% endfor %}
+  </span>
+  <span class="arrow_icon">
+    <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2.82732 4L0.663038 1.83603L0.663033 1.83602C0.573831 1.74682 0.523718 1.62584 0.523718 1.49969C0.523718 1.37354 0.573831 1.25255 0.663033 1.16335C0.752234 1.07415 0.873218 1.02404 0.999369 1.02404C1.12552 1.02404 1.2465 1.07415 1.3357 1.16335L1.34718 1.17483L1.34749 1.17545L3.83589 3.66385L3.83602 3.66398L3.76531 3.73469C3.80027 3.76952 3.828 3.81092 3.84693 3.8565C3.86586 3.90209 3.8756 3.95096 3.8756 4.00031C3.8756 4.04967 3.86586 4.09854 3.84693 4.14412C3.828 4.1897 3.80027 4.2311 3.76531 4.26594L1.26531 6.76594C1.19486 6.83638 1.09931 6.87596 0.999681 6.87596C0.900053 6.87596 0.804504 6.83638 0.734056 6.76594C0.663608 6.69549 0.624031 6.59994 0.624031 6.50031C0.624031 6.40068 0.663608 6.30513 0.734056 6.23469L2.82732 4ZM2.82732 4L0.663346 6.16398C0.574144 6.25318 0.524031 6.37416 0.524031 6.50031C0.524031 6.62646 0.574144 6.74744 0.663346 6.83665C0.752547 6.92585 0.873531 6.97596 0.999681 6.97596C1.12583 6.97596 1.24682 6.92585 1.33602 6.83665L3.83589 4.33677C3.83592 4.33674 3.83594 4.33672 3.83597 4.3367L2.82732 4Z" fill="#090E22" stroke="#090E22" stroke-width="0.2"/>
+    </svg>
+  </span>
+  <span>{{ product.title }}</span>
+</nav>
+{% comment %}
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span class="arrow_icon">
+      <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.82732 4L0.663038 1.83603L0.663033 1.83602C0.573831 1.74682 0.523718 1.62584 0.523718 1.49969C0.523718 1.37354 0.573831 1.25255 0.663033 1.16335C0.752234 1.07415 0.873218 1.02404 0.999369 1.02404C1.12552 1.02404 1.2465 1.07415 1.3357 1.16335L1.34718 1.17483L1.34749 1.17545L3.83589 3.66385L3.83602 3.66398L3.76531 3.73469C3.80027 3.76952 3.828 3.81092 3.84693 3.8565C3.86586 3.90209 3.8756 3.95096 3.8756 4.00031C3.8756 4.04967 3.86586 4.09854 3.84693 4.14412C3.828 4.1897 3.80027 4.2311 3.76531 4.26594L1.26531 6.76594C1.19486 6.83638 1.09931 6.87596 0.999681 6.87596C0.900053 6.87596 0.804504 6.83638 0.734056 6.76594C0.663608 6.69549 0.624031 6.59994 0.624031 6.50031C0.624031 6.40068 0.663608 6.30513 0.734056 6.23469L2.82732 4ZM2.82732 4L0.663346 6.16398C0.574144 6.25318 0.524031 6.37416 0.524031 6.50031C0.524031 6.62646 0.574144 6.74744 0.663346 6.83665C0.752547 6.92585 0.873531 6.97596 0.999681 6.97596C1.12583 6.97596 1.24682 6.92585 1.33602 6.83665L3.83589 4.33677C3.83592 4.33674 3.83594 4.33672 3.83597 4.3367L2.82732 4Z" fill="#090E22" stroke="#090E22" stroke-width="0.2"/>
+      </svg>
+    </span>
+    <a href="javascript:history.back()"> <span id="curUrl"></span></a>
+    <span class="arrow_icon">
+      <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.82732 4L0.663038 1.83603L0.663033 1.83602C0.573831 1.74682 0.523718 1.62584 0.523718 1.49969C0.523718 1.37354 0.573831 1.25255 0.663033 1.16335C0.752234 1.07415 0.873218 1.02404 0.999369 1.02404C1.12552 1.02404 1.2465 1.07415 1.3357 1.16335L1.34718 1.17483L1.34749 1.17545L3.83589 3.66385L3.83602 3.66398L3.76531 3.73469C3.80027 3.76952 3.828 3.81092 3.84693 3.8565C3.86586 3.90209 3.8756 3.95096 3.8756 4.00031C3.8756 4.04967 3.86586 4.09854 3.84693 4.14412C3.828 4.1897 3.80027 4.2311 3.76531 4.26594L1.26531 6.76594C1.19486 6.83638 1.09931 6.87596 0.999681 6.87596C0.900053 6.87596 0.804504 6.83638 0.734056 6.76594C0.663608 6.69549 0.624031 6.59994 0.624031 6.50031C0.624031 6.40068 0.663608 6.30513 0.734056 6.23469L2.82732 4ZM2.82732 4L0.663346 6.16398C0.574144 6.25318 0.524031 6.37416 0.524031 6.50031C0.524031 6.62646 0.574144 6.74744 0.663346 6.83665C0.752547 6.92585 0.873531 6.97596 0.999681 6.97596C1.12583 6.97596 1.24682 6.92585 1.33602 6.83665L3.83589 4.33677C3.83592 4.33674 3.83594 4.33672 3.83597 4.3367L2.82732 4Z" fill="#090E22" stroke="#090E22" stroke-width="0.2"/>
+      </svg>
+    </span>
+    <span>{{ product.title }}</span>
+  </div>
+{% endcomment %}
+
+<p style="display:none;">Current Template URL: <span id="curUrl"></span></p>
+<p style="display:none;">Previous page URL: <span id="previousPageUrl"></span></p>
+<p style="display:none;"><span id="previousPageTemplate"></span></p>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var previousPageUrl = document.referrer;
+    var previousPageTemplate = '';
+
+    var urlParts = previousPageUrl.split('/');
+    var templateName = urlParts[urlParts.length - 1];
+
+    templateName = templateName.split('?')[0];
+
+    switch (templateName) {
+      case 'products':
+        previousPageTemplate = 'Products';
+        break;
+      case 'collections':
+        previousPageTemplate = 'Collections';
+        break;
+      case 'blogs':
+        previousPageTemplate = 'Blog';
+        break;
+
+      default:
+        previousPageTemplate = 'Collections';
+    }
+
+    var curUrlSpan = document.getElementById('curUrl');
+    if (curUrlSpan.textContent === templateName) {
+      previousPageUrl = localStorage.getItem('previousPageUrl');
+      templateName = previousPageUrl.split('/').pop();
+      templateName = templateName.split('?')[0];
+    } else {
+      localStorage.setItem('previousPageUrl', previousPageUrl);
+    }
+
+    document.getElementById('previousPageUrl').textContent = previousPageUrl;
+    document.getElementById('previousPageTemplate').textContent = previousPageTemplate;
+    document.getElementById('curUrl').textContent = templateName;
+  });
+  previousPageUrl = localStorage.getItem('previousPageUrl');
+
+  if (document.referrer.includes('/search') || document.referrer.includes('/products')) {
+    var breadcrbNewClass = document.querySelector('.breadcrumb');
+    breadcrbNewClass.classList.add('templ_prev');
+  }
+  var rj = document.getElementById('rjVal');
+
+  if(rj != null){
+    rj = rj.textContent;
+  }else{
+     document.getElementById('arrow_breadcrumb').style.display= 'none';
+  }
+</script>
+<!-- Breadcrumb Menu -->

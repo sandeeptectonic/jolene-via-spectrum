@@ -1,0 +1,63 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "blocks": {
+        "e58dd817-152f-4700-8034-725cff8271dc": {
+          "type": "announcement",
+          "settings": {
+            "message_one": "ENJOY UNLIMITED COMPLIMENTARY SHIPPING",
+            "link_one": "",
+            "message_two": "VISIT OUR STORE AT KORAMANGALA, BANGALORE",
+            "link_two": "",
+            "message_three": "EASY RETURN AND EXCHANGE",
+            "link_three": "",
+            "message_four": "",
+            "link_four": "",
+            "message_five": "",
+            "link_five": "",
+            "text_alignment": "center",
+            "color_scheme": ""
+          }
+        }
+      },
+      "block_order": [
+        "e58dd817-152f-4700-8034-725cff8271dc"
+      ],
+      "custom_css": [],
+      "settings": {}
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo_position": "middle-left",
+        "logo_color_change": true,
+        "menu": "main-menu",
+        "menu_type_desktop": "mega",
+        "sticky_header_type": "always",
+        "show_line_separator": false,
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 20,
+        "padding_bottom": 20
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "header"
+  ]
+}
