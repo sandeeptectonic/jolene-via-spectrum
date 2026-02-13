@@ -93,7 +93,7 @@
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   cursor: pointer;
-  z-index: 10;
+  z-index: 1;
   pointer-events: auto;
   transition:
     transform 0.2s ease,
@@ -266,6 +266,6 @@
    ==================================== */
 
 /* Loading state uses Dawn's .button.loading pattern from base.css */
-.shop-by-look__bulk-button[aria-disabled='true'] {
+.shop-by-look__bulk-button[aria-disabled="true"] {
   cursor: not-allowed;
 }
