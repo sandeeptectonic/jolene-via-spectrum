@@ -139,8 +139,13 @@
         this.input = this.querySelector('[data-search-drawer-input]');
         this.closeButtons = this.querySelectorAll('[data-search-drawer-close]');
 
+        this.inner = this.querySelector('.search-drawer__inner');
         this.overlay.addEventListener('click', () => this.close());
         this.closeButtons.forEach(btn => btn.addEventListener('click', () => this.close()));
+        /* Close when clicking outside the inner panel (on the search-drawer element itself) */
+        this.addEventListener('click', (e) => {
+          if (e.target === this || !this.inner.contains(e.target)) this.close();
+        });
       }
 
       open() {
