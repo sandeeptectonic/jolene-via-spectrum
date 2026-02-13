@@ -1,0 +1,146 @@
+{{ 'pair-it-with.css' | asset_url | stylesheet_tag }}
+
+{%- assign upsell_products = product.metafields.custom.frequently_bought_together.value -%}
+
+{%- if upsell_products != blank and upsell_products.size > 0 -%}
+<pair-it-with-section class="pair-it-with" data-section-id="{{ section_id }}" {{ block_attributes }}>
+  {%- if heading != blank -%}
+    <h2 class="pair-it-with__heading">{{ heading }}</h2>
+  {%- endif -%}
+
+  <div class="pair-it-with__grid">
+    {%- comment -%} Current PDP Product {%- endcomment -%}
+    {%- assign pdp_variant = product.selected_or_first_available_variant -%}
+    <div class="pair-it-with__item" data-product-index="0" data-variant-id="{{ pdp_variant.id }}">
+      <div class="pair-it-with__media">
+        <label class="pair-it-with__check-wrap">
+          <input type="checkbox" class="pair-it-with__input visually-hidden" checked data-product-index="0">
+          <span class="pair-it-with__checkmark">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+        {%- if product.featured_image -%}
+          <img
+            src="{{ product.featured_image | image_url: width: 600 }}"
+            srcset="{{ product.featured_image | image_url: width: 300 }} 300w, {{ product.featured_image | image_url: width: 450 }} 450w, {{ product.featured_image | image_url: width: 600 }} 600w"
+            sizes="(min-width: 990px) 280px, 45vw"
+            alt="{{ product.featured_image.alt | escape }}"
+            loading="lazy"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            class="pair-it-with__img"
+          >
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg pair-it-with__img' }}
+        {%- endif -%}
+      </div>
+      <div class="pair-it-with__info">
+        <h3 class="pair-it-with__title">{{ product.title | truncate: 30 }}</h3>
+        <div class="pair-it-with__price-row" data-product-index="0">
+          <span class="pair-it-with__sale-price">{{ pdp_variant.price | money }}</span>
+          {%- if pdp_variant.compare_at_price > pdp_variant.price -%}
+            <s class="pair-it-with__compare-price">{{ pdp_variant.compare_at_price | money }}</s>
+            {%- assign pdp_discount = pdp_variant.compare_at_price | minus: pdp_variant.price | times: 100 | divided_by: pdp_variant.compare_at_price -%}
+            <span class="pair-it-with__discount">{{ pdp_discount }}% OFF</span>
+          {%- endif -%}
+        </div>
+        {%- unless product.has_only_default_variant -%}
+          <div class="pair-it-with__select-wrap">
+            <select class="pair-it-with__select" data-product-index="0" aria-label="Select variant for {{ product.title | escape }}">
+              {%- for variant in product.variants -%}
+                <option
+                  value="{{ variant.id }}"
+                  data-price="{{ variant.price | money | strip_html }}"
+                  data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | strip_html }}{% endif %}"
+                  data-price-raw="{{ variant.price }}"
+                  data-compare-raw="{{ variant.compare_at_price | default: 0 }}"
+                  {% if variant == pdp_variant %}selected{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                >{{ variant.title }}</option>
+              {%- endfor -%}
+            </select>
+            <span class="pair-it-with__select-arrow">
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        {%- endunless -%}
+      </div>
+    </div>
+
+    {%- for upsell in upsell_products -%}
+      <span class="pair-it-with__plus" aria-hidden="true">+</span>
+
+      {%- assign upsell_variant = upsell.selected_or_first_available_variant -%}
+      <div class="pair-it-with__item" data-product-index="{{ forloop.index }}" data-variant-id="{{ upsell_variant.id }}">
+        <div class="pair-it-with__media">
+          <label class="pair-it-with__check-wrap">
+            <input type="checkbox" class="pair-it-with__input visually-hidden" checked data-product-index="{{ forloop.index }}">
+            <span class="pair-it-with__checkmark">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 5L4.5 8.5L11 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </label>
+          {%- if upsell.featured_image -%}
+            <img
+              src="{{ upsell.featured_image | image_url: width: 600 }}"
+              srcset="{{ upsell.featured_image | image_url: width: 300 }} 300w, {{ upsell.featured_image | image_url: width: 450 }} 450w, {{ upsell.featured_image | image_url: width: 600 }} 600w"
+              sizes="(min-width: 990px) 280px, 45vw"
+              alt="{{ upsell.featured_image.alt | escape }}"
+              loading="lazy"
+              width="{{ upsell.featured_image.width }}"
+              height="{{ upsell.featured_image.height }}"
+              class="pair-it-with__img"
+            >
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg pair-it-with__img' }}
+          {%- endif -%}
+        </div>
+        <div class="pair-it-with__info">
+          <h3 class="pair-it-with__title">{{ upsell.title | truncate: 30 }}</h3>
+          <div class="pair-it-with__price-row" data-product-index="{{ forloop.index }}">
+            <span class="pair-it-with__sale-price">{{ upsell_variant.price | money }}</span>
+            {%- if upsell_variant.compare_at_price > upsell_variant.price -%}
+              <s class="pair-it-with__compare-price">{{ upsell_variant.compare_at_price | money }}</s>
+              {%- assign u_discount = upsell_variant.compare_at_price | minus: upsell_variant.price | times: 100 | divided_by: upsell_variant.compare_at_price -%}
+              <span class="pair-it-with__discount">{{ u_discount }}% OFF</span>
+            {%- endif -%}
+          </div>
+          {%- unless upsell.has_only_default_variant -%}
+            <div class="pair-it-with__select-wrap">
+              <select class="pair-it-with__select" data-product-index="{{ forloop.index }}" aria-label="Select variant for {{ upsell.title | escape }}">
+                {%- for variant in upsell.variants -%}
+                  <option
+                    value="{{ variant.id }}"
+                    data-price="{{ variant.price | money | strip_html }}"
+                    data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | strip_html }}{% endif %}"
+                    data-price-raw="{{ variant.price }}"
+                    data-compare-raw="{{ variant.compare_at_price | default: 0 }}"
+                    {% if variant == upsell_variant %}selected{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >{{ variant.title }}</option>
+                {%- endfor -%}
+              </select>
+              <span class="pair-it-with__select-arrow">
+                <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+          {%- endunless -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <button type="button" class="pair-it-with__atc-btn" id="PairItWithATC-{{ section_id }}">
+    ADD TO BAG (<span class="pair-it-with__count">{{ upsell_products.size | plus: 1 }}</span>)
+  </button>
+</pair-it-with-section>
+
+<script src="{{ 'pair-it-with.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

@@ -1,0 +1,351 @@
+/* ===== Pair It With Section ===== */
+
+.pair-it-with {
+  max-width: 100%;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  position: relative;
+}
+
+.pair-it-with::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 6rem;
+  width: 4rem;
+  background: linear-gradient(to right, transparent, rgb(var(--color-background)));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.pair-it-with__heading {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  margin: 0 0 2.4rem;
+  color: rgb(var(--color-foreground));
+  font-style: italic;
+}
+
+/* ===== Grid layout ===== */
+
+.pair-it-with__grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--color-foreground), 0.3) transparent;
+  padding-bottom: 0.8rem;
+}
+
+.pair-it-with__grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.pair-it-with__grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pair-it-with__grid::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-foreground), 0.3);
+  border-radius: 3px;
+}
+
+.pair-it-with__grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-foreground), 0.5);
+}
+
+.pair-it-with__item {
+  flex: 0 0 calc(45% - 2rem);
+  min-width: calc(45% - 2rem);
+  max-width: calc(45% - 2rem);
+  transition: opacity 0.3s ease;
+}
+
+.pair-it-with__item.is-unchecked {
+  opacity: 0.4;
+}
+
+.pair-it-with__plus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1.2rem;
+  font-size: 3.2rem;
+  font-weight: 300;
+  color: rgb(var(--color-foreground));
+  flex-shrink: 0;
+  align-self: stretch;
+  margin-bottom: 12rem;
+}
+
+/* ===== Checkbox ===== */
+
+.pair-it-with__check-wrap {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.pair-it-with__checkmark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 1.5px solid #ccc;
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: transparent;
+  transition: all 0.15s ease;
+}
+
+.pair-it-with__input:checked + .pair-it-with__checkmark {
+  background: rgb(var(--color-foreground));
+  border-color: rgb(var(--color-foreground));
+  color: #fff;
+}
+
+/* ===== Product Image ===== */
+
+.pair-it-with__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.pair-it-with__img,
+.pair-it-with__media .placeholder-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  aspect-ratio: 3 / 4;
+}
+
+/* ===== Product Info ===== */
+
+.pair-it-with__info {
+  padding: 1.2rem 0 0;
+}
+
+.pair-it-with__title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 0.6rem;
+  color: rgb(var(--color-foreground));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== Price Row ===== */
+
+.pair-it-with__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.pair-it-with__sale-price {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: rgb(var(--color-foreground));
+}
+
+.pair-it-with__compare-price {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: rgba(var(--color-foreground), 0.5);
+  text-decoration: line-through;
+}
+
+.pair-it-with__discount {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #c00;
+  letter-spacing: 0.03rem;
+  white-space: nowrap;
+}
+
+/* ===== Variant Select ===== */
+
+.pair-it-with__select-wrap {
+  position: relative;
+  display: block;
+}
+
+.pair-it-with__select {
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(var(--color-foreground), 0.2);
+  border-radius: 0;
+  padding: 0.8rem 3rem 0.8rem 1rem;
+  font-size: 1.3rem;
+  font-family: inherit;
+  color: rgb(var(--color-foreground));
+  background: transparent;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.pair-it-with__select:focus {
+  outline: none;
+  border-color: rgb(var(--color-foreground));
+}
+
+.pair-it-with__select-arrow {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: rgb(var(--color-foreground));
+  display: flex;
+  align-items: center;
+}
+
+/* ===== Add to Cart Button ===== */
+
+.pair-it-with__atc-btn {
+  display: block;
+  width: 100%;
+  margin: 2.4rem auto 0;
+  padding: 1.5rem 2rem;
+  background: rgb(var(--color-foreground));
+  color: rgb(var(--color-background));
+  border: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+  font-family: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.pair-it-with__atc-btn:hover {
+  opacity: 0.85;
+}
+
+.pair-it-with__atc-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pair-it-with__atc-btn.loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ===== Mobile (< 750px) ===== */
+
+@media screen and (max-width: 749px) {
+  .pair-it-with::after {
+    display: none;
+  }
+
+  .pair-it-with__heading {
+    font-size: 1.3rem;
+    letter-spacing: 0.16rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .pair-it-with__item {
+    flex: 0 0 calc(70% - 1rem);
+    min-width: calc(70% - 1rem);
+    max-width: calc(70% - 1rem);
+  }
+
+  .pair-it-with__plus {
+    padding: 0 0.5rem;
+    font-size: 2.6rem;
+    margin-bottom: 8rem;
+  }
+
+  .pair-it-with__check-wrap {
+    top: 0.6rem;
+    left: 0.6rem;
+  }
+
+  .pair-it-with__checkmark {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .pair-it-with__checkmark svg {
+    width: 10px;
+    height: 8px;
+  }
+
+  .pair-it-with__info {
+    padding-top: 0.8rem;
+  }
+
+  .pair-it-with__title {
+    font-size: 1.3rem;
+  }
+
+  .pair-it-with__sale-price {
+    font-size: 1.3rem;
+  }
+
+  .pair-it-with__compare-price {
+    font-size: 1.2rem;
+  }
+
+  .pair-it-with__discount {
+    font-size: 1.1rem;
+  }
+
+  .pair-it-with__price-row {
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .pair-it-with__select {
+    font-size: 1.2rem;
+    padding: 0.6rem 2.5rem 0.6rem 0.8rem;
+  }
+
+  .pair-it-with__atc-btn {
+    margin-top: 1.6rem;
+    padding: 1.3rem 1.5rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.16rem;
+  }
+}
+
+/* ===== Desktop (990px+) ===== */
+
+@media screen and (min-width: 990px) {
+  .pair-it-with {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .pair-it-with__heading {
+    font-size: 1.5rem;
+    letter-spacing: 0.24rem;
+    margin-bottom: 3rem;
+  }
+
+  .pair-it-with__plus {
+    padding: 0 2rem;
+    font-size: 3.6rem;
+  }
+}
