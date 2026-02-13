@@ -1,0 +1,203 @@
+{{ 'mini-pdp-modal.css' | asset_url | stylesheet_tag }}
+
+<!-- Mini PDP Modal Container -->
+<div id="mini-pdp-modal" class="mini-pdp-modal" aria-hidden="true" role="dialog" aria-labelledby="mini-pdp-title">
+  <div class="mini-pdp-backdrop" data-mini-pdp-close></div>
+  <div class="mini-pdp-container">
+
+    <!-- Modal Header -->
+    <div class="mini-pdp-header">
+      <button class="mini-pdp-close" data-mini-pdp-close aria-label="Close product details">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="mini-pdp-actions">
+        <button class="mini-pdp-share" data-mini-pdp-share aria-label="Share product">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M4 12V20A2 2 0 0 0 6 22H18A2 2 0 0 0 20 20V12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="16,6 12,2 8,6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="12" y1="2" x2="12" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <button class="mini-pdp-external" data-mini-pdp-external aria-label="View full product page">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M18 13V19A2 2 0 0 1 16 21H5A2 2 0 0 1 3 19V8A2 2 0 0 1 5 6H11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="mini-pdp-content">
+
+      <!-- Product Images Section -->
+      <div class="mini-pdp-gallery">
+        <div class="mini-pdp-main-image">
+          <div class="mini-pdp-image-container">
+            <!-- Main product image will be injected here -->
+          </div>
+          <!-- Product badges -->
+          <div class="mini-pdp-badges">
+            <!-- Badges like "NEW ARRIVAL" will be injected here -->
+          </div>
+        </div>
+
+        <!-- Image thumbnails -->
+        <div class="mini-pdp-thumbnails">
+          <!-- Thumbnail images will be injected here -->
+        </div>
+      </div>
+
+      <!-- Product Details Section -->
+      <div class="mini-pdp-details">
+
+        <!-- Product Title -->
+        <h2 id="mini-pdp-title" class="mini-pdp-title">
+          <!-- Product title will be injected here -->
+        </h2>
+
+        <!-- Product Price -->
+        <div class="mini-pdp-price">
+          <!-- Pricing will be injected here -->
+        </div>
+
+        <!-- Size Information -->
+        <div class="mini-pdp-size-info">
+          <div class="mini-pdp-size-label">
+            <span>Size (in inches):</span>
+            <button class="mini-pdp-size-chart" data-mini-pdp-size-chart>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                <path d="M9 9H15V15H9V9Z" stroke="currentColor" stroke-width="2"/>
+              </svg>
+              Size Chart
+            </button>
+          </div>
+
+          <!-- Product Measurements -->
+          <div class="mini-pdp-measurements">
+            <!-- Measurements will be injected here -->
+          </div>
+        </div>
+
+        <!-- Size Selector -->
+        <div class="mini-pdp-variants">
+          <div class="mini-pdp-variant-options">
+            <!-- Size options will be injected here -->
+          </div>
+        </div>
+
+        <!-- Stock Status -->
+        <div class="mini-pdp-stock">
+          <!-- Stock information will be injected here -->
+        </div>
+
+        <!-- Add to Bag Button -->
+        <div class="mini-pdp-add-to-cart">
+          <button class="mini-pdp-atc-button" data-mini-pdp-add-to-cart disabled>
+            <span class="mini-pdp-atc-text">ADD TO BAG</span>
+            <div class="mini-pdp-atc-loader" style="display: none;">
+              <div class="mini-pdp-spinner"></div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Share Modal -->
+<div id="mini-pdp-share-modal" class="mini-pdp-share-modal" aria-hidden="true">
+  <div class="mini-pdp-share-backdrop" data-share-close></div>
+  <div class="mini-pdp-share-content">
+    <div class="mini-pdp-share-header">
+      <h3>Share this product</h3>
+      <button class="mini-pdp-share-close" data-share-close aria-label="Close share menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="mini-pdp-share-options">
+      <button class="mini-pdp-share-option" data-share-platform="facebook">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M18 2H15A5 5 0 0 0 10 7V10H7V14H10V22H14V14H17L18 10H14V7A1 1 0 0 1 15 6H18V2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Facebook</span>
+      </button>
+      <button class="mini-pdp-share-option" data-share-platform="twitter">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M23 3A10.9 10.9 0 0 1 20.1 4.6A4.48 4.48 0 0 0 22.5 1.8A9 9 0 0 1 19.8 3A4.48 4.48 0 0 0 12 6.9A12.94 12.94 0 0 1 3 2.3A4.48 4.48 0 0 0 4.6 9.3A4.38 4.38 0 0 1 2.3 8.6V8.9A4.48 4.48 0 0 0 6.1 13.4A4.43 4.43 0 0 1 4.9 13.7A4.48 4.48 0 0 0 9.1 17.8A9 9 0 0 1 1 19.5A12.94 12.94 0 0 0 22.5 9.4C22.5 9.1 22.5 8.8 22.5 8.6A9.26 9.26 0 0 0 23 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Twitter</span>
+      </button>
+      <button class="mini-pdp-share-option" data-share-platform="whatsapp">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M21 11.5A8.38 8.38 0 0 1 12.62 20A8.38 8.38 0 0 1 5.12 17L3 21L7.2 18.9A8.38 8.38 0 0 1 12 21A8.5 8.5 0 1 1 21 11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 14S15.5 13.5 15 13C14.5 12.5 14 12 13.5 12S12.5 12.5 12 13C11.5 13.5 11 14 10.5 14.5C10 15 9.5 15.5 9 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>WhatsApp</span>
+      </button>
+      <button class="mini-pdp-share-option" data-share-platform="copy">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 15H4A2 2 0 0 1 2 13V4A2 2 0 0 1 4 2H13A2 2 0 0 1 15 4V5" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>Copy Link</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'mini-pdp-modal.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "Mini PDP Modal",
+  "tag": "section",
+  "class": "section mini-pdp-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mini PDP Modal Settings"
+    },
+    {
+      "type": "paragraph",
+      "content": "This section provides a mini product detail modal that can be triggered from product cards, video carousels, or other sections. The modal will automatically populate with product data when opened."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_social_sharing",
+      "label": "Enable Social Sharing",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_size_chart",
+      "label": "Enable Size Chart",
+      "default": false,
+      "info": "Size chart functionality (coming soon)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_measurements",
+      "label": "Show Product Measurements",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "atc_button_text",
+      "label": "Add to Cart Button Text",
+      "default": "ADD TO BAG"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mini PDP Modal"
+    }
+  ]
+}
+{% endschema %}

@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "home_collection_F7n8t7": {
@@ -22,9 +13,7 @@
           }
         }
       },
-      "block_order": [
-        "heading_yKxfag"
-      ],
+      "block_order": ["heading_yKxfag"],
       "settings": {}
     },
     "home_collection_HrGHkd": {
@@ -39,14 +28,61 @@
           }
         }
       },
-      "block_order": [
-        "heading_GtnzXm"
-      ],
+      "block_order": ["heading_GtnzXm"],
       "disabled": true,
       "settings": {}
     },
+    "spectrum_carousel_editorial": {
+      "type": "spectrum-carousel-videos",
+      "settings": {
+        "heading": "Editorial",
+        "heading_size": "h1",
+        "description": "",
+        "widget_handle": "homepage-editorial",
+        "max_videos": 9,
+        "color_scheme": "scheme-1",
+        "padding_top": 52,
+        "padding_bottom": 52
+      }
+    },
     "170998461498dec8a7": {
       "type": "apps",
+      "blocks": {
+        "foxsell_cps_box_pro_y7VXew": {
+          "type": "shopify://apps/foxsell/blocks/cps_box_pro/8af31731-4b2e-455d-bbf0-ce3debb3c4bf",
+          "settings": {
+            "featured_collection": "",
+            "featured_product_list": [
+              "printed-flare-pants",
+              "printed-halter-neck-dress",
+              "printed-halter-neck-top",
+              "printed-ruched-mini-dress",
+              "printed-shirt-dress",
+              "printed-wrap-dress",
+              "printed-resort-shirt"
+            ],
+            "add_to_cart_text": "",
+            "view_details_text": "View Details",
+            "sale_text": "",
+            "section_background": "linear-gradient(274deg, rgba(255, 255, 255, 1) 100%, rgba(0, 0, 0, 1) 100%)",
+            "title_card_color": "#ffffff",
+            "card_text_color": "#000000",
+            "sale_label_color": "#000000",
+            "sale_text_color": "#ffffff",
+            "button_color": "#000000",
+            "primary_button_text_color": "#ffffff",
+            "secondary_button_text_color": "#000000",
+            "slide_color": "#ffffff",
+            "arrow_background_color": "#4b4c49",
+            "arrow_color": "#ffffff",
+            "crop_images": false,
+            "show_add_to_cart": false,
+            "show_view_details": true,
+            "sale_label_position": "top_left"
+          }
+        }
+      },
+      "block_order": ["foxsell_cps_box_pro_y7VXew"],
       "disabled": true,
       "settings": {
         "include_margins": true
@@ -81,9 +117,7 @@
           }
         }
       },
-      "block_order": [
-        "heading_DwwBBz"
-      ],
+      "block_order": ["heading_DwwBBz"],
       "settings": {}
     },
     "44a854d8-af70-4d7e-afe7-a718dda09ea5": {
@@ -133,9 +167,7 @@
     "9a150da2-4084-489a-85ca-ea1e64c6ded0": {
       "type": "custom-liquid",
       "disabled": true,
-      "custom_css": [
-        "video {display: block;}"
-      ],
+      "custom_css": ["video {display: block;}"],
       "settings": {
         "custom_liquid": "<video class=\"desktop_banner-video\" width=\"100%\" data-lazy-video=\"\" data-video-autoplay=\"\" playsinline=\"\" autoplay=\"\" loop=\"\" muted title=\"\">\n            <source src=\"https://cdn.shopify.com/videos/c/o/v/1830d13ef1b1409a9b79146b59e1fb04.mp4\">     \n        </video>\n\n<video width=\"100%\" data-lazy-video=\"\" data-video-autoplay=\"\" playsinline=\"\" autoplay=\"\" loop=\"\" muted  title=\"\" class=\"mobile_banner_video\">\n\n  <source src=\"https://cdn.shopify.com/videos/c/o/v/d971d2b7743448f49193514db8945cf1.mp4\">  \n     \n        </video>",
         "color_scheme": "",
@@ -246,13 +278,8 @@
           }
         }
       },
-      "block_order": [
-        "heading_pwyyp7"
-      ],
-      "custom_css": [
-        "h2 {color: #ffffff;}",
-        "button {color: #ffffff;}"
-      ],
+      "block_order": ["heading_pwyyp7"],
+      "custom_css": ["h2 {color: #ffffff;}", "button {color: #ffffff;}"],
       "settings": {}
     },
     "home_collection_BHgefH": {
@@ -267,13 +294,8 @@
           }
         }
       },
-      "block_order": [
-        "heading_GFipEU"
-      ],
-      "custom_css": [
-        "h2 {color: #ffffff;}",
-        "button {color: #ffffff;}"
-      ],
+      "block_order": ["heading_GFipEU"],
+      "custom_css": ["h2 {color: #ffffff;}", "button {color: #ffffff;}"],
       "settings": {}
     },
     "spectrum_row_shirts": {
@@ -292,6 +314,7 @@
   "order": [
     "home_collection_F7n8t7",
     "home_collection_HrGHkd",
+    "spectrum_carousel_editorial",
     "170998461498dec8a7",
     "276e84eb-cfaf-4711-974e-74baf3d7444b",
     "home_collection_cVfd9T",
