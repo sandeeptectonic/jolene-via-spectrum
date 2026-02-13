@@ -140,7 +140,7 @@
       }
     },
     "pdp_collection_row": {
-      "type": "spectrum-collection-row",
+      "type": "featured-collection",
       "settings": {
         "title": "BEST SELLERS",
         "collection": "shirts",
