@@ -3,22 +3,33 @@
     <div class="maincollection_box">
       <a href="{{ block.settings.url_link }}">
         <div class="home_collection_image">
-          <!-- {{ block.settings.image | image_url: width: 1728 | image_tag: loading: 'lazy' }} -->
-          <img src="{{ block.settings.image | image_url }}" alt="Section Image">
+          {%- if block.settings.video -%}
+            <video autoplay muted loop playsinline style="object-fit:cover;width:100%;height:100%;">
+              <source src="{{ block.settings.video.sources[1].url }}" type="video/mp4">
+            </video>
+          {%- elsif block.settings.image -%}
+            <img src="{{ block.settings.image | image_url }}" alt="Section Image">
+          {%- endif -%}
         </div>
-        <div class="home_collection_text card__information">
-          <h2>
-            {{ block.settings.heading }}
-          </h2>
-          <button class="btn disc_btn">
-            DISCOVER
-            <span class="icon-wrap">
-              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.8717 5.78942L1.49719 9.88012C1.45655 9.91813 1.4083 9.94827 1.35519 9.96884C1.30209 9.98941 1.24517 10 1.18769 10C1.13022 10 1.0733 9.98941 1.0202 9.96884C0.967092 9.94827 0.918841 9.91813 0.878197 9.88012C0.837554 9.84211 0.805313 9.79699 0.783317 9.74733C0.761321 9.69768 0.75 9.64445 0.75 9.5907C0.75 9.53695 0.761321 9.48373 0.783317 9.43407C0.805313 9.38441 0.837554 9.33929 0.878197 9.30128L4.94376 5.5L0.878197 1.69871C0.796114 1.62196 0.75 1.51785 0.75 1.4093C0.75 1.30075 0.796114 1.19664 0.878197 1.11988C0.960281 1.04312 1.07161 1 1.18769 1C1.30378 1 1.41511 1.04312 1.49719 1.11988L5.8717 5.21058C5.91237 5.24857 5.94464 5.29369 5.96666 5.34335C5.98867 5.39301 6 5.44624 6 5.5C6 5.55376 5.98867 5.60699 5.96666 5.65665C5.94464 5.70631 5.91237 5.75143 5.8717 5.78942Z" fill="white" stroke="white" stroke-width="0.25"></path>
-              </svg>
-            </span>
-          </button>
-        </div>
+        {%- if block.settings.show_heading or block.settings.show_button -%}
+          <div class="home_collection_text card__information">
+            {%- if block.settings.show_heading -%}
+              <h2>
+                {{ block.settings.heading }}
+              </h2>
+            {%- endif -%}
+            {%- if block.settings.show_button -%}
+              <button class="btn disc_btn">
+                DISCOVER
+                <span class="icon-wrap">
+                  <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.8717 5.78942L1.49719 9.88012C1.45655 9.91813 1.4083 9.94827 1.35519 9.96884C1.30209 9.98941 1.24517 10 1.18769 10C1.13022 10 1.0733 9.98941 1.0202 9.96884C0.967092 9.94827 0.918841 9.91813 0.878197 9.88012C0.837554 9.84211 0.805313 9.79699 0.783317 9.74733C0.761321 9.69768 0.75 9.64445 0.75 9.5907C0.75 9.53695 0.761321 9.48373 0.783317 9.43407C0.805313 9.38441 0.837554 9.33929 0.878197 9.30128L4.94376 5.5L0.878197 1.69871C0.796114 1.62196 0.75 1.51785 0.75 1.4093C0.75 1.30075 0.796114 1.19664 0.878197 1.11988C0.960281 1.04312 1.07161 1 1.18769 1C1.30378 1 1.41511 1.04312 1.49719 1.11988L5.8717 5.21058C5.91237 5.24857 5.94464 5.29369 5.96666 5.34335C5.98867 5.39301 6 5.44624 6 5.5C6 5.55376 5.98867 5.60699 5.96666 5.65665C5.94464 5.70631 5.91237 5.75143 5.8717 5.78942Z" fill="white" stroke="white" stroke-width="0.25"></path>
+                  </svg>
+                </span>
+              </button>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
       </a>
     </div>
   {% endfor %}
@@ -52,6 +63,52 @@
                 "type": "url",
                 "id": "url_link",
                 "label": "Add Url link"
+             },
+             {
+                "type": "checkbox",
+                "id": "show_heading",
+                "default": true,
+                "label": "Show heading"
+             },
+             {
+                "type": "checkbox",
+                "id": "show_button",
+                "default": true,
+                "label": "Show button"
+             }
+           ]
+         },
+         {
+           "type": "video",
+           "name": "Video Block",
+           "settings":[
+              {
+                "type": "video",
+                "id": "video",
+                "label": "Select Video"
+             },
+             {
+                "type": "inline_richtext",
+                "id": "heading",
+                "default": "Video with text",
+                "label": "Add Text"
+             },
+             {
+                "type": "url",
+                "id": "url_link",
+                "label": "Add Url link"
+             },
+             {
+                "type": "checkbox",
+                "id": "show_heading",
+                "default": true,
+                "label": "Show heading"
+             },
+             {
+                "type": "checkbox",
+                "id": "show_button",
+                "default": true,
+                "label": "Show button"
              }
            ]
          }
