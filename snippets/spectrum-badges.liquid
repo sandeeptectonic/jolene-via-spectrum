@@ -1,0 +1,83 @@
+{% comment %}
+  Spectrum Badges — Renders product badge overlays.
+
+  Accepts:
+  - product: {Object} Product Liquid object (required)
+  - context: {String} 'card' or 'pdp' (required)
+
+  DATA SOURCE is isolated below — swap for metaobject rules later.
+  Renders inline (no array building) for Shopify Liquid compatibility.
+{% endcomment %}
+
+{%- liquid
+  assign max_badges = 2
+  if context == 'pdp'
+    assign max_badges = 3
+  endif
+  assign badge_count = 0
+-%}
+
+{% comment %} ================================================
+   DATA SOURCE — Replace this block with metaobject reads.
+   Future: loop shop.metaobjects.spectrum_badge_rule.values
+   and evaluate 5-part rules per spectrum-badges-architecture.md
+   ================================================ {% endcomment %}
+
+{%- capture badge_html -%}
+
+  {%- comment -%} Priority 1: Sold Out {%- endcomment -%}
+  {%- if product.available == false and badge_count < max_badges -%}
+    <span class="spectrum-badge" style="background-color: #757575; color: #FFFFFF;">Sold Out</span>
+    {%- assign badge_count = badge_count | plus: 1 -%}
+  {%- endif -%}
+
+  {%- comment -%} Priority 2: Sale {%- endcomment -%}
+  {%- if product.compare_at_price > product.price and product.available and badge_count < max_badges -%}
+    <span class="spectrum-badge" style="background-color: #EA0606; color: #FFFFFF;">Sale</span>
+    {%- assign badge_count = badge_count | plus: 1 -%}
+  {%- endif -%}
+
+  {%- comment -%} Priority 3: New Arrival (tag: badge__New_Arrival) {%- endcomment -%}
+  {%- if badge_count < max_badges -%}
+    {%- for tag in product.tags -%}
+      {%- if tag == 'badge__New_Arrival' -%}
+        <span class="spectrum-badge" style="background-color: #000000; color: #FFFFFF;">New Arrival</span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} Priority 4: Bestseller (tag: badge__Bestseller) {%- endcomment -%}
+  {%- if badge_count < max_badges -%}
+    {%- for tag in product.tags -%}
+      {%- if tag == 'badge__Bestseller' -%}
+        <span class="spectrum-badge" style="background-color: #FF9800; color: #FFFFFF;">Bestseller</span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+  {%- comment -%} Priority 5: Limited (tag: badge:limited) {%- endcomment -%}
+  {%- if badge_count < max_badges -%}
+    {%- for tag in product.tags -%}
+      {%- if tag == 'badge:limited' -%}
+        <span class="spectrum-badge" style="background-color: #9C27B0; color: #FFFFFF;">Limited</span>
+        {%- assign badge_count = badge_count | plus: 1 -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endif -%}
+
+{%- endcapture -%}
+
+{% comment %} ================================================
+   END DATA SOURCE
+   ================================================ {% endcomment %}
+
+{%- if badge_count > 0 -%}
+  <div class="spectrum-badge-container">
+    {{- badge_html -}}
+  </div>
+{%- endif -%}
