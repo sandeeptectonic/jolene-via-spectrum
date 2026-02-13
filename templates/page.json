@@ -16,54 +16,9 @@
         "padding_top": 28,
         "padding_bottom": 28
       }
-    },
-    "rich_text_hhJ6BB": {
-      "type": "rich-text",
-      "blocks": {
-        "heading_FhmkDg": {
-          "type": "heading",
-          "settings": {
-            "heading": "SHOP THE LOOKS",
-            "heading_size": "h1"
-          }
-        }
-      },
-      "block_order": [
-        "heading_FhmkDg"
-      ],
-      "name": "t:sections.rich-text.presets.name",
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "",
-        "full_width": true,
-        "padding_top": 40,
-        "padding_bottom": 52
-      }
-    },
-    "shop_by_look_7hnLam": {
-      "type": "shop-by-look",
-      "name": "Shop by Look",
-      "settings": {
-        "title": "",
-        "heading_size": "h1",
-        "source": "section_setting",
-        "look": "spectrum-look-wrqkn9yt",
-        "image_index": 0,
-        "bulk_add_text": "ADD LOOK TO BAG",
-        "color_scheme": "background-1",
-        "max_width": 1200,
-        "background_color": "#f1f1f1",
-        "padding_top": 36,
-        "padding_bottom": 36,
-        "show_atc_mobile": false,
-        "show_atc_desktop": false
-      }
     }
   },
   "order": [
-    "main",
-    "rich_text_hhJ6BB",
-    "shop_by_look_7hnLam"
+    "main"
   ]
 }
