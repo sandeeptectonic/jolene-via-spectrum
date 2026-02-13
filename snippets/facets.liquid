@@ -44,14 +44,15 @@
       </button>
       <div class="spectrum-toolbar__sort" id="SpectrumSortWrapper">
         <button type="button" class="spectrum-toolbar__sort-btn" id="SpectrumSortBtn" aria-expanded="false" aria-controls="SpectrumSortDropdown">
-          SORT BY
-          <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M8 2v12M5 5l3-3 3 3M5 11l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
+          SORT BY
         </button>
         <div class="spectrum-toolbar__sort-dropdown" id="SpectrumSortDropdown" role="listbox" aria-label="Sort options">
           {%- for option in results.sort_options -%}
             {%- case option.value -%}
+              {%- when 'relevance' -%}{%- assign custom_label = 'RELEVANCE' -%}
               {%- when 'manual' -%}{%- assign custom_label = 'FEATURED' -%}
               {%- when 'best-selling' -%}{%- assign custom_label = 'POPULAR' -%}
               {%- when 'price-ascending' -%}{%- assign custom_label = 'LOWEST PRICE' -%}
@@ -70,6 +71,11 @@
       </div>
       <div class="spectrum-toolbar__spacer"></div>
       <div class="spectrum-toolbar__grid-toggle" id="SpectrumGridToggle">
+        <button type="button" data-cols="1" data-mobile-only="true" title="1 per row" aria-label="1 per row grid" class="medium-hide large-up-hide">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="4" y="3" width="16" height="18" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          </svg>
+        </button>
         <button type="button" data-cols="2" title="2 per row" aria-label="2 per row grid">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <rect x="2" y="2" width="9" height="9" stroke="currentColor" stroke-width="1.5" fill="none"/>

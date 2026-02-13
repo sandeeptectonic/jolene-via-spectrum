@@ -514,51 +514,83 @@ customElements.define('facet-remove', FacetRemove);
 
   // --- GRID TOGGLE ---
   const gridToggle = document.getElementById('SpectrumGridToggle');
+  const mobileMediaQuery = window.matchMedia('(max-width: 749px)');
 
   function getProductGrid() {
     return document.getElementById('product-grid');
   }
 
-  function applyGridPreference() {
-    const stored = sessionStorage.getItem('spectrum-grid-cols');
-    if (!stored) return;
+  function isMobileViewport() {
+    return mobileMediaQuery.matches;
+  }
 
+  function applyGridPreference() {
     const grid = getProductGrid();
     if (!grid) return;
 
-    // Remove existing grid column classes
-    const classesToRemove = [];
-    grid.classList.forEach((cls) => {
-      if (cls.match(/grid--\d+-col-desktop/)) {
-        classesToRemove.push(cls);
-      }
-    });
-    classesToRemove.forEach((cls) => grid.classList.remove(cls));
+    const storedDesktop = sessionStorage.getItem('spectrum-grid-cols');
+    const storedMobile = sessionStorage.getItem('spectrum-grid-cols-mobile');
 
-    grid.classList.add('grid--' + stored + '-col-desktop');
+    if (!storedDesktop && !storedMobile) return;
 
-    // Update active button state
+    // Only remove/replace the class type that has a stored preference
+    // This preserves server-rendered classes for the other viewport
+    if (storedDesktop) {
+      Array.from(grid.classList).forEach((cls) => {
+        if (cls.match(/grid--\d+-col-desktop/)) grid.classList.remove(cls);
+      });
+      grid.classList.add('grid--' + storedDesktop + '-col-desktop');
+    }
+
+    if (storedMobile) {
+      Array.from(grid.classList).forEach((cls) => {
+        if (cls.match(/grid--\d+-col-tablet-down/)) grid.classList.remove(cls);
+      });
+      grid.classList.add('grid--' + storedMobile + '-col-tablet-down');
+    }
+
+    // Update active button states based on current viewport
     if (gridToggle) {
+      const isMobile = isMobileViewport();
+      const activeCols = isMobile ? storedMobile : storedDesktop;
       gridToggle.querySelectorAll('button').forEach((btn) => {
-        btn.classList.toggle('is-active', btn.dataset.cols === stored);
+        const isMobileBtn = btn.dataset.mobileOnly === 'true';
+        if (isMobile) {
+          // On mobile: activate based on mobile storage, but only for visible buttons
+          btn.classList.toggle('is-active', btn.dataset.cols === activeCols && !btn.classList.contains('small-hide'));
+        } else {
+          // On desktop: activate based on desktop storage, skip mobile-only buttons
+          btn.classList.toggle('is-active', !isMobileBtn && btn.dataset.cols === activeCols);
+        }
       });
     }
   }
 
   if (gridToggle) {
     // Set initial active state
-    const defaultCols = sessionStorage.getItem('spectrum-grid-cols');
-    if (defaultCols) {
+    const storedDesktop = sessionStorage.getItem('spectrum-grid-cols');
+    const storedMobile = sessionStorage.getItem('spectrum-grid-cols-mobile');
+
+    if (storedDesktop || storedMobile) {
       applyGridPreference();
     } else {
-      // Detect current grid columns from existing class
+      // Detect current grid columns from existing classes
       const grid = getProductGrid();
       if (grid) {
-        const match = Array.from(grid.classList).find((cls) => cls.match(/grid--(\d+)-col-desktop/));
-        if (match) {
-          const cols = match.match(/grid--(\d+)-col-desktop/)[1];
+        const desktopMatch = Array.from(grid.classList).find((cls) => cls.match(/grid--(\d+)-col-desktop/));
+        const mobileMatch = Array.from(grid.classList).find((cls) => cls.match(/grid--(\d+)-col-tablet-down/));
+        const isMobile = isMobileViewport();
+
+        if (desktopMatch && !isMobile) {
+          const cols = desktopMatch.match(/grid--(\d+)-col-desktop/)[1];
           gridToggle.querySelectorAll('button').forEach((btn) => {
-            btn.classList.toggle('is-active', btn.dataset.cols === cols);
+            btn.classList.toggle('is-active', btn.dataset.mobileOnly !== 'true' && btn.dataset.cols === cols);
+          });
+        }
+        if (mobileMatch && isMobile) {
+          const cols = mobileMatch.match(/grid--(\d+)-col-tablet-down/)[1];
+          gridToggle.querySelectorAll('button').forEach((btn) => {
+            btn.classList.toggle('is-active', !btn.classList.contains('small-hide') && btn.dataset.cols === cols);
           });
         }
       }
@@ -569,12 +601,30 @@ customElements.define('facet-remove', FacetRemove);
       if (!btn) return;
 
       const cols = btn.dataset.cols;
-      sessionStorage.setItem('spectrum-grid-cols', cols);
+      const isMobile = isMobileViewport();
 
-      // Update active state
-      gridToggle.querySelectorAll('button').forEach((b) => b.classList.remove('is-active'));
+      if (isMobile) {
+        sessionStorage.setItem('spectrum-grid-cols-mobile', cols);
+      } else {
+        sessionStorage.setItem('spectrum-grid-cols', cols);
+      }
+
+      // Update active state only for buttons visible in current viewport
+      gridToggle.querySelectorAll('button').forEach((b) => {
+        const isMobileBtn = b.dataset.mobileOnly === 'true';
+        if (isMobile) {
+          if (!b.classList.contains('small-hide')) b.classList.remove('is-active');
+        } else {
+          if (!isMobileBtn) b.classList.remove('is-active');
+        }
+      });
       btn.classList.add('is-active');
 
+      applyGridPreference();
+    });
+
+    // Re-evaluate active states on viewport resize
+    mobileMediaQuery.addEventListener('change', () => {
       applyGridPreference();
     });
   }

@@ -1155,6 +1155,7 @@ input.mobile-facets__checkbox {
 
 .spectrum-toolbar__sort {
   position: relative;
+  z-index: 1;
 }
 
 .spectrum-toolbar__sort-btn {
@@ -1178,13 +1179,9 @@ input.mobile-facets__checkbox {
 }
 
 .spectrum-toolbar__sort-btn svg {
-  width: 1rem;
-  height: 0.6rem;
-  transition: transform 0.2s ease;
-}
-
-.spectrum-toolbar__sort-btn[aria-expanded="true"] svg {
-  transform: rotate(180deg);
+  width: 1.4rem;
+  height: 1.4rem;
+  flex-shrink: 0;
 }
 
 .spectrum-toolbar__sort-dropdown {
@@ -1292,7 +1289,7 @@ input.mobile-facets__checkbox {
 
 /* Override z-index and background for Spectrum drawer to sit above sticky header (z-index: 999999) */
 .spectrum-drawer .mobile-facets {
-  z-index: 99999999;
+  z-index: 99999999 !important;
   background-color: rgba(var(--color-foreground), 0.5) !important;
   pointer-events: auto !important;
   cursor: default;
@@ -1769,4 +1766,46 @@ input.mobile-facets__checkbox {
   .spectrum-drawer__checkbox {
     font-size: 1.2rem;
   }
+
+  .spectrum-toolbar__grid-toggle button {
+    padding: 1rem 0.8rem;
+  }
+
+  .spectrum-toolbar__grid-toggle button svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  /* Fix: Override grid item width to account for custom.css gap: 16px override
+     (--grid-mobile-horizontal-spacing is only 2px, causing items to wrap) */
+  .product-grid.grid--2-col-tablet-down .grid__item {
+    width: calc(50% - 8px) !important;
+    max-width: calc(50% - 8px) !important;
+  }
+}
+
+/* Fix: Break stacking context on aside#main-collection-filters.
+   custom.css sets position:relative + z-index:999999 at max-width:767px,
+   which traps the position:fixed drawer inside a z-index:999999 ceiling
+   AND makes the toolbar overlap the sticky header (same z-index).
+   Setting z-index:auto removes the stacking context while keeping
+   position:relative. The drawer's z-index:99999999 then evaluates
+   in the root stacking context, above the header. */
+@media screen and (max-width: 989px) {
+  aside#main-collection-filters {
+    z-index: auto !important;
+  }
+}
+
+/* Fix: Lower header z-index when any drawer/modal is open.
+   On search page (and potentially others), the position:sticky header at
+   z-index:999999 renders above the position:fixed drawer at z-index:99999999
+   despite lower z-index (browser compositor quirk with sticky vs fixed).
+   When overflow-hidden-mobile is on body (drawer is open), drop header to
+   z-index:3 so the drawer definitively paints above it.
+   Specificity (0,2,1) beats header base rule (0,2,0) but loses to
+   .overflow-hidden-mobile .scrolled-past-header.menu-open (0,3,0)
+   so hamburger menu behavior is preserved. */
+body.overflow-hidden-mobile .section-header {
+  z-index: 3 !important;
 }
