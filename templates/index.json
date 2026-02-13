@@ -313,6 +313,18 @@
         "button {color: #ffffff;}"
       ],
       "settings": {}
+    },
+    "spectrum_row_shirts": {
+      "type": "spectrum-collection-row",
+      "settings": {
+        "title": "SHIRTS",
+        "collection": "shirts",
+        "products_to_show": 12,
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
     }
   },
   "order": [
@@ -321,6 +333,7 @@
     "170998461498dec8a7",
     "276e84eb-cfaf-4711-974e-74baf3d7444b",
     "home_collection_cVfd9T",
+    "spectrum_row_shirts",
     "44a854d8-af70-4d7e-afe7-a718dda09ea5",
     "9a150da2-4084-489a-85ca-ea1e64c6ded0",
     "bfd8195c-3638-4ee1-9a46-419475f244f5",

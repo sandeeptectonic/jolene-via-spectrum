@@ -10,6 +10,7 @@
   {{ 'component-rating.css' | asset_url | stylesheet_tag }}
   {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
   {{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+  {{ 'spectrum-card.css' | asset_url | stylesheet_tag }}
 
   {%- style -%}
     .section-{{ section.id }}-padding {
@@ -152,6 +153,7 @@
                   price_class: 'price--large'
                 -%}
               </div>
+              {% render 'spectrum-product-groups', product: product, context: 'pdp' %}
               <div class="prd_description">{{ product.description }}</div>
               {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
                 <div class="product__tax caption rte">

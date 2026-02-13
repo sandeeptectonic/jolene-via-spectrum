@@ -126,6 +126,8 @@
     "show_vendor": false,
     "show_cart_note": false,
     "cart_drawer_collection": "",
+    "cart_reco_collection": "shirts",
+    "cart_reco_title": "BEST SELLERS",
     "checkout_logo_image": "shopify://shop_images/JOLENE_LOGO_3.png",
     "checkout_logo_position": "center",
     "checkout_accent_color": "#000000",

@@ -130,27 +130,32 @@
         "padding_bottom": 0
       }
     },
-    "related-products": {
-      "type": "related-products",
+    "pdp_collection_row": {
+      "type": "spectrum-collection-row",
       "settings": {
-        "heading": "Trending",
-        "heading_size": "h2",
-        "products_to_show": 3,
-        "columns_desktop": 3,
-        "color_scheme": "background-1",
-        "image_ratio": "portrait",
-        "image_shape": "default",
+        "title": "BEST SELLERS",
+        "collection": "shirts",
+        "products_to_show": 12,
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "padding_top": 36,
+        "padding_top": 28,
+        "padding_bottom": 12
+      }
+    },
+    "view_similar": {
+      "type": "spectrum-view-similar",
+      "settings": {
+        "heading": "VIEW SIMILAR",
+        "products_to_show": 8,
+        "show_secondary_image": true,
+        "padding_top": 12,
         "padding_bottom": 28
       }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "pdp_collection_row",
+    "view_similar"
   ]
 }

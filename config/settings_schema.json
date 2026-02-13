@@ -1457,6 +1457,18 @@
         "id": "cart_drawer_collection",
         "label": "t:settings_schema.cart.settings.cart_drawer.collection.label",
         "info": "t:settings_schema.cart.settings.cart_drawer.collection.info"
+      },
+      {
+        "type": "collection",
+        "id": "cart_reco_collection",
+        "label": "Cart recommendations collection",
+        "info": "Collection to show as recommendations in cart drawer (e.g. Best Sellers)"
+      },
+      {
+        "type": "text",
+        "id": "cart_reco_title",
+        "label": "Cart recommendations title",
+        "default": "BEST SELLERS"
       }
     ]
   }
