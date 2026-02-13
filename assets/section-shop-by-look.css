@@ -1,0 +1,271 @@
+/* ====================================
+   Shop by Look Section Styles
+   ==================================== */
+
+/* Main Container */
+.shop-by-look {
+  overflow: hidden;
+}
+
+.shop-by-look__container {
+  position: relative;
+}
+
+/* Responsive Grid Layout */
+.shop-by-look__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media screen and (min-width: 750px) {
+  .shop-by-look__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ====================================
+   Image Container & Hotspots
+   ==================================== */
+
+.shop-by-look__image-wrapper {
+  position: relative;
+}
+
+/* Full-bleed image on mobile - REMOVED to fix horizontal overflow */
+@media screen and (max-width: 749px) {
+  .shop-by-look__image-wrapper {
+    /* No special styling - let it use normal page-width padding to prevent overflow */
+  }
+}
+
+.shop-by-look__image-container {
+  position: relative;
+  width: 100%;
+  border-radius: var(--media-radius);
+  overflow: hidden;
+}
+
+.shop-by-look__image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.shop-by-look__placeholder {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  background: rgb(var(--color-background));
+  border: 1px solid rgba(var(--color-foreground), 0.1);
+  border-radius: var(--media-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-by-look__placeholder svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+}
+
+/* Hotspot Container */
+.shop-by-look__hotspots {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Individual Hotspot Button */
+.shop-by-look__hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  z-index: 10;
+  pointer-events: auto;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.shop-by-look__hotspot:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.shop-by-look__hotspot:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 4px;
+}
+
+.shop-by-look__hotspot.active {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 255, 255, 0.7);
+  border-color: #ffffff;
+}
+
+.shop-by-look__hotspot.active .shop-by-look__hotspot-dot {
+  width: 12px;
+  height: 12px;
+}
+
+/* Hotspot Inner Elements */
+.shop-by-look__hotspot-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0.6;
+  animation: hotspot-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.shop-by-look__hotspot-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  z-index: 1;
+}
+
+@keyframes hotspot-pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .shop-by-look__hotspot-pulse {
+    animation: none;
+  }
+}
+
+/* ====================================
+   Products Wrapper
+   ==================================== */
+
+.shop-by-look__products-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow: hidden;
+}
+
+/* ====================================
+   Product Carousel/Slider
+   ==================================== */
+
+.shop-by-look__slider {
+  position: relative;
+}
+
+.shop-by-look__product-list {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  gap: 1.2rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.shop-by-look__product-list::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.shop-by-look__product-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: 90%;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+@media screen and (min-width: 750px) {
+  .shop-by-look__product-item {
+    width: 240px;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .shop-by-look__product-list {
+    gap: 1.5rem;
+  }
+
+  .shop-by-look__product-item {
+    width: calc(50% - 0.75rem); /* 2 cards visible, fills grid cell space */
+    min-width: 240px;
+  }
+}
+
+/* Highlight Animation */
+.shop-by-look__product-item.highlighted {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(var(--color-shadow), 0.15);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shop-by-look__product-item.highlighted {
+    transform: none;
+  }
+}
+
+/* ====================================
+   Bulk Add Button & Messages
+   ==================================== */
+
+.shop-by-look__bulk-button {
+  margin-top: 1rem;
+}
+
+/* ====================================
+   Empty State
+   ==================================== */
+
+.shop-by-look__empty {
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgba(var(--color-foreground), 0.5);
+  font-size: 1.6rem;
+}
+
+/* ====================================
+   Loading State
+   ==================================== */
+
+/* Loading state uses Dawn's .button.loading pattern from base.css */
+.shop-by-look__bulk-button[aria-disabled='true'] {
+  cursor: not-allowed;
+}
