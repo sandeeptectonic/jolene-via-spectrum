@@ -1,0 +1,255 @@
+{% comment %}
+  Mini PDP Trigger Snippet
+
+  Usage:
+  {% render 'mini-pdp-trigger', product: product, class: 'custom-class', size: 'large' %}
+
+  Parameters:
+  - product (required): Product object
+  - product_handle (alternative): Product handle string
+  - class (optional): Additional CSS classes
+  - size (optional): 'small', 'medium', 'large' - defaults to 'medium'
+  - position (optional): 'absolute', 'relative', 'static' - defaults to 'absolute'
+  - style (optional): Additional inline styles
+  - aria_label (optional): Custom aria-label for accessibility
+{% endcomment %}
+
+{%- liquid
+  assign product_obj = product | default: nil
+  assign product_handle_param = product_handle | default: nil
+  assign custom_class = class | default: ''
+  assign button_size = size | default: 'medium'
+  assign position_type = position | default: 'absolute'
+  assign custom_style = style | default: ''
+  assign custom_aria_label = aria_label | default: 'Quick view product'
+
+  if product_obj == nil and product_handle_param != nil
+    assign product_obj = all_products[product_handle_param]
+  endif
+
+  unless product_obj
+    break
+  endunless
+
+  assign final_handle = product_obj.handle
+  assign final_title = product_obj.title
+-%}
+
+<button class="mini-pdp-trigger mini-pdp-trigger--{{ button_size }} mini-pdp-trigger--{{ position_type }} {{ custom_class }}"
+        data-mini-pdp-trigger
+        data-product-handle="{{ final_handle }}"
+        aria-label="{{ custom_aria_label }}: {{ final_title }}"
+        type="button"
+        {% if custom_style != blank %}style="{{ custom_style }}"{% endif %}>
+
+  <!-- Shopping Bag Icon -->
+  <svg class="mini-pdp-trigger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 2L3 6V20A2 2 0 0 0 5 22H19A2 2 0 0 0 21 20V6L18 2H6Z"/>
+    <line x1="3" y1="8" x2="21" y2="8"/>
+    <path d="M16 11A4 4 0 0 1 8 11"/>
+  </svg>
+
+  <!-- Optional loading state -->
+  <div class="mini-pdp-trigger-loading" style="display: none;">
+    <svg class="mini-pdp-trigger-spinner" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+        <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+        <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+</button>
+
+<style>
+/* Mini PDP Trigger Styles */
+.mini-pdp-trigger {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: #000;
+  z-index: 2;
+}
+
+.mini-pdp-trigger:hover {
+  background-color: #000;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.mini-pdp-trigger:active {
+  transform: scale(0.95);
+}
+
+/* Size Variants */
+.mini-pdp-trigger--small {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.mini-pdp-trigger--small .mini-pdp-trigger-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.mini-pdp-trigger--medium {
+  width: 4rem;
+  height: 4rem;
+}
+
+.mini-pdp-trigger--medium .mini-pdp-trigger-icon {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+.mini-pdp-trigger--large {
+  width: 5rem;
+  height: 5rem;
+}
+
+.mini-pdp-trigger--large .mini-pdp-trigger-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+/* Position Variants */
+.mini-pdp-trigger--absolute {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+}
+
+.mini-pdp-trigger--relative {
+  position: relative;
+}
+
+.mini-pdp-trigger--static {
+  position: static;
+}
+
+/* Loading State */
+.mini-pdp-trigger.loading .mini-pdp-trigger-icon {
+  display: none;
+}
+
+.mini-pdp-trigger.loading .mini-pdp-trigger-loading {
+  display: block !important;
+}
+
+.mini-pdp-trigger-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.mini-pdp-trigger-spinner {
+  width: 2rem;
+  height: 2rem;
+  color: currentColor;
+}
+
+/* Focus State */
+.mini-pdp-trigger:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+/* Disabled State */
+.mini-pdp-trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.mini-pdp-trigger:disabled:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #000;
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+</style>
+
+<script>
+  // Initialize mini-PDP triggers when this snippet is rendered
+  (function() {
+    const initTrigger = (trigger) => {
+      if (trigger.dataset.initialized) return;
+
+      const productHandle = trigger.dataset.productHandle;
+
+      trigger.addEventListener('click', async function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        // Add loading state
+        this.classList.add('loading');
+        this.disabled = true;
+
+        try {
+          // Use global helper function
+          if (window.openMiniPDP) {
+            await window.openMiniPDP(productHandle);
+          } else {
+            // Fallback: dispatch custom event
+            document.dispatchEvent(new CustomEvent('minipdp:open', {
+              detail: { productHandle }
+            }));
+          }
+        } catch (error) {
+          console.error('Error opening mini-PDP:', error);
+        } finally {
+          // Remove loading state
+          setTimeout(() => {
+            this.classList.remove('loading');
+            this.disabled = false;
+          }, 300);
+        }
+      });
+
+      trigger.dataset.initialized = 'true';
+    };
+
+    // Initialize current trigger
+    const currentTrigger = document.currentScript?.previousElementSibling;
+    if (currentTrigger?.matches?.('.mini-pdp-trigger')) {
+      initTrigger(currentTrigger);
+    }
+
+    // Initialize all triggers on page (for dynamic content)
+    document.addEventListener('DOMContentLoaded', function() {
+      const triggers = document.querySelectorAll('[data-mini-pdp-trigger]:not([data-initialized])');
+      triggers.forEach(initTrigger);
+    });
+
+    // Re-initialize when new content is added (for AJAX/theme editor)
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        mutation.addedNodes.forEach(function(node) {
+          if (node.nodeType === 1) { // Element node
+            const triggers = node.querySelectorAll ?
+              node.querySelectorAll('[data-mini-pdp-trigger]:not([data-initialized])') : [];
+            triggers.forEach(initTrigger);
+
+            // Check if the node itself is a trigger
+            if (node.matches?.('[data-mini-pdp-trigger]:not([data-initialized])')) {
+              initTrigger(node);
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  })();
+</script>

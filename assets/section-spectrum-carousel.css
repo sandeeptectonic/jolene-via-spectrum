@@ -1,0 +1,1392 @@
+/* Spectrum Carousel Videos - Theme Integrated Styling */
+
+.spectrum-carousel-videos {
+  padding: 4.5rem 0;
+}
+
+.spectrum-carousel__header {
+  margin-bottom: 16px;
+}
+
+.spectrum-carousel__heading {
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: none;
+  font-family: 'gt_alpina_tw';
+  text-transform: uppercase;
+  padding-inline-start: 16px;
+}
+
+.spectrum-carousel__description {
+  color: rgba(var(--color-foreground-rgb), 0.7);
+  font-size: 1.125rem;
+  margin: 1rem 0 0 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: inherit;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* Responsive adjustments for heading */
+@media (max-width: 749px) {
+  .spectrum-carousel-videos {
+    padding: 3rem 0;
+  }
+
+  .spectrum-carousel__header {
+    margin-bottom: 16px;
+  }
+
+  .spectrum-carousel__heading {
+    font-size: 18px;
+  }
+
+  .spectrum-carousel__description {
+    font-size: 1rem;
+  }
+
+  .spectrum-carousel__slide-title {
+    font-size: 16px;
+  }
+}
+
+.spectrum-carousel__container {
+  position: relative;
+  overflow: hidden;
+  min-height: 320px; /* Prevent layout shift during loading */
+}
+
+/* Loading state for carousel */
+.spectrum-carousel__track:empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 320px;
+}
+
+.spectrum-carousel__track:empty::before {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #333;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Skeleton loading for better UX */
+.spectrum-carousel__slide.loading {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.spectrum-carousel__slide.loading .spectrum-carousel__thumbnail {
+  background: #f0f0f0;
+}
+
+.spectrum-carousel__slide.loading .spectrum-carousel__slide-title {
+  background: #f0f0f0;
+  color: transparent;
+  border-radius: 4px;
+  height: 1.2em;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Ensure smooth transitions when content loads */
+.spectrum-carousel__slide {
+  transition: opacity 0.3s ease;
+}
+
+.spectrum-carousel__slide img,
+.spectrum-carousel__slide video {
+  transition: opacity 0.3s ease;
+}
+
+.spectrum-carousel__track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  /* Create scroll snap for better UX */
+  /* scroll-snap-type: x mandatory; */
+  padding-inline: 16px;
+}
+
+.spectrum-carousel__track::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
+
+/* Show scrollbar on hover for desktop */
+@media (min-width: 750px) {
+  .spectrum-carousel__track:hover {
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+
+  .spectrum-carousel__track:hover::-webkit-scrollbar {
+    display: block;
+    height: 6px;
+  }
+
+  .spectrum-carousel__track:hover::-webkit-scrollbar-thumb {
+    background: rgba(var(--color-foreground-rgb), 0.3);
+    border-radius: 3px;
+  }
+
+  .spectrum-carousel__track:hover::-webkit-scrollbar-track {
+    background: rgba(var(--color-foreground-rgb), 0.1);
+  }
+}
+
+.spectrum-carousel__slide {
+  position: relative;
+  flex: 0 0 280px; /* Fixed width for horizontal scrolling */
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spectrum-carousel__slide-title {
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 0.5rem;
+  letter-spacing: -0.01em;
+  font-family: 'gt_alpina_tw';
+  color: #000;
+  font-weight: 500;
+}
+
+@media (min-width: 750px) {
+  .spectrum-carousel__slide {
+    flex: 0 0 320px; /* Larger on desktop */
+  }
+}
+
+.spectrum-carousel__trigger {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  display: block;
+}
+
+/* .spectrum-carousel__trigger:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 4px;
+} */
+
+.spectrum-carousel__thumbnail {
+  position: relative;
+  padding-bottom: 178.57%; /* 1/0.56 = 1.7857 = 178.57% for 0.56 aspect ratio */
+  background: rgba(var(--color-foreground-rgb), 0.05);
+  overflow: hidden;
+}
+
+.spectrum-carousel__thumbnail img,
+.spectrum-carousel__thumbnail video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spectrum-carousel__preview {
+  background: rgba(var(--color-foreground-rgb), 0.1);
+}
+
+.spectrum-carousel__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1.5rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 1.25rem;
+}
+
+/* .spectrum-carousel__trigger:hover .spectrum-carousel__overlay,
+.spectrum-carousel__trigger:focus .spectrum-carousel__overlay {
+  opacity: 1;
+} */
+
+/* Play button removed from thumbnail hover overlay */
+
+.spectrum-carousel__info {
+  text-align: center;
+}
+
+.spectrum-carousel__info h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.spectrum-carousel__info p {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Navigation */
+.spectrum-carousel__nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  pointer-events: none;
+  padding: 0;
+  z-index: 2;
+}
+
+.spectrum-carousel__nav button {
+  width: 44px;
+  height: 44px;
+  background: var(--color-background);
+  border: 1px solid rgba(var(--color-foreground-rgb), 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 4px 16px rgba(var(--color-foreground-rgb), 0.12);
+  transition: all 0.3s ease;
+  color: var(--color-foreground);
+  opacity: 0.9;
+}
+
+.spectrum-carousel__nav button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(var(--color-foreground-rgb), 0.2);
+  opacity: 1;
+}
+
+.spectrum-carousel__nav-prev {
+  margin-left: -22px; /* Position outside the container */
+}
+
+.spectrum-carousel__nav-next {
+  margin-right: -22px; /* Position outside the container */
+}
+
+/* Hide navigation on small screens where touch scrolling is preferred */
+@media (max-width: 749px) {
+  .spectrum-carousel__nav {
+    display: none;
+  }
+}
+
+.spectrum-carousel__nav button:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 2px;
+}
+
+.spectrum-carousel__nav svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+.spectrum-carousel__empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(var(--color-foreground-rgb), 0.6);
+}
+
+/* Dialog - Carousel Design */
+dialog.spectrum-modal {
+  position: fixed;
+  padding: 0;
+  margin: 0;
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  overflow: hidden;
+}
+
+dialog.spectrum-modal[open] {
+  opacity: 1;
+}
+
+dialog.spectrum-modal::backdrop {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* Backdrop is now handled by dialog::backdrop */
+
+.spectrum-modal__container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  overflow: hidden;
+}
+
+.spectrum-modal__content {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  position: relative;
+}
+
+/* Responsive visibility controls */
+.spectrum-modal__content .spectrum-modal__desktop-only {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.spectrum-modal__content .spectrum-modal__mobile-only {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+@media (max-width: 749px) {
+  .spectrum-modal__content .spectrum-modal__desktop-only {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .spectrum-modal__content .spectrum-modal__mobile-only {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Desktop Multi-Video Carousel Container */
+.spectrum-modal__carousel-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  overflow: hidden;
+}
+
+.spectrum-modal__video-track {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+  width: calc(100vw - 200px); /* Leave space for navigation arrows */
+  height: 100vh;
+  overflow: hidden;
+  padding: 2rem 0;
+}
+
+.spectrum-modal__video-panel {
+  overflow: visible;
+  position: relative;
+  transition: all 0.3s ease;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Different video panel sizes based on position */
+.spectrum-modal__video-panel--center {
+  width: min(550px, 40vw);
+  z-index: 3;
+  transform: scale(1);
+}
+
+.spectrum-modal__video-panel--center .spectrum-modal__video-wrapper {
+  height: min(75vh, 850px);
+  max-height: calc(100vh - 8rem);
+}
+
+.spectrum-modal__video-panel--side {
+  width: min(350px, 25vw);
+  z-index: 2;
+  transform: scale(0.85);
+}
+
+.spectrum-modal__video-panel--side .spectrum-modal__video-wrapper {
+  height: min(55vh, 580px);
+  max-height: calc(100vh - 10rem);
+}
+
+.spectrum-modal__video-panel--edge {
+  width: 200px;
+  height: 320px;
+  z-index: 1;
+  transform: scale(0.7);
+}
+
+/* Responsive adjustments for smaller desktop screens */
+@media (max-height: 800px) {
+  .spectrum-modal__video-panel--center .spectrum-modal__video-wrapper {
+    height: min(70vh, 650px);
+  }
+
+  .spectrum-modal__video-panel--side .spectrum-modal__video-wrapper {
+    height: min(50vh, 450px);
+  }
+
+  .spectrum-modal__video-title {
+    padding: 0.75rem 0.5rem 0;
+    font-size: 1rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .spectrum-modal__video-panel--center .spectrum-modal__video-wrapper {
+    height: min(65vh, 550px);
+  }
+
+  .spectrum-modal__video-panel--side .spectrum-modal__video-wrapper {
+    height: min(45vh, 400px);
+  }
+
+  .spectrum-modal__video-track {
+    gap: 2rem;
+  }
+
+  .spectrum-modal__video-title {
+    padding: 0.5rem 0.25rem 0;
+    font-size: 0.875rem;
+  }
+}
+
+.spectrum-modal__video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: #1a1a1a;
+}
+
+.spectrum-modal__video-panel video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.spectrum-modal__video-title {
+  color: #ffffff;
+  font-size: 1.125rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 1rem 0.5rem 0;
+  line-height: 1.4;
+  opacity: 0.9;
+  letter-spacing: -0.01em;
+}
+
+.spectrum-modal__video-panel--center .spectrum-modal__video-title {
+  font-size: 1.25rem;
+}
+
+.spectrum-modal__video-panel--side .spectrum-modal__video-title {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+
+/* Video Navigation Arrows */
+.spectrum-modal__video-nav-prev,
+.spectrum-modal__video-nav-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #1a1a1a;
+  transition: all 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.spectrum-modal__video-nav-prev {
+  left: 2rem;
+}
+
+.spectrum-modal__video-nav-next {
+  right: 2rem;
+}
+
+.spectrum-modal__video-nav-prev:hover,
+.spectrum-modal__video-nav-next:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.spectrum-modal__video-nav-prev svg,
+.spectrum-modal__video-nav-next svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2;
+}
+
+/* Mobile: Single Video Container */
+.spectrum-modal__video-container {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.spectrum-modal__player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product Overlay - Inside Video Panel */
+.spectrum-modal__product-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+  padding: 1rem 1.5rem;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.spectrum-modal__product-overlay.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.spectrum-modal__products-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Product navigation arrows removed - scroll-based navigation only */
+
+.spectrum-modal__products-track {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  height: 100%;
+  padding: 0.25rem 0;
+  align-items: center;
+}
+
+.spectrum-modal__products-track::-webkit-scrollbar {
+  display: none;
+}
+
+.spectrum-modal__product-card {
+  flex: 0 0 320px;
+  height: 110px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+}
+
+.spectrum-modal__product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.spectrum-modal__product-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+  position: relative;
+  background: white !important;
+  box-sizing: border-box;
+}
+
+.spectrum-modal__product-image {
+  width: 70px;
+  height: 90px;
+  object-fit: cover;
+  background: #f8f8f8;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.spectrum-modal__product-image--placeholder {
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: #999;
+  border: 1px solid #eee;
+}
+
+.spectrum-modal__product-image--placeholder::after {
+  content: '📦';
+  font-size: 1.2rem;
+}
+
+.spectrum-modal__product-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  padding-inline: 8px;
+  height: 100%;
+  margin-right: auto;
+}
+
+.spectrum-modal__product-title {
+  margin: 0 0 0.5rem;
+  font-family: 'gt_alpina_tw';
+  font-size: 1rem; /* Increased for larger cards */
+  font-weight: 600;
+  color: #1a1a1a !important;
+  line-height: 1.3;
+  max-height: 2.6em; /* Approximately 2 lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.spectrum-modal__product-price {
+  font-size: 12px; /* Increased for larger cards */
+  font-weight: 700;
+  color: #1a1a1a !important;
+  margin-bottom: 0.75rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.spectrum-modal__product-status {
+  font-size: 0.7rem;
+  color: #ef4444;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.spectrum-modal__shop-btn {
+  position: absolute;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spectrum-modal__shop-btn:hover {
+  background: #2a2a2a;
+  transform: scale(1.05);
+}
+
+/* Mute/Unmute Button */
+.spectrum-modal__mute-btn {
+  position: absolute;
+  bottom: 10rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 15;
+}
+
+/* Desktop mute button for video carousel */
+.spectrum-modal__mute-btn--desktop {
+  position: absolute;
+  bottom: 170px;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.3s ease;
+}
+
+.spectrum-modal__mute-btn:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.spectrum-modal__mute-btn:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.spectrum-modal__mute-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+/* Modal Corner Buttons */
+.spectrum-modal__back,
+.spectrum-modal__close,
+.spectrum-modal__cart {
+  position: absolute;
+  top: 1.5rem;
+  z-index: 20;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.spectrum-modal__back {
+  left: 1.5rem;
+}
+
+.spectrum-modal__close {
+  left: 5rem;
+}
+
+.spectrum-modal__cart {
+  right: 1.5rem;
+}
+
+.spectrum-modal__back:hover,
+.spectrum-modal__close:hover,
+.spectrum-modal__cart:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.spectrum-modal__back:focus-visible,
+.spectrum-modal__close:focus-visible,
+.spectrum-modal__cart:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}
+
+.spectrum-modal__back svg,
+.spectrum-modal__close svg,
+.spectrum-modal__cart svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 749px) {
+  .spectrum-carousel-videos {
+    padding: 2rem 0;
+  }
+
+  .spectrum-carousel__slide {
+    flex: 0 0 240px; /* Smaller slides on mobile */
+  }
+
+  .spectrum-carousel__track {
+    gap: 12px;
+  }
+
+  .spectrum-modal__content {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+  }
+
+  .spectrum-modal__video-container {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .spectrum-modal__back,
+  .spectrum-modal__close,
+  .spectrum-modal__cart {
+    top: 1rem;
+    width: 45px;
+    height: 45px;
+  }
+
+  .spectrum-modal__back {
+    left: 1rem;
+  }
+
+  .spectrum-modal__close {
+    left: 4rem;
+  }
+
+  .spectrum-modal__back svg,
+  .spectrum-modal__close svg,
+  .spectrum-modal__cart svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .spectrum-modal__product-overlay {
+    height: 160px;
+    padding: 1rem;
+  }
+
+  .spectrum-modal__product-card {
+    height: 134px;
+    max-width: 310px;
+  }
+
+  .spectrum-modal__product-info {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .spectrum-modal__product-image {
+    width: 80px;
+    height: 104px;
+    aspect-ratio: 0.6;
+  }
+
+  .spectrum-modal__product-title {
+    font-size: 12px;
+  }
+
+  .spectrum-modal__product-price {
+    font-size: 12px;
+  }
+
+  .spectrum-modal__shop-btn {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.65rem;
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .spectrum-modal__mute-btn {
+    bottom: 18rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+  }
+
+  .spectrum-modal__mute-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .spectrum-carousel__slide {
+    flex: 0 0 200px; /* Even smaller on very small screens */
+  }
+}
+
+/* ==========================================
+   MINI PDP DIALOG STYLES
+   ========================================== */
+
+.spectrum-modal__mini-pdp {
+  border: none;
+  padding: 0;
+  margin: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 600px;
+  background: transparent;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.spectrum-modal__mini-pdp::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.spectrum-modal__mini-pdp.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.spectrum-pdp {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+/* Close Button */
+.spectrum-pdp__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #000;
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.spectrum-pdp__close:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Product Gallery */
+.spectrum-pdp__gallery {
+  width: 100%;
+  background: #f9f9f9;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.spectrum-pdp__gallery-main {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+}
+
+.spectrum-pdp__main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.spectrum-pdp__gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.spectrum-pdp__gallery-thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.spectrum-pdp__thumb {
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.spectrum-pdp__thumb.active {
+  border-color: #000;
+}
+
+.spectrum-pdp__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product Details */
+.spectrum-pdp__details {
+  padding: 24px;
+  flex: 1;
+}
+
+.spectrum-pdp__title {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0 0 16px 0;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spectrum-pdp__price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.spectrum-pdp__current-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+}
+
+.spectrum-pdp__compare-price {
+  font-size: 16px;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.spectrum-pdp__discount {
+  color: #a60017;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Size Section */
+.spectrum-pdp__size-section {
+  margin-bottom: 20px;
+}
+
+.spectrum-pdp__size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.spectrum-pdp__size-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.spectrum-pdp__size-chart {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid #ddd;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.spectrum-pdp__size-chart:hover {
+  border-color: #999;
+}
+
+.spectrum-pdp__size-measurements {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  word-spacing: 2px;
+}
+
+.spectrum-pdp__size-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spectrum-pdp__size-btn {
+  min-width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+}
+
+.spectrum-pdp__size-btn:hover:not(:disabled) {
+  border-color: #999;
+}
+
+.spectrum-pdp__size-btn.selected {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.spectrum-pdp__size-btn.disabled,
+.spectrum-pdp__size-btn:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  border-color: #e5e5e5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.spectrum-pdp__size-btn.disabled::after,
+.spectrum-pdp__size-btn:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ccc;
+  transform: rotate(-45deg);
+}
+
+/* Stock Status */
+.spectrum-pdp__stock {
+  margin-bottom: 20px;
+}
+
+.spectrum-pdp__stock-text {
+  font-size: 12px;
+  color: #ff6b35;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.spectrum-pdp__stock-text--out {
+  color: #999;
+}
+
+/* Add to Cart Button */
+.spectrum-pdp__actions {
+}
+
+.spectrum-pdp__add-to-bag {
+  width: 100%;
+  height: 41px;
+  background: #000;
+  color: white;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: 'gt_alpina_tw';
+  transition: background-color 0.2s ease;
+}
+
+.spectrum-pdp__add-to-bag:hover:not(:disabled) {
+  background: #333;
+}
+
+.spectrum-pdp__add-to-bag--disabled,
+.spectrum-pdp__add-to-bag:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Action Icons */
+.spectrum-pdp__icons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.spectrum-pdp__icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ddd;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.spectrum-pdp__icon:hover {
+  border-color: #999;
+  color: #000;
+}
+
+/* Responsive Design */
+@media (max-width: 749px) {
+  .spectrum-modal__mini-pdp {
+    max-width: 95vw;
+    max-height: 95vh;
+    width: auto;
+  }
+
+  .spectrum-pdp__details {
+    padding: 20px;
+  }
+
+  .spectrum-pdp__title {
+    font-size: 20px;
+  }
+
+  .spectrum-pdp__current-price {
+    font-size: 18px;
+  }
+
+  .spectrum-pdp__gallery-main {
+    height: 250px;
+  }
+
+  .spectrum-pdp__thumb {
+    width: 40px;
+    height: 40px;
+  }
+
+  .spectrum-pdp__size-options {
+    gap: 6px;
+  }
+
+  .spectrum-pdp__size-btn {
+    min-width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+}
+
+/* Notifications */
+.spectrum-modal__notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #000;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  max-width: 300px;
+}
+
+.spectrum-modal__notification.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.spectrum-modal__notification--success {
+  background: #10b981;
+}
+
+.spectrum-modal__notification--error {
+  background: #ef4444;
+}
+
+.spectrum-modal__pdp-toggle {
+  height: 30px;
+  width: 30px;
+  border: 0;
+  background-color: white;
+}

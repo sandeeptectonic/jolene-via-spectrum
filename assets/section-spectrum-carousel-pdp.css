@@ -1,0 +1,469 @@
+/* ==========================================
+   MINI PDP DIALOG STYLES - EXACT MATCH TO SCREENSHOT
+   ========================================== */
+
+.spectrum-modal__mini-pdp {
+  border: none;
+  padding: 0;
+  margin: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 700px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.spectrum-modal__mini-pdp::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+
+.spectrum-modal__mini-pdp.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.spectrum-pdp {
+  background: #ffffff;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 600px;
+}
+
+/* Close Button */
+.spectrum-pdp__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #000;
+  z-index: 10;
+  transition: background-color 0.2s ease;
+}
+
+.spectrum-pdp__close:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* Left Side - Product Gallery (220px width) */
+.spectrum-pdp__left {
+  width: 220px;
+  height: 330px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.spectrum-pdp__gallery {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.spectrum-pdp__gallery-scroll {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  /* scroll-snap-type: x mandatory; */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar but keep functionality */
+.spectrum-pdp__gallery-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.spectrum-pdp__gallery-scroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.spectrum-pdp__gallery-item {
+  min-width: 220px;
+  height: 100%;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.spectrum-pdp__gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Right Side - Product Details (flex-grow to fill remaining) */
+.spectrum-pdp__right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.spectrum-pdp__title {
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0 0 4px 0;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.2;
+  font-family: 'gt_alpina_tw';
+  font-weight: 600;
+}
+
+.spectrum-pdp__price-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.spectrum-pdp__current-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+}
+
+.spectrum-pdp__original-price {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.spectrum-pdp__discount {
+  color: #a60017;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Size Section */
+.spectrum-pdp__size-section {
+  margin-bottom: 24px;
+}
+
+.spectrum-pdp__size-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.spectrum-pdp__size-label {
+  font-size: 16px;
+  color: #333;
+  font-weight: 400;
+}
+
+.spectrum-pdp__size-chart-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 0;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.spectrum-pdp__size-chart-btn:hover {
+  border-color: #999;
+}
+
+.spectrum-pdp__measurements {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 16px;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+}
+
+.spectrum-pdp__size-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.spectrum-pdp__size-option {
+  min-width: 50px;
+  height: 25px;
+  border: 1px solid #ddd;
+  background: white;
+  color: #000;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+}
+
+.spectrum-pdp__size-option:hover:not(:disabled) {
+  border-color: #999;
+}
+
+.spectrum-pdp__size-option.selected {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.spectrum-pdp__size-option:disabled {
+  background: #f5f5f5;
+  color: #ccc;
+  border-color: #e5e5e5;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.spectrum-pdp__size-option:disabled::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  right: 2px;
+  height: 1px;
+  background: #ccc;
+  transform: rotate(-45deg);
+}
+
+/* Stock Status */
+.spectrum-pdp__stock-status {
+  margin-bottom: 24px;
+}
+
+.spectrum-pdp__stock-indicator {
+  font-size: 14px;
+  color: #a60017;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.spectrum-pdp__stock-indicator.out-of-stock {
+  color: #999;
+}
+
+.spectrum-pdp__stock-indicator.in-stock {
+  color: #28a745;
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.spectrum-pdp__actions {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 16px 0 0;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.spectrum-pdp__buy-now {
+  width: 100%;
+  height: 41px;
+  background: white;
+  color: black;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: 'gt_alpina_tw';
+  transition: all 0.2s ease;
+  order: 1;
+}
+
+.spectrum-pdp__buy-now:hover:not(:disabled) {
+  background: black;
+  color: white;
+}
+
+.spectrum-pdp__buy-now.disabled,
+.spectrum-pdp__buy-now:disabled {
+  background: #f5f5f5;
+  color: #999;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.spectrum-pdp__buy-now.loading {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.spectrum-pdp__add-to-bag {
+  width: 100%;
+  height: 41px;
+  background: #000;
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 0;
+  font-family: 'gt_alpina_tw';
+  transition: background-color 0.2s ease;
+  order: 2;
+}
+
+.spectrum-pdp__add-to-bag:hover:not(:disabled) {
+  background: #333;
+}
+
+/* Loading state for add to bag button */
+.spectrum-pdp__add-to-bag.loading {
+  position: relative;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.spectrum-pdp__spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid transparent;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spectrum-pdp__add-to-bag.disabled,
+.spectrum-pdp__add-to-bag:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Action Icons - Positioned absolutely on gallery */
+.spectrum-pdp__action-icons {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 5;
+}
+
+.spectrum-pdp__action-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spectrum-pdp__action-icon:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.spectrum-pdp__action-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .spectrum-modal__mini-pdp {
+    max-width: 95vw;
+    max-height: 95vh;
+    width: 100%;
+  }
+
+  .spectrum-pdp {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .spectrum-pdp__left {
+    width: 100%;
+    height: 330px;
+  }
+
+  .spectrum-pdp__right {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .spectrum-pdp__title {
+    font-size: 14px;
+    font-family: 'gt_alpina_tw';
+  }
+
+  .spectrum-pdp__current-price {
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .spectrum-pdp__gallery-item {
+    min-height: 330px;
+  }
+
+  .spectrum-pdp__size-option {
+    min-width: 56px;
+    height: 25px;
+    font-size: 10px;
+  }
+}

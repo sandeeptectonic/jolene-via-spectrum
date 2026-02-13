@@ -28,6 +28,7 @@
 
   <script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-buy-now.js' | asset_url }}" defer="defer"></script>
   {% if section.settings.image_zoom == 'hover' %}
     <script id="EnableZoomOnHover-main" src="{{ 'magnify.js' | asset_url }}" defer="defer"></script>
   {% endif %}
@@ -308,6 +309,113 @@
             {%- when 'variant_picker' -%}
               <div class="variant_picker_wrap">
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+              </div>
+
+              <!-- Stock Urgency Callout -->
+              <div class="product-stock-urgency" id="product-stock-urgency-{{ section.id }}">
+                {%- assign selected_variant = product.selected_or_first_available_variant -%}
+                {%- if selected_variant.inventory_quantity and selected_variant.inventory_quantity > 0 and selected_variant.inventory_quantity <= 20 -%}
+                  <div class="stock-urgency-indicator">
+                    🔥 Low in stock - Only {{ selected_variant.inventory_quantity }} available
+                  </div>
+                {%- elsif selected_variant.inventory_quantity and selected_variant.inventory_quantity > 20 -%}
+                  <div class="stock-in-stock-indicator">
+                    In Stock
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <!-- Desktop Buy Buttons (positioned here) -->
+              <div class="desktop-buy-buttons">
+                {%- assign desktop_form_id = 'desktop-' | append: product_form_id -%}
+                {%- form 'product',
+                  product,
+                  id: desktop_form_id,
+                  class: 'form',
+                  novalidate: 'novalidate',
+                  data-type: 'add-to-cart-form'
+                -%}
+                  <input
+                    type="hidden"
+                    name="id"
+                    value="{{ product.selected_or_first_available_variant.id }}"
+                    disabled
+                    class="product-variant-id"
+                  >
+
+                  <div class="product-form__buttons desktop-buttons-container">
+                    {%- liquid
+                      assign check_against_inventory = true
+                      if product.selected_or_first_available_variant.inventory_management != 'shopify' or product.selected_or_first_available_variant.inventory_policy == 'continue'
+                        assign check_against_inventory = false
+                      endif
+                      if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
+                        assign quantity_rule_soldout = true
+                      endif
+                    -%}
+
+                    <!-- Buy Now Button -->
+                    <button
+                      id="ProductBuyNowButton-desktop-{{ section.id }}"
+                      type="button"
+                      class="product-form__buy-now button button--full-width button--secondary"
+                      data-product-id="{{ product.id }}"
+                      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                      {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                        disabled
+                      {% endif %}
+                    >
+                      <span>
+                        {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                          {{ 'products.product.sold_out' | t }}
+                        {%- else -%}
+                          BUY NOW
+                        {%- endif -%}
+                      </span>
+                      <div class="loading-overlay__spinner hidden">
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          class="spinner"
+                          viewBox="0 0 66 66"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                      </div>
+                    </button>
+
+                    <!-- Add to Cart Button -->
+                    <button
+                      id="ProductSubmitButton-desktop-{{ section.id }}"
+                      type="submit"
+                      name="add"
+                      class="single_prd_bag product-form__submit button button--full-width button--primary"
+                      {% if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %}
+                        disabled
+                      {% endif %}
+                    >
+                      <span>
+                        {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout -%}
+                          {{ 'products.product.sold_out' | t }}
+                        {%- else -%}
+                          {{ 'products.product.add_to_cart' | t }}
+                        {%- endif -%}
+                      </span>
+                      <div class="loading-overlay__spinner hidden">
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          class="spinner"
+                          viewBox="0 0 66 66"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                {%- endform -%}
               </div>
 
             {%- when 'buy_buttons' -%}
